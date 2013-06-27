@@ -1,4 +1,4 @@
 Carless 1.0
 ===========
 
-A webapp to assist with a carless life.
+A web app to get people to where they want to go, without a car.
