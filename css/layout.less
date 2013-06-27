@@ -1,0 +1,123 @@
+/*------------------------------------------------------------------
+[Layout Stylesheet]
+Project:    Kevin Montgomery HTML
+Version:    3
+-------------------------------------------------------------------*/
+
+html { height: 100%; } 
+
+body {
+   display: -webkit-box;   /* OLD: Safari,  iOS, Android browser, older WebKit browsers.  */
+   display: -moz-box;      /* OLD: Firefox (buggy) */ 
+   display: -ms-flexbox;   /* MID: IE 10 */
+   display: -webkit-flex;  /* NEW, Chrome 21+ */
+   display: flex;          /* NEW: Opera 12.1, Firefox 22+ */
+
+   -webkit-box-align: center; -moz-box-align: center; /* OLD… */
+   -ms-flex-align: center; /* You know the drill now… */
+   -webkit-align-items: center;
+   align-items: center;
+
+   -webkit-box-pack: center; -moz-box-pack: center; 
+   -ms-flex-pack: center; 
+   -webkit-justify-content: center;
+   justify-content: center;
+
+   margin: 0;
+   height: 100%;
+   width: 100% /* needed for Firefox */
+}
+
+/* [Block-level Flex] */
+.flexbox() {
+	display: flex;
+	display: flexbox;
+	display: box;
+}
+
+/* [Inline-level Flex] */
+.inline-flexbox() {
+	display: inline-flex;
+	display: inline-flexbox;
+	display: inline-box;
+}
+
+/* [Axis alignment: specifying alignment of items along the main flexbox axis] */
+.axis-align-start() {
+	justify-content: flex-start;
+	flex-pack: start;
+	box-pack: start;
+}
+
+/* [Set up container] */
+.container {
+	width: 100%;
+  margin: 0 auto;
+	display: none;
+	
+	&.mockup {		
+		.column, .columns {
+			border: 1px solid @black;
+			padding: .5em;
+		}
+	}
+	
+	.row .row { margin: 0; }	
+}
+
+/* [Variables should always come first, they're handy that way] */
+@tablet-min: 39em;
+@screen-min: 59em;
+
+/* [Foundation CSS Overrides] */
+
+/* [Mobile First View] */
+.loading_page {
+	.title {
+		text-align: center;
+		max-width: 39em;
+		margin: 0 auto;
+	}
+}
+
+/* [Tablet Screen View] */
+@media screen and (min-width: @tablet-min) {
+}
+
+/* [Computer Screen View] */
+@media screen and (min-width: @screen-min) {
+}
+
+/* [Breakpoints] */
+@media screen and (min-width: 640px) {}
+@media screen and (min-width: 800px) { 
+	.container { max-width: 640px; }
+}
+@media screen and (min-width: 1024px) { 
+	.container { max-width: 800px; }
+}
+@media screen and (min-width: 1152px) { 
+	.container { max-width: 1024px; }
+}
+@media screen and (min-width: 1280px) { 
+	.container { max-width: 1152px; }
+}
+@media screen and (min-width: 1360px) { 
+	.container { max-width: 1280px; }
+}
+@media screen and (min-width: 1366px) { 
+	.container { max-width: 1360px; }
+}
+@media screen and (min-width: 1440px) { 
+	.container { max-width: 1366px; }
+}
+@media screen and (min-width: 1600px) { 
+	.container { max-width: 1440px; }
+}
+@media screen and (min-width: 1680px) { 
+	.container { max-width: 1600px; }
+}
+
+/* [Print Style] */
+@media print {
+}

@@ -1,0 +1,72 @@
+/*=========================================
+[Colors, LESS/CSS Stylesheet, HTML Template]
+Version: 3.0
+Author: Kevin Montgomery
+===========================================*/
+
+/* [Useful Mixins] */
+.button-bg-gradient(@button-colour-start, @button-colour-end) {
+	background: @button-colour-start url(/img/header-titlebar-back.jpg) repeat-x; /* Old browsers */
+	background: -moz-linear-gradient(top,  @button-colour-start 0%, @button-colour-end 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,@button-colour-start), color-stop(100%,@button-colour-end)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top,  @button-colour-start 0%,@button-colour-end 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top,  @button-colour-start 0%,@button-colour-end 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top,  @button-colour-start 0%,@button-colour-end 100%); /* IE10+ */
+	background: linear-gradient(to bottom,  @button-colour-start 0%,@button-colour-end 100%); /* W3C */
+	ms-filter: "progid:DXImageTransform.Microsoft.gradient( startColorstr=@button-colour-start, endColorstr=@button-colour-end,GradientType=0 )"; /* IE6-8 */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr=@button-colour-start, endColorstr=@button-colour-end,GradientType=0 ); /* IE6-8 */
+}
+
+.bg-gradient(@colour) {
+	background: @colour; /* Old browsers */
+	background: -moz-linear-gradient(top,  lighten(@colour, 20%) 0%, @colour 50%, darken(@colour, 20%) 51%, @colour 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,lighten(@colour, 20%)), color-stop(50%,@colour), color-stop(51%,darken(@colour, 20%)), color-stop(100%,@colour)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top,  lighten(@colour, 20%) 0%,@colour 50%,darken(@colour, 20%) 51%,@colour 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top,  lighten(@colour, 20%) 0%,@colour 50%,darken(@colour, 20%) 51%,@colour 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top,  lighten(@colour, 20%) 0%,@colour 50%,darken(@colour, 20%) 51%,@colour 100%); /* IE10+ */
+	background: linear-gradient(to bottom, lighten(@colour, 20%) 0%,@colour 50%,darken(@colour, 20%) 51%,@colour 100%); /* W3C */
+	// filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='lighten(@colour, 20%))', endColorstr='@colour',GradientType=0 ); /* IE6-8 */
+}
+
+.transition-duration(@duration: .25s) {
+	transition-duration: @duration;
+	-moz-transition-duration: @duration; /* Firefox 4 */
+	-webkit-transition-duration: @duration; /* Safari and Chrome */
+	-o-transition-duration: @duration; /* Opera */
+}
+
+.shadow(@horizontal: 0px, @vertical: 5px, @blur: 5px, @spread: 0px) {
+	-moz-box-shadow: @horizontal @vertical @blur @spread @gray;
+	-webkit-box-shadow: @horizontal @vertical @blur @spread @gray;
+	box-shadow: @horizontal @vertical @blur @spread @gray;
+	/* For IE 8 */
+	-ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=@vertical, Direction=45, Color='@gray')";
+	/* For IE 5.5 - 7 */
+	filter: progid:DXImageTransform.Microsoft.Shadow(Strength=@vertical, Direction=45, Color='@gray');
+}
+
+/*====================
+[Colors]
+======================*/
+
+/* [Shades of Black] */
+@black-70: #4d4d4d;
+@black-80: #333333;
+@black-90: #1a1a1a;
+@black-100: #000000;
+
+/* [Print Colors] */
+@cyan: #00aeef;
+@magenta: #ec008c;
+@yellow: #fff200;
+@key: #231f20;
+@blue: #2e3192;
+@green: #00a651;
+@red: #ed1c24;
+
+/* [Default Colors] */
+
+@black: @black-70;
+@inherit: @black;
+
+body, body * { color: @black; }

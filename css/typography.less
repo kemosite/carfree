@@ -1,0 +1,110 @@
+/*==============================================
+[Typography, LESS/CSS Stylesheet, HTML Template]
+Version: 3.0
+Author: Kevin Montgomery
+===============================================*/
+
+/*==============================================
+[Default Fonts] */
+body { font-family: SourceSansProRegular, Arial, Helvetica, sans-serif; }
+em { font-family: SourceSansProItalic, Arial, Helvetica, sans-serif; }
+h1,h2,h3,h4,h5,h6,strong { font-family: SourceSansProSemibold, "Arial Black", Helvetica, sans-serif; }
+em strong, 
+strong em, 
+h1 em, 
+h2 em, 
+h3 em, 
+h4 em, 
+h5 em, 
+h6 em 
+{ font-family: SourceSansProSemiboldItalic, "Arial Black", Helvetica, sans-serif; }
+.glyph { font-family: ModernPictogramsNormal; }
+	
+/* [Header Sizes] */
+h1 { font-size: 3em; line-height: .333em; margin: 0.666em 0 0.333em 0; }
+h2 { font-size: 2.6em; line-height: 0.384em; margin: 0.769em 0 0.384em 0}
+h3 { font-size: 2.2em; line-height: 0.454em; margin: 0.909em 0 0.454em 0; }
+h4 { font-size: 1.8em; line-height: 0.555em; margin: 1.111em 0 0.555em 0; }
+h5 { font-size: 1.4em; line-height: 0.714em; margin: 1.428em 0 0.714em 0; }
+h6 { font-size: 1em; line-height: 1em; margin: 2em 0 1em 0; }
+
+/* [Default Link Formatting] */
+a, a:link, a:visited {
+	text-decoration: none;
+	color: @blue;
+	
+	&:hover {
+		color: @cyan;
+		border-bottom-color: @cyan;
+	}
+	
+}
+a[href^="http://"],
+a[href^="https://"],
+a[href^="mailto:"] {
+	border-bottom: 1px solid @blue;
+}
+
+/* [External Link Format] */
+a[href^="http://"]:after,
+a[href^="https://"]:after {
+	content: "\o";
+	font: ModernPictogramsNormal;
+	/* outline: 1px solid inherit; */
+	color: inherit;
+	padding:1px;
+	margin:0 5px 0 0;
+}
+	
+/* [Email Link Format] */
+a[href^="mailto:"]:after {
+	font-family: ModernPictogramsNormal;
+	content: "m";
+	margin-left: .25em;
+	color: inherit;
+}
+	
+/* [PDF Link Format] */
+a[href$=".pdf"]:after {
+	font-family: ModernPictogramsNormal;
+	content: "K";
+	margin-left: .25em;
+	color: inherit;
+}
+	
+/* [New Window Link Format] */
+a[target="_blank"]:after,
+a[target="new"]:after {
+	font-family: ModernPictogramsNormal;
+	content: "W";
+	margin-left: .25em;
+	color: inherit;
+}
+	
+/* [Blockquote Format] */	
+blockquote {
+	 background:#f9f9f9;
+	 border-left:10px solid #ccc;
+	 margin:1.5em 10px;
+	 padding:.5em 10px;
+	 quotes:"\201C""\201D""\2018""\2019";
+}
+blockquote:before {
+		 color:#ccc;
+		 content:open-quote;
+		 font-size:4em;
+		 line-height:.1em;
+		 margin-right:.25em;
+		 vertical-align:-.4em;
+}
+blockquote p {
+	 display:inline;
+}
+
+/* [ End Default Formats]
+===============================================*/
+
+.gallery li { 
+	list-style: none;
+	display: inline-block;
+}
