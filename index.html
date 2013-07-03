@@ -8,7 +8,7 @@ Author: Kevin Montgomery
 -->
 
 <!-- paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/ -->
-<!--[if IE 8]>		<html class="no-js lt-ie9" dir="ltr" lang="en-CA">								<![endif]-->
+<!--[if lt IE 9]>		<html class="no-js lt-ie9" dir="ltr" lang="en-CA">								<![endif]-->
 <!--[if gt IE 8]>	<!--><html class="no-js" dir="ltr" lang="en-CA">							<!--<![endif]-->
 
 <head>
@@ -56,9 +56,6 @@ Author: Kevin Montgomery
 <!-- Glyphs: Modern Pictograms -->
 <link rel="stylesheet" href="fonts/modern-pictograms/stylesheet.css?ver=3.0" type="text/css" media="all">
 
-<!-- Sans Serif: Source Sans -->
-<link rel="stylesheet" href="fonts/source-sans/stylesheet.css?ver=3.0" type="text/css" media="all">
-
 <!--
 [ Master Stylesheet]
 Includes:
@@ -82,14 +79,14 @@ Includes:
 
 <body>
 
-<!-- [Container] -->
-<div class="container">
+<div class="throbber"></div>
 
-<section class="loading_page visible">
-	<div class="title">
-		<h1>Carless 1.0</h1>
-		<p>Loading&hellip;</p>
-	</div>
+<!-- [Container] -->
+<div class="container rounded">
+
+<section>
+	<h1>Carless</h1>
+	<p>Loading...</p>
 </section>
 
 </div>
@@ -117,6 +114,25 @@ $(function() {
 });
 </script>
 
+<!-- [TypeSet 3.0] -->
+<script src="js/jquery.typeset-v3.js?ver=3"></script>
+
+<!-- [JQuery: Standard Behaviours] -->
+<script src="js/standard-behaviours-jquery.js?ver=1.9.1"></script>
+
+<!-- [JQuery: Adaptive Scripts] -->
+<script src="js/adaptive-scripts-jquery.js?ver=1.9.1"></script>
+
+<!-- [Custom JQuery] -->
+<script src="js/my-jquery.js?ver=1.9.1"></script>
+
+<noscript>
+	<style>
+  	/* [ Turn on the container if JavaScript not loaded] */
+  	.container { display: block; }
+  </style>
+</noscript>
+
 <!-- [Initialize Google Analytics]
 <script>
 var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];
@@ -125,39 +141,6 @@ g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js
 s.parentNode.insertBefore(g,s)}(document,'script'));
 </script>
 -->
-
-<!-- [Scroll To 1.4.3.1] -->
-<script src="js/vendor/jquery.scrollTo-1.4.3.1-min.js?ver=1.4.3.1"></script>
-
-<!-- [TypeSet 3.0] -->
-<script src="js/jquery.typeset-v3.js?ver=3"></script>
-
-<!-- [JQuery: Standard Behaviours] -->
-<script src="js/standard-behaviours-jquery.js?ver=1.9.1"></script>
-
-<!-- [Custom JQuery] -->
-<script src="js/my-jquery.js?ver=1.9.1"></script>
-
-<!-- [MaxMind GeoIP] -->
-<script src="http://j.maxmind.com/app/geoip.js" charset="ISO-8859-1"></script>
-
-<!-- Usage:
-geoip_city()
-geoip_region()
-geoip_region_name()
-geoip_postal_code()
-geoip_country_code()
-geoip_country_name()
-geoip_latitude()
-geoip_longitude()
--->
-
-<noscript>
-	<style>
-  	/* [ Turn on the container if JavaScript not loaded] */
-  	.container { display: block; }
-  </style>
-</noscript>
 
 </body>
 </html>

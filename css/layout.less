@@ -4,6 +4,14 @@ Project:    Kevin Montgomery HTML
 Version:    3
 -------------------------------------------------------------------*/
 
+/* [Useful Mixins] */
+.round-corners(@radius: .5em) {
+	-moz-border-radius: @radius;
+	-webkit-border-radius: @radius;
+	-o-border-radius: @radius;
+	border-radius: @radius;
+}
+
 html { height: 100%; } 
 
 body {
@@ -49,6 +57,19 @@ body {
 	box-pack: start;
 }
 
+/* [Throbber] */
+.throbber {
+	position: absolute;
+	background-color: white;
+	background-image: url(../assets/ajax-loader.gif);
+	background-repeat: no-repeat;
+	background-position: center center;
+	z-index: 9999;
+	height: 100%; width: 100%;
+	top: 0; left: 0;
+	display: block;
+}
+
 /* [Set up container] */
 .container {
 	width: 100%;
@@ -72,12 +93,9 @@ body {
 /* [Foundation CSS Overrides] */
 
 /* [Mobile First View] */
-.loading_page {
-	.title {
-		text-align: center;
-		max-width: 39em;
-		margin: 0 auto;
-	}
+.container { 
+	min-height: 100%;
+	> * { margin: 1em; }
 }
 
 /* [Tablet Screen View] */
@@ -89,9 +107,14 @@ body {
 }
 
 /* [Breakpoints] */
-@media screen and (min-width: 640px) {}
+@media screen and (min-width: 640px) {
+}
 @media screen and (min-width: 800px) { 
-	.container { max-width: 640px; }
+	.container { 
+		max-width: 640px;
+		min-height: 39em;
+		.round-corners();
+	}
 }
 @media screen and (min-width: 1024px) { 
 	.container { max-width: 800px; }

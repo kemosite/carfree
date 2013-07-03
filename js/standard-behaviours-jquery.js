@@ -56,5 +56,6 @@ $(document).ready(function(){
 
 /* [Fade The Page In] */
 $(window).load( function() {
+	$(".throbber").fadeOut().css("display: block");
 	$(".container").fadeIn().css("display: block");
 });
