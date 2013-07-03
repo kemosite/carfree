@@ -69,11 +69,16 @@ Includes:
 <!--[if lt IE 10]><script type="text/javascript" src="js/vendor/PIE.js?ver=1.0.0"></script><![endif]-->
 
 <!-- [Modernizr 2.6.2] -->
-<script src="js/vendor/modernizr-2.6.2.min.js?ver=2.6.2"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js?ver=2.6.2"></script>
+<script>window.Modernizr || document.write('<script src="js/vendor/modernizr-2.6.2.min.js?ver=2.6.2"><\/script>')</script>
 
 <!-- [Initialize JQuery] -->
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js?ver=1.9.1"></script>
 <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.9.1.min.js?ver=1.9.1"><\/script>')</script>
+
+<!-- [AngularJS v1.0.7] -->
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js?ver=1.0.7"></script>
+<script>window.angular || document.write('<script src="js/vendor/angular.min.js?ver=1.0.7"><\/script>')</script>
 
 </head>
 
@@ -117,11 +122,11 @@ $(function() {
 <!-- [TypeSet 3.0] -->
 <script src="js/jquery.typeset-v3.js?ver=3"></script>
 
-<!-- [JQuery: Standard Behaviours] -->
-<script src="js/standard-behaviours-jquery.js?ver=1.9.1"></script>
-
 <!-- [JQuery: Adaptive Scripts] -->
 <script src="js/adaptive-scripts-jquery.js?ver=1.9.1"></script>
+
+<!-- [JQuery: Standard Behaviours] -->
+<script src="js/standard-behaviours-jquery.js?ver=1.9.1"></script>
 
 <!-- [Custom JQuery] -->
 <script src="js/my-jquery.js?ver=1.9.1"></script>

@@ -8,29 +8,29 @@ function debug_report(item) {
 	 if(this.console){ console.log(item); }
 }
 
-/* [TypeSet Body Copy] */
-$("body, p").typeset();
-
-/* [Switch SVG for PNG Image, If Not Supported] */
-if(!Modernizr.svg) {
-	$('img[src*="svg"]').attr('src', function () {
-		return $(this).attr('src').replace('.svg', '.png');
-	});
-}
-
-/*
-[If Retina Display, Load 2x Pixel Images]
-var retina = window.devicePixelRatio > 1;
-if (retina) {
-	$('img[src!="svg"]').attr('src', function () {
-		return $(this).attr('src').replace(/\.(png|jpg|gif)+$/i, '@2x.$1');
-	});
-}
-*/
-
-/* [Default Link Behaviour] */
-
 $(document).ready(function(){
+	
+	/* [TypeSet Body Copy] */
+	$("body, p").typeset();
+	
+	/* [Switch SVG for PNG Image, If Not Supported] */
+	if(!Modernizr.svg) {
+		$('img[src*="svg"]').attr('src', function () {
+			return $(this).attr('src').replace('.svg', '.png');
+		});
+	}
+	
+	/*
+	[If Retina Display, Load 2x Pixel Images]
+	var retina = window.devicePixelRatio > 1;
+	if (retina) {
+		$('img[src!="svg"]').attr('src', function () {
+			return $(this).attr('src').replace(/\.(png|jpg|gif)+$/i, '@2x.$1');
+		});
+	}
+	*/
+	
+	/* [Default Link Behaviour] */
 		
 	$("a").click(function(event) {
 		

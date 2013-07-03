@@ -4,8 +4,7 @@ var adaptive_scripts = {
 	resolution: Math.max(screen.width,screen.height),
 	sorted_breakpoints: function() { return this.breakpoints.sort(function(a,b){return a-b}); }	
 };
-
-
+	
 if (adaptive_scripts.resolution > adaptive_scripts.sorted_breakpoints()[0]) {
 	
 	/* Sans Serif: Source Sans */
