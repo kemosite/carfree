@@ -1,56 +1,84 @@
-function geolocate_class() {
-	
-	this.props = {
-		latitude: geoip_latitude(),
-		longitude: geoip_longitude(),
+function geoip2_class() {
+
+	var properties = {
+		latitude: "",
+		longitude: "",
+		city: "",
+		province: "",
 		accuracy: 40000,
 		altitude: "",
 		altitudeAccuracy: "",
 		heading: "",
 		speed: "",
-		error: "",
-		city: geoip_city()
-	};
-	
-	this.opts = {
+		error: ""
+	}
+
+	var options = {
 		enableHighAccuracy: true
 		// timeout: 5000
 	};
-	
-	this.success = function(position) {		
-		this.props.latitude = position.coords.latitude;
-		this.props.longitude = position.coords.longitude;
-		this.props.accuracy = position.coords.accuracy;
+
+	var success = function(position) {
+		properties.latitude = position.location.latitude;
+		properties.longitude = position.location.longitude;
+		properties.city = position.city.names.en;
+		properties.province = position.subdivisions[0].iso_code;
 	};
-	
-	this.failure = function(error) {		
-		
-		switch(error.code) {
-			case error.PERMISSION_DENIED:
-			this.error = "User denied the request for Geolocation.";
-			break;
-			case error.POSITION_UNAVAILABLE:
-			this.error = "Location information is unavailable.";
-			break;
-			case error.TIMEOUT:
-			this.error = "The request to get user location timed out.";
-			break;
-			case error.UNKNOWN_ERROR:
-			this.error = "An unknown error occurred.";
-			break;
-		}
-	
+
+	var failure = function(error) {
+		properties.error = error;
 	};
-	
-	this.getlocation = function() {
-		if (navigator.geolocation) {
-			navigator.geolocation.watchPosition(this.success, this.failure, this.opts);
-			// navigator.geolocation.getCurrentPosition(this.success, this.failure, this.opts);
-		}
-	};
-	
+
+	geoip2.city(success, failure, options);
+	this.properties = properties;
+
 }
 
-$(document).ready(function(){
-	var geolocate = new geolocate_class;
+function geolocate_class() {
+    
+	this.success = function(position) {
+		this.position = position.coords;
+	}
+
+	this.failure = function (error) {
+		switch(error.code) {
+			case error.PERMISSION_DENIED:
+				this.error="User denied the request for Geolocation."
+				break;
+		    case error.POSITION_UNAVAILABLE:
+				this.error="Location information is unavailable."
+				break;
+			case error.TIMEOUT:
+				this.error="The request to get user location timed out."
+				break;
+			case error.UNKNOWN_ERROR:
+				this.error="An unknown error occurred."
+				break;
+		}
+	}
+
+	this.options = {
+		enableHighAccuracy: true,
+		timeout: "", //in milliseconds
+		maximumAge: ""
+	};
+
+	this.getLocation = function() {
+		navigator.geolocation.getCurrentPosition(this.success, this.failure, this.options);
+	}
+
+	this.getLocation();
+
+}
+
+$(window).load(function(){
+
+	if (!navigator.geolocation){
+		var geolocate_object = new geoip2_class;
+	} else {
+		var geolocate_object = new geolocate_class;
+	}
+
+	debug_report(geolocate_object);
+	
 });
