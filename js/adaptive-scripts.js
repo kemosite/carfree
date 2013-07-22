@@ -34,7 +34,7 @@ if (adaptive_scripts.resolution > adaptive_scripts.sorted_breakpoints()[0]) {
 	geoip_longitude()
 	*/
 
-	/* [Attach MaxMind GeoIP 2.0] */
+	/* [Attach MaxMind GeoIP 2.0 if navigator.geolocation is not supported] */
 	if (!navigator.geolocation) {
 		var attach_geoip2 = document.createElement("script");
 		attach_geoip2.setAttribute("src", "//j.maxmind.com/js/apis/geoip2/v2.0/geoip2.js");

@@ -73,7 +73,7 @@ body {
 /* [Set up container] */
 .container {
 	width: 100%;
-  margin: 0 auto;
+	margin: 0 auto;
 	display: none;
 	
 	&.mockup {		
@@ -83,6 +83,7 @@ body {
 		}
 	}
 	
+	.row { max-width: 100%; }
 	.row .row { margin: 0; }	
 }
 
@@ -95,7 +96,19 @@ body {
 /* [Mobile First View] */
 .container { 
 	min-height: 100%;
-	> * { margin: 1em; }
+
+	header {
+
+		border-bottom: 1px solid @cyan;
+
+	}
+
+	footer {
+
+		> .maxmind_statement { display: none; }
+
+	}
+
 }
 
 /* [Tablet Screen View] */

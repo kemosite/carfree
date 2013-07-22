@@ -89,14 +89,50 @@ Includes:
 <!-- [Container] -->
 <div class="container rounded">
 
-<section>
-	<h1>Carless</h1>
-	<p>Loading...</p>
-</section>
+  <div class="row">
+    <div class="large-12 columns">
+      <header>
+        <h1>Carless</h1>
+      </header>
+    </div>
+  </div>
 
-<footer>
-<p>This website uses <a href="http://www.maxmind.com/en/javascript">GeoIP2 JavaScript from MaxMind</a>.</p>
-</footer>
+  <div class="row">
+
+    <div class="large-3 columns">
+
+      <section class="trip_mode">
+        <h3>Trip Mode</h3>
+      	<form class="custom">
+          <select id="trip_mode_select" class="medium">
+            <option>Cycling</option>
+            <option>Transit</option>
+          </select>
+        </form>
+      </section>
+
+      <section class="trip_details">
+        <h3>Trip Details</h3>
+      </section>
+
+    </div>
+
+    <div class="large-9 columns">
+       <section class="trip_map">
+        <h3>Trip Map</h3>
+        
+      </section>
+    </div>
+
+  </div>
+
+  <div class="row">
+    <div class="large-12 columns">
+      <footer>
+        <p class="maxmind_statement">This website uses <a href="http://www.maxmind.com/en/javascript">GeoIP2 JavaScript from MaxMind</a>.</p>
+      </footer>
+    </div>
+  </div>
 
 </div>
 <!-- [End Container] -->

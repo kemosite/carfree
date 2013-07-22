@@ -73,8 +73,10 @@ function geolocate_class() {
 
 $(window).load(function(){
 
-	if (!navigator.geolocation){
+	// [Use GeoIP2 if loaded and browser doesn't support navigator.geolocation] //
+	if (!navigator.geolocation && geoip2){
 		var geolocate_object = new geoip2_class;
+		$(".maxmind_statement").show();
 	} else {
 		var geolocate_object = new geolocate_class;
 	}

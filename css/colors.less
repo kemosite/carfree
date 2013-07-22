@@ -40,7 +40,7 @@ Author: Kevin Montgomery
 	-webkit-box-shadow: @horizontal @vertical @blur @spread @gray;
 	box-shadow: @horizontal @vertical @blur @spread @gray;
 	/* For IE 8 */
-	-ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=@vertical, Direction=45, Color='@gray')";
+	ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=@vertical, Direction=45, Color='@gray')";
 	/* For IE 5.5 - 7 */
 	filter: progid:DXImageTransform.Microsoft.Shadow(Strength=@vertical, Direction=45, Color='@gray');
 }
@@ -70,6 +70,17 @@ Author: Kevin Montgomery
 
 body, body * { color: @black; }
 
+h1,h2,h3,h4,h5,h6 { color: @cyan; }
+
 .container {
-	background-color: @cyan;
+
+	border: 1px solid @cyan;
+
+	.button-group a { 
+		color: white;
+		&:hover {
+			color: white;
+		}
+	}
+
 }
