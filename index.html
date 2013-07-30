@@ -76,9 +76,8 @@ Includes:
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js?ver=1.9.1"></script>
 <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.9.1.min.js?ver=1.9.1"><\/script>')</script>
 
-<!-- [AngularJS v1.0.7] -->
-<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js?ver=1.0.7"></script>
-<script>window.angular || document.write('<script src="js/vendor/angular.min.js?ver=1.0.7"><\/script>')</script>
+<!-- [Google Maps with Places Library] -->
+<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyDI_5jh9WF2nJha5ST5w_Sq1uoNRPtBrdE&libraries=weather,places&sensor=false"></script>
 
 </head>
 
@@ -97,30 +96,52 @@ Includes:
     </div>
   </div>
 
-  <div class="row">
+  <div class="row map_height">
 
-    <div class="large-3 columns">
+    <div class="large-6 trip columns">
+      <div class="row">
+        
+        <div class="large-6 columns">
+          <section class="trip_mode">
+            <h6>Trip Mode</h6>
+          	<form class="custom">
+              <select id="trip_mode_select" class="large">
+                <option>Cycling</option>
+                <option>Transit</option>
+              </select>
+            </form>
+          </section>
 
-      <section class="trip_mode">
-        <h3>Trip Mode</h3>
-      	<form class="custom">
-          <select id="trip_mode_select" class="medium">
-            <option>Cycling</option>
-            <option>Transit</option>
-          </select>
-        </form>
-      </section>
+          <section class="trip_details">
+            <h6>Trip Details</h6>
+            <form>
+              <div>
+                <label>Start Location</label>
+                <input type="text" id="start_location" placeholder="Where are you starting your trip from?">
+              </div>
+              <div>
+                <label>Trip Location(s)</label>
+                <input type="text" placeholder="">
+              </div>
+            </form>
+          </section>
+        </div>
 
-      <section class="trip_details">
-        <h3>Trip Details</h3>
-      </section>
+        <div class="large-6 columns">
+          <section class="nearby_destrinations">
+            <h6>Nearby Destinations</h6>
+            <p>Destinations will appear here.</p>
+          </section>
+        </div>
 
+      </div>
     </div>
 
-    <div class="large-9 columns">
+    <div class="large-6 map columns map_height">
        <section class="trip_map">
-        <h3>Trip Map</h3>
-        
+        <h6>Trip Map</h6>
+        <!-- Turn this into an iFrame -->
+        <div id="map_canvas"></div>
       </section>
     </div>
 

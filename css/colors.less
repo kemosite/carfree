@@ -68,13 +68,19 @@ Author: Kevin Montgomery
 @black: @black-70;
 @inherit: @black;
 
-body, body * { color: @black; }
+body {
+	background-color: lighten(@cyan, 50%);
+	* {
+		color: @black;
+	}
+}
 
 h1,h2,h3,h4,h5,h6 { color: @cyan; }
 
 .container {
 
 	border: 1px solid @cyan;
+	background-color: white;
 
 	.button-group a { 
 		color: white;

@@ -3,9 +3,24 @@
 Version: 3.0
 Author: Kevin Montgomery
 ==============================================*/
+
 /* [Debug Tool] */
 function debug_report(item) {
 	 if(this.console){ console.log(item); }
+}
+
+/* [Safe Execute] */
+function safe_exec(function_name) {
+	try {
+		function_name();
+	} catch (e) {
+		debug_report(e); // statements to handle any unspecified exceptions
+	}
+	finally {
+		window.onerror = function(message, url, linenumber) {
+			debug_report("Error: " + message + " on line " + linenumber + " for " + url);
+		}
+	}
 }
 
 $(document).ready(function(){
@@ -56,6 +71,6 @@ $(document).ready(function(){
 
 /* [Fade The Page In] */
 $(window).load( function() {
-	$(".throbber").fadeOut().css("display: block");
+	$(".throbber").fadeOut().css("display: none");
 	$(".container").fadeIn().css("display: block");
 });

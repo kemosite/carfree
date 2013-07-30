@@ -15,21 +15,22 @@ Version:    3
 html { height: 100%; } 
 
 body {
-   display: -webkit-box;   /* OLD: Safari,  iOS, Android browser, older WebKit browsers.  */
-   display: -moz-box;      /* OLD: Firefox (buggy) */ 
-   display: -ms-flexbox;   /* MID: IE 10 */
-   display: -webkit-flex;  /* NEW, Chrome 21+ */
-   display: flex;          /* NEW: Opera 12.1, Firefox 22+ */
+   
+   // display: -webkit-box;   /* OLD: Safari,  iOS, Android browser, older WebKit browsers.  */
+   // display: -moz-box;      /* OLD: Firefox (buggy) */ 
+   // display: -ms-flexbox;   /* MID: IE 10 */
+   // display: -webkit-flex;  /* NEW, Chrome 21+ */
+   // display: flex;          /* NEW: Opera 12.1, Firefox 22+ */
 
-   -webkit-box-align: center; -moz-box-align: center; /* OLD… */
-   -ms-flex-align: center; /* You know the drill now… */
-   -webkit-align-items: center;
-   align-items: center;
+   // -webkit-box-align: center; -moz-box-align: center; /* OLD… */
+   // -ms-flex-align: center; /* You know the drill now… */
+   // -webkit-align-items: center;
+   // align-items: center;
 
-   -webkit-box-pack: center; -moz-box-pack: center; 
-   -ms-flex-pack: center; 
-   -webkit-justify-content: center;
-   justify-content: center;
+   // -webkit-box-pack: center; -moz-box-pack: center; 
+   // -ms-flex-pack: center; 
+   // -webkit-justify-content: center;
+   // justify-content: center;
 
    margin: 0;
    height: 100%;
@@ -95,24 +96,37 @@ body {
 
 /* [Mobile First View] */
 .container { 
+	
 	min-height: 100%;
 
+	.map.columns { height: 100%; }
+
 	header {
-
 		border-bottom: 1px solid @cyan;
+	}
 
+	.trip_map { 
+		height: 100%;
+		width: 100%;
+		display: none; 
+
+		& > #map_canvas {
+			height: 30em;
+			margin: 1em 0;
+		}
 	}
 
 	footer {
-
 		> .maxmind_statement { display: none; }
-
 	}
 
 }
 
 /* [Tablet Screen View] */
-@media screen and (min-width: @tablet-min) {
+@media only screen and (min-width: @tablet-min) {
+	.container {
+		.trip_map { display: block; }
+	}
 }
 
 /* [Computer Screen View] */
@@ -124,6 +138,7 @@ body {
 }
 @media screen and (min-width: 800px) { 
 	.container { 
+		margin: 1em auto;
 		max-width: 640px;
 		min-height: 39em;
 		.round-corners();
@@ -131,6 +146,11 @@ body {
 }
 @media screen and (min-width: 1024px) { 
 	.container { max-width: 800px; }
+}
+@media screen and (max-width: 1152px) {
+	.container { 
+		.map.columns, .trip.columns { width: 100%; }
+	}
 }
 @media screen and (min-width: 1152px) { 
 	.container { max-width: 1024px; }
