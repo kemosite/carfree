@@ -106,8 +106,8 @@ Includes:
             <h6>Trip Mode</h6>
           	<form class="custom">
               <select id="trip_mode_select" class="large">
-                <option>Cycling</option>
-                <option>Transit</option>
+                <option value="8000">Cycling</option>
+                <option value="25000">Transit</option>
               </select>
             </form>
           </section>
@@ -130,7 +130,9 @@ Includes:
         <div class="large-6 columns">
           <section class="nearby_destrinations">
             <h6>Nearby Destinations</h6>
-            <p>Destinations will appear here.</p>
+            <label>Search for places</label>
+            <input type="text" id="location_search" placeholder="food in ...">
+            <ul class="destination_selections small-block-grid-2 large-block-grid-4"></ul>
           </section>
         </div>
 
