@@ -39,9 +39,31 @@ body {
 
 /* [Block-level Flex] */
 .flexbox() {
+	
+	/*
 	display: flex;
 	display: flexbox;
 	display: box;
+	*/
+
+	display: -webkit-box;   /* OLD: Safari,  iOS, Android browser, older WebKit browsers.  */
+	display: -moz-box;      /* OLD: Firefox (buggy) */ 
+	display: -ms-flexbox;   /* MID: IE 10 */
+	display: -webkit-flex;  /* NEW, Chrome 21+ */
+	display: flex;          /* NEW: Opera 12.1, Firefox 22+ */
+	// display: flexbox;
+	// display: box;
+
+	-webkit-box-align: center; -moz-box-align: center; /* OLD… */
+	-ms-flex-align: center; /* You know the drill now… */
+	-webkit-align-items: center;
+	align-items: center;
+
+	-webkit-box-pack: center; -moz-box-pack: center; 
+	-ms-flex-pack: center; 
+	-webkit-justify-content: center;
+	justify-content: center;
+
 }
 
 /* [Inline-level Flex] */
@@ -105,6 +127,21 @@ body {
 		border-bottom: 1px solid @cyan;
 	}
 
+	#location_search { margin-bottom: 0; }
+
+	.destination_types {
+
+		margin: 1em 0;
+
+		li {
+			
+			label { white-space:nowrap; }
+			img { height: 1em; }
+
+		}
+
+	}
+
 	.trip_map { 
 		height: 100%;
 		width: 100%;
@@ -145,7 +182,9 @@ body {
 	}
 }
 @media screen and (min-width: 1024px) { 
-	.container { max-width: 800px; }
+	.container { 
+		max-width: 800px; 
+	}
 }
 @media screen and (max-width: 1152px) {
 	.container { 

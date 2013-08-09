@@ -77,7 +77,7 @@ Includes:
 <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.9.1.min.js?ver=1.9.1"><\/script>')</script>
 
 <!-- [Google Maps with Places Library] -->
-<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyDI_5jh9WF2nJha5ST5w_Sq1uoNRPtBrdE&libraries=weather,places&sensor=false"></script>
+<script src="//maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyDI_5jh9WF2nJha5ST5w_Sq1uoNRPtBrdE&libraries=weather,places&sensor=false"></script>
 
 </head>
 
@@ -98,54 +98,77 @@ Includes:
 
   <div class="row map_height">
 
-    <div class="large-6 trip columns">
+    <form class="custom">
+
+    <div class="large-7 trip columns">
       <div class="row">
         
-        <div class="large-6 columns">
-          <section class="trip_mode">
-            <h6>Trip Mode</h6>
-          	<form class="custom">
-              <select id="trip_mode_select" class="large">
-                <option value="8000">Cycling</option>
-                <option value="25000">Transit</option>
+        <div class="large-5 columns">
+          <h6>Trip Details</h6>
+          <div class="radius panel">
+            <section class="trip_mode">
+              <label>Mode</label>
+              <select id="trip_mode_select" class="medium" onchange="google_api_obj.update_radius();">
+                <option value="cycling">Cycling</option>
+                <option value="transit">Transit</option>
               </select>
-            </form>
-          </section>
+            </section>
 
-          <section class="trip_details">
-            <h6>Trip Details</h6>
-            <form>
+            <section class="trip_details">
               <div>
                 <label>Start Location</label>
-                <input type="text" id="start_location" placeholder="Where are you starting your trip from?">
+                <div class="row collapse">
+                  <div class="small-10 columns">
+                    <input type="text" id="start_location" placeholder="Where are you starting your trip from?" onchange="google_api_obj.geocode_start_address();">
+                  </div>
+                  <div class="small-2 columns">
+                    <a href="#" class="button prefix glyph" onclick="google_api_obj.reset_start_address();">w</a>
+                  </div>
               </div>
-              <div>
-                <label>Trip Location(s)</label>
-                <input type="text" placeholder="">
+              <div class="trip_locations">
+                <label>Waypoints:</label>
+                <span></span>
               </div>
-            </form>
-          </section>
+            </section>
+          </div>
         </div>
 
-        <div class="large-6 columns">
-          <section class="nearby_destrinations">
+        <div class="large-7 columns">
+          <section class="nearby_destinations">
             <h6>Nearby Destinations</h6>
-            <label>Search for places</label>
-            <input type="text" id="location_search" placeholder="food in ...">
-            <ul class="destination_selections small-block-grid-2 large-block-grid-4"></ul>
+
+            <div class="section-container tabs" data-section="tabs">
+              <section>
+                <div class="title" data-section-title><a href="#">Search</a></div>
+                <div class="content" data-section-content>
+                  <label>Search (Example: Pizza in <span class="search_city_ex">your city</span>; Store name; Address)</label>
+                  <input type="text" id="location_search" placeholder="Address, or name of place."><br>
+                </div>
+              </section>
+              <section>
+                <div class="title" data-section-title><a href="#">Categories</a></div>
+                <div class="content" data-section-content>
+                  <label>Locate all places with these categories:</label>
+                  <ul class="destination_types small-block-grid-1 large-block-grid-2"></ul>
+                </div>
+              </section>
+            </div>
+
           </section>
         </div>
 
       </div>
     </div>
 
-    <div class="large-6 map columns map_height">
+    <div class="large-5 map columns map_height">
        <section class="trip_map">
         <h6>Trip Map</h6>
         <!-- Turn this into an iFrame -->
         <div id="map_canvas"></div>
       </section>
     </div>
+
+    </form>
 
   </div>
 
@@ -165,17 +188,19 @@ Includes:
 <script type="text/javascript" src="js/vendor/less-1.3.3.min.js?ver=1.3.3"></script>
 
 <!-- [Initialize Foundation JS] -->
-<script src="js/vendor/foundation.min.js?ver=4.0.9"></script>
-<script src="js/vendor/app.js?ver=3.1.1"></script>
+<script src="js/vendor/foundation.min.js?ver=4.3.1"></script>
+
 <script>
-$(document).foundation();
+$(document).foundation(function (response) {
+  if(response.errors && console) { console.log(response.errors); }
+});
 </script>
 
 <!-- [Initialize CSS PIE] -->
 <script type="text/javascript">
 $(function() {
     if (window.PIE) {
-        $('.rounded').each(function() {
+        $('.round-corners').each(function() {
             PIE.attach(this);
         });
     }
@@ -193,6 +218,9 @@ $(function() {
 
 <!-- [GeoLocate Class -->
 <script src="js/geolocate-class.js"></script>
+
+<!-- [Google API Functions -->
+<script src="js/google-api-functions.js"></script>
 
 <!-- [Custom JQuery] -->
 <script src="js/my-jquery.js?ver=1.9.1"></script>
