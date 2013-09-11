@@ -105,32 +105,39 @@ Includes:
         
         <div class="large-5 columns">
           <h6>Trip Details</h6>
-          <div class="radius panel">
-            <section class="trip_mode">
-              <label>Mode</label>
-              <select id="trip_mode_select" class="medium" onchange="google_api_obj.update_radius();">
-                <option value="cycling">Cycling</option>
-                <option value="transit">Transit</option>
-              </select>
-            </section>
 
-            <section class="trip_details">
-              <div>
-                <label>Start Location</label>
-                <div class="row collapse">
-                  <div class="small-10 columns">
-                    <input type="text" id="start_location" placeholder="Where are you starting your trip from?" onchange="google_api_obj.geocode_start_address();">
-                  </div>
-                  <div class="small-2 columns">
-                    <a href="#" class="button prefix glyph" onclick="google_api_obj.reset_start_address();">w</a>
-                  </div>
+          <div class="section-container tabs" data-section="tabs">
+            <section>
+              <div class="title" data-section-title><a href="#">Mode</a></div>
+              <div class="content trip_mode" data-section-content>
+                <label>Mode</label>
+                <select id="trip_mode_select" class="medium" onchange="google_api_obj.update_radius();">
+                  <option value="cycling">Cycling</option>
+                  <option value="transit">Transit</option>
+                </select>
               </div>
-              <div class="trip_locations">
-                <label>Waypoints:</label>
-                <span></span>
+            </section>
+            <section>
+              <div class="title" data-section-title><a href="#">Waypoints</a></div>
+              <div class="content trip_details" data-section-content>
+                <div>
+                  <label>Start Location</label>
+                  <div class="row collapse">
+                    <div class="small-10 columns">
+                      <input type="text" id="start_location" placeholder="Where are you starting your trip from?" onchange="google_api_obj.geocode_start_address();">
+                    </div>
+                    <div class="small-2 columns">
+                      <a href="#" class="button prefix glyph" onclick="google_api_obj.reset_start_address();" title="Reset to my location">w</a>
+                    </div>
+                </div>
+                <div class="trip_locations">
+                  <label>Waypoints:</label>
+                  <span></span>
+                </div>
               </div>
             </section>
           </div>
+
         </div>
 
         <div class="large-7 columns">
@@ -142,7 +149,14 @@ Includes:
                 <div class="title" data-section-title><a href="#">Search</a></div>
                 <div class="content" data-section-content>
                   <label>Search (Example: Pizza in <span class="search_city_ex">your city</span>; Store name; Address)</label>
-                  <input type="text" id="location_search" placeholder="Address, or name of place."><br>
+                   <div class="row collapse">
+                      <div class="small-10 columns">
+                        <input type="text" id="location_search" placeholder="Address, or name of place.">
+                      </div>
+                      <div class="small-2 columns">
+                        <a href="#" class="button prefix" onclick="google_api_obj.places.text_search();">Search</a>
+                      </div>
+                    </div>
                 </div>
               </section>
               <section>
@@ -192,7 +206,7 @@ Includes:
 
 <script>
 $(document).foundation(function (response) {
-  if(response.errors && console) { console.log(response.errors); }
+  // if (response.errors && console) { console.log(response.errors); }
 });
 </script>
 
@@ -240,6 +254,14 @@ g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js
 s.parentNode.insertBefore(g,s)}(document,'script'));
 </script>
 -->
+
+<!-- Modal Windows -->
+<div id="text_search_modal" class="reveal-modal small" style="display: none;">
+  <h4>Locations found for <span class="text_search_keyword">your search term</span>.</h4>
+  <h5>Please select locations to add to as waypoints.</h5>
+  <div class="text_search_findings"></div>
+  <a class="close-reveal-modal">&#215;</a>
+</div>
 
 </body>
 </html>

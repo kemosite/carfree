@@ -9,6 +9,7 @@ var google_api_obj = new function() {
 		"transit": 25000 / 4
 	};
 	this.start_location = "";
+	this.categories_keyword = "";
 	this.places = {
 		service: "",
 		types: "",
@@ -61,6 +62,7 @@ var google_api_obj = new function() {
 		google_api_obj.map.fitBounds(this.map_bounds);
 		this.map_zoom_circle.setMap(null);
 		google_api_obj.start_location = geocode_properties.city;
+		google_api_obj.categories_keyword = geocode_properties.city;
 
 	}
 
@@ -87,6 +89,12 @@ var google_api_obj = new function() {
 	      if (status == google.maps.GeocoderStatus.OK) {
 
 	      	google_api_obj.start_location = address;
+
+	      	$(results[0].address_components).each(function() {
+				if (this.types[0] == "locality") {
+					google_api_obj.categories_keyword = this.long_name;
+				}	
+			});
 
 	      	this.map_zoom_properties = {
 				map: google_api_obj.map,
@@ -116,6 +124,7 @@ var google_api_obj = new function() {
 	      if (status == google.maps.GeocoderStatus.OK) {
 
 	      	google_api_obj.start_location = address;
+	      	google_api_obj.categories_keyword = address;
 
 	      	this.map_zoom_properties = {
 				map: google_api_obj.map,
@@ -271,7 +280,7 @@ var google_api_obj = new function() {
 
 		this.search_properties = {
 			location: google_api_obj.map_default_options.center,
-			keyword: google_api_obj.start_location,
+			keyword: google_api_obj.categories_keyword,
 			rankBy: google.maps.places.RankBy.DISTANCE
 		};
 
@@ -333,20 +342,41 @@ var google_api_obj = new function() {
 
 	}
 
-	this.places.text_search = function(search_text) {
+	this.places.text_search = function() {
+
+		this.text_search_input = document.getElementById('location_search').value;
 
 		this.text_search_properties = {
-			query: search_text,
+			query: this.text_search_input,
 			location: google_api_obj.map_default_options.center,
-			radius: 8000
+			radius: google_api_obj.trip_mode_radius[google_api_obj.trip_mode]
 		};
 
 		google_api_obj.places.service.textSearch(this.text_search_properties, function(locations, status, pagination) {
 
-			$(locations).each(function() {
-				// debug_report(this);
-			});
-			pagination.nextPage();
+			// debug_report(locations[0]);
+			// debug_report(status);
+
+			if (status == "OK") {
+
+				$(".text_search_findings").empty();
+
+				$(".text_search_keyword").text("'"+google_api_obj.places.text_search_input+"'");
+
+				$(locations).each(function() {
+
+					$(".text_search_findings").append('<h6>'+this.name+'</h6>');
+					$(".text_search_findings").append('<p><em>'+google_api_obj.places.types[this.types[0]]+'</em> <img src="'+this.icon+'" style="height: 1em;"></p>');
+					$(".text_search_findings").append('<p>'+this.formatted_address+'</p>');
+
+					debug_report(this);
+				});
+
+				$('#text_search_modal').foundation('reveal', 'open');
+
+			}
+
+			// pagination.nextPage();
 
 		});
 
