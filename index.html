@@ -89,7 +89,7 @@ Includes:
 <div class="container rounded">
 
   <div class="row">
-    <div class="large-12 columns">
+    <div class="small-12 columns">
       <header>
         <h1>Carless</h1>
       </header>
@@ -100,83 +100,71 @@ Includes:
 
     <form class="custom">
 
-    <div class="large-7 trip columns">
+    <div class="small-9 large-6 trip columns">
       <div class="row">
         
-        <div class="large-5 columns">
+        <div class="small-12 columns">
           <h6>Trip Details</h6>
 
           <div class="section-container tabs" data-section="tabs">
             <section>
-              <div class="title" data-section-title><a href="#">Mode</a></div>
-              <div class="content trip_mode" data-section-content>
-                <label>Mode</label>
-                <select id="trip_mode_select" class="medium" onchange="google_api_obj.update_radius();">
-                  <option value="cycling">Cycling</option>
-                  <option value="transit">Transit</option>
-                </select>
-              </div>
-            </section>
-            <section>
-              <div class="title" data-section-title><a href="#">Waypoints</a></div>
+              <div class="title" data-section-title><a href="#">Destinations</a></div>
               <div class="content trip_details" data-section-content>
+                <div>
+                  <label>Mode</label>
+                  <select id="trip_mode_select" class="medium" onchange="google_api_obj.update_radius();">
+                    <option value="BICYCLING">Cycling</option>
+                    <option value="TRANSIT">Transit</option>
+                  </select>
+                </div>
                 <div>
                   <label>Start Location</label>
                   <div class="row collapse">
-                    <div class="small-10 columns">
+                    <div class="small-11 columns">
                       <input type="text" id="start_location" placeholder="Where are you starting your trip from?" onchange="google_api_obj.geocode_start_address();">
                     </div>
-                    <div class="small-2 columns">
-                      <a href="#" class="button prefix glyph" onclick="google_api_obj.reset_start_address();" title="Reset to my location">w</a>
+                    <div class="small-1 column">
+                      <a href="#" class="button prefix glyph" onclick="google_api_obj.reset_start_address();" title="Reset to my location">,</a>
                     </div>
                 </div>
+                <p>Click on &ldquo;<a href="#" class="search_click">Search</a>&rdquo; to locate or browse nearby destinations.</p>
                 <div class="trip_locations">
-                  <label>Waypoints:</label>
+                  <label>Destinations:</label>
+                  <div id="directions-panel"></div>
                   <span></span>
                 </div>
               </div>
             </section>
-          </div>
-
-        </div>
-
-        <div class="large-7 columns">
-          <section class="nearby_destinations">
-            <h6>Nearby Destinations</h6>
-
-            <div class="section-container tabs" data-section="tabs">
-              <section>
-                <div class="title" data-section-title><a href="#">Search</a></div>
+            <section>
+                <div class="search title" data-section-title><a href="#">Search</a></div>
                 <div class="content" data-section-content>
                   <label>Search (Example: Pizza in <span class="search_city_ex">your city</span>; Store name; Address)</label>
                    <div class="row collapse">
-                      <div class="small-10 columns">
+                      <div class="small-11 columns">
                         <input type="text" id="location_search" placeholder="Address, or name of place.">
                       </div>
-                      <div class="small-2 columns">
-                        <a href="#" class="button prefix" onclick="google_api_obj.places.text_search();">Search</a>
+                      <div class="small-1 columns">
+                        <a href="#" class="button prefix glyph" onclick="google_api_obj.places.text_search();">s</a>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="small-12 columns nearby_destinations">
+                        <br>
+                        <label>Locate all places with these categories:</label>
+                        <ul class="destination_types small-block-grid-1 large-block-grid-2"></ul>
                       </div>
                     </div>
                 </div>
               </section>
-              <section>
-                <div class="title" data-section-title><a href="#">Categories</a></div>
-                <div class="content" data-section-content>
-                  <label>Locate all places with these categories:</label>
-                  <ul class="destination_types small-block-grid-1 large-block-grid-2"></ul>
-                </div>
-              </section>
-            </div>
+          </div>
 
-          </section>
         </div>
 
       </div>
     </div>
 
-    <div class="large-5 map columns map_height">
+    <div class="small-3 large-6 map columns map_height">
        <section class="trip_map">
-        <h6>Trip Map</h6>
         <!-- Turn this into an iFrame -->
         <div id="map_canvas"></div>
       </section>
@@ -256,10 +244,10 @@ s.parentNode.insertBefore(g,s)}(document,'script'));
 -->
 
 <!-- Modal Windows -->
-<div id="text_search_modal" class="reveal-modal small" style="display: none;">
-  <h4>Locations found for <span class="text_search_keyword">your search term</span>.</h4>
-  <h5>Please select locations to add to as waypoints.</h5>
-  <div class="text_search_findings"></div>
+<div id="search_modal" class="reveal-modal small" style="display: none;">
+  <h4>Locations found for <span class="search_keyword">your search term</span>.</h4>
+  <h5>Please select locations to add to as destinations.</h5>
+  <div class="search_findings"></div>
   <a class="close-reveal-modal">&#215;</a>
 </div>
 

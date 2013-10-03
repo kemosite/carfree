@@ -119,6 +119,8 @@ body {
 /* [Mobile First View] */
 .container { 
 	
+	.button { margin: 0; }
+
 	min-height: 100%;
 
 	.map.columns { height: 100%; }
@@ -148,8 +150,9 @@ body {
 		display: none; 
 
 		& > #map_canvas {
-			height: 30em;
-			margin: 1em 0;
+			height: 32em;
+			max-width: 32em;
+			margin: 1em auto;
 		}
 	}
 
@@ -163,6 +166,9 @@ body {
 @media only screen and (min-width: @tablet-min) {
 	.container {
 		.trip_map { display: block; }
+		.destination_types li .icon { 
+			height: 1.5em;
+		}
 	}
 }
 

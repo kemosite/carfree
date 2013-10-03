@@ -5,10 +5,15 @@ var google_api_obj = new function() {
 	this.geocoder = "";
 	this.trip_mode = "";
 	this.trip_mode_radius = {
-		"cycling": 8000 / 4,
-		"transit": 25000 / 4
+		"BICYCLING": 8000 / 4,
+		"TRANSIT": 25000 / 4
 	};
+	this.directions_display = "";
+	this.directions_service = "";
+	this.directions_service_options = "";
 	this.start_location = "";
+	this.destination = "";
+	this.waypoints = [];
 	this.categories_keyword = "";
 	this.places = {
 		service: "",
@@ -23,31 +28,93 @@ var google_api_obj = new function() {
 		text_search: ""
 	};
 	this.map_default_options = "";
+	this.styled_map = "";
+	this.styles = "";
+	this.layers = {
+		bike_layer: "",
+		transit_layer: "",
+		weather_layer: "",
+		traffic_layer: ""
+	}
 
 	this.load_map_canvas = function() {
 
 		// Enable the visual refresh
 		google.maps.visualRefresh = true;
 
+		// Create an array of styles.
+		google_api_obj.styles = [
+		/*{
+		  stylers: [
+		    { hue: "#80dbff" },
+		  ]
+		},*/{
+		  featureType: "road.arterial",
+		  elementType: "geometry.stroke",
+		  stylers: [
+		    { 
+		    	color: "#99991c",
+		    	weight: 8
+		    }
+		  ]
+		},{
+		  featureType: "road.highway",
+		  elementType: "geometry.stroke",
+		  stylers: [
+		    { 
+				color: "#991c1c",
+				weight: 8
+			}
+		  ]
+		},{
+		    featureType: "road",
+		    elementType: "labels.text.stroke",
+		    stylers: [
+		      { color: "#FFFFFF" },
+		      { weight: 4 }
+		    ]
+		},{
+		    featureType: "road",
+		    elementType: "labels.text.fill",
+		    stylers: [
+		      { color: "#000000" }
+		    ]
+		  }
+		];
+
+		// Create a new StyledMapType object, passing it the array of styles,
+		// as well as the name to be displayed on the map type control.
+		// google_api_obj.styled_map = new google.maps.StyledMapType(styles, {name: "Styled Map"});
+
 		google_api_obj.map_default_options = {
 			center: new google.maps.LatLng(geocode_properties.latitude, geocode_properties.longitude),
 			panControl: true,
 		    zoomControl: true,
 		    scaleControl: true,
-			mapTypeId: google.maps.MapTypeId.ROADMAP
+			mapTypeControlOptions: {
+		      mapTypeIds: [google.maps.MapTypeId.ROADMAP, 'map_style']
+		    }
 		};
 
 		google_api_obj.map = new google.maps.Map(document.getElementById("map_canvas"), google_api_obj.map_default_options);
 		google_api_obj.places.service = new google.maps.places.PlacesService(google_api_obj.map);
 
-		this.bike_layer = new google.maps.BicyclingLayer();
-		this.bike_layer.setMap(google_api_obj.map);
+		google_api_obj.map.setOptions({styles: google_api_obj.styles});
 
-		this.bike_layer = new google.maps.TrafficLayer();
-		this.bike_layer.setMap(google_api_obj.map);
+		google_api_obj.layers.bike_layer = new google.maps.BicyclingLayer();
+		google_api_obj.layers.bike_layer.setMap(google_api_obj.map);
 		
-		this.weather_layer = new google.maps.weather.WeatherLayer({ temperatureUnits: google.maps.weather.TemperatureUnit.CELSIUS });
-		this.weather_layer.setMap(google_api_obj.map);
+		google_api_obj.layers.weather_layer = new google.maps.weather.WeatherLayer({ temperatureUnits: google.maps.weather.TemperatureUnit.CELSIUS });
+		google_api_obj.layers.weather_layer.setMap(google_api_obj.map);
+
+		google_api_obj.directions_service = new google.maps.DirectionsService();
+
+		google_api_obj.directions_display_options = {
+			draggable: true
+		};
+		google_api_obj.directions_display = new google.maps.DirectionsRenderer(google_api_obj.directions_display_options);
+		google_api_obj.directions_display.setMap(google_api_obj.map);
+		google_api_obj.directions_display.setPanel(document.getElementById("directions-panel"));
 
 		google_api_obj.trip_mode = document.getElementById("trip_mode_select").value;
 
@@ -77,6 +144,30 @@ var google_api_obj = new function() {
 		this.map_bounds = new google.maps.LatLngBounds(this.map_zoom_circle.getBounds().getSouthWest(), this.map_zoom_circle.getBounds().getNorthEast()); 
 		google_api_obj.map.fitBounds(this.map_bounds);
 		this.map_zoom_circle.setMap(null);
+
+		if (google_api_obj.trip_mode == "TRANSIT") {
+			
+			debug_report(google_api_obj.layers);
+
+			google_api_obj.map.setOptions({styles: null});
+			google_api_obj.layers.bike_layer.setMap(null);
+
+			google_api_obj.layers.traffic_layer = new google.maps.TrafficLayer();
+			google_api_obj.layers.traffic_layer.setMap(google_api_obj.map);
+
+		} else {
+						
+			google_api_obj.layers.traffic_layer.setMap(null);
+
+			google_api_obj.map.setOptions({styles: google_api_obj.styles});
+			
+			google_api_obj.layers.bike_layer = new google.maps.BicyclingLayer();
+			google_api_obj.layers.bike_layer.setMap(google_api_obj.map);
+
+		}
+
+		google_api_obj.calculate_route();
+
 	}
 
 	this.geocode_start_address = function() {
@@ -109,6 +200,8 @@ var google_api_obj = new function() {
 	        google_api_obj.map.fitBounds(this.map_bounds);
 	        this.map_zoom_circle.setMap(null);
 	        google_api_obj.places.broad_search();
+	        google_api_obj.calculate_route();
+
 	      }
 	    });
 	}
@@ -292,10 +385,10 @@ var google_api_obj = new function() {
 
 			var i = 1;
 			$.each(destinations, function(index, destination) {
-				if (google_api_obj.places.categories.types.indexOf(destination.types[0]) < 1) {
+				if (google_api_obj.places.categories.types.indexOf(destination.types[0]) == -1) {
 					google_api_obj.places.categories.types.push(destination.types[0]);
-					destination_types.append('<li><label for="checkbox'+i+'"><input type="checkbox" id="checkbox'+i+'" style="display: none;"><span class="custom checkbox"></span> '+google_api_obj.places.types[destination.types[0]]+'&ensp;<img src="'+destination.icon+'" class="icon"></label></li>');
-					i++;
+					destination_types.append('<li><a class="destination small button radius expand" onclick="google_api_obj.places.type_search(\''+destination.types[0]+'\');">'+google_api_obj.places.types[destination.types[0]]+'&ensp;<img src="'+destination.icon+'" class="icon"></a></li>');
+					i++;'+google_api_obj.places.types[destination.types[0]]+'
 				}
 			});
 
@@ -305,21 +398,45 @@ var google_api_obj = new function() {
 
 	}
 
-	this.places.type_search = function() {
+	this.places.type_search = function(type) {
 
 		this.typesearch_properties = {
 			location: google_api_obj.map_default_options.center,
-			types: ["stadium"],	
+			types: [type],	
 			rankBy: google.maps.places.RankBy.PROMINENCE,
-			radius: 8000
+			radius: google_api_obj.trip_mode_radius[google_api_obj.trip_mode]
 		};
 
 		google_api_obj.places.service.nearbySearch(this.typesearch_properties, function(locations, status, pagination) {
 
-			$(locations).each(function() {
-				// debug_report(this);
-			});
-			pagination.nextPage();
+			if (status == "OK") {
+
+				$(".search_findings").empty();
+
+				$(".search_keyword").text(google_api_obj.places.types[type]);
+
+				$(locations).each(function() {
+
+					$(".search_findings").append(
+						'<div class="row">'+
+						'<div class="small-2 columns"><a class="tiny button radius glyph" onclick="google_api_obj.add_destination(\''+this.vicinity+'\', \''+escape(this.name)+'\')">%</a></div>'+
+						'<div class="small-10 columns">'+
+						'<div><strong>'+this.name+'</strong></div>'+
+						'<div>'+this.vicinity+'</div>'+
+						'</div></div><br>');
+
+				});
+
+				$('#search_modal').foundation('reveal', 'open');
+
+				/*
+				$(locations).each(function() {
+					debug_report(this);
+				});
+				pagination.nextPage();
+				*/
+
+			}
 
 		});
 
@@ -359,24 +476,69 @@ var google_api_obj = new function() {
 
 			if (status == "OK") {
 
-				$(".text_search_findings").empty();
+				$(".search_findings").empty();
 
-				$(".text_search_keyword").text("'"+google_api_obj.places.text_search_input+"'");
+				$(".search_keyword").text("'"+google_api_obj.places.text_search_input+"'");
 
 				$(locations).each(function() {
 
-					$(".text_search_findings").append('<h6>'+this.name+'</h6>');
-					$(".text_search_findings").append('<p><em>'+google_api_obj.places.types[this.types[0]]+'</em> <img src="'+this.icon+'" style="height: 1em;"></p>');
-					$(".text_search_findings").append('<p>'+this.formatted_address+'</p>');
-
 					debug_report(this);
+
+					$(".search_findings").append(
+						'<div class="row">'+
+						'<div class="small-2 columns"><a class="tiny button radius glyph" onclick="google_api_obj.add_destination(\''+this.formatted_address+'\', \''+escape(this.name)+'\')">%</a></div>'+
+						'<div class="small-10 columns">'+
+						'<div><strong>'+this.name+'</strong></div>'+
+						'<div><em>'+google_api_obj.places.types[this.types[0]]+'</em> <img src="'+this.icon+'" style="height: 1em;"></div>'+
+						'<div>'+this.formatted_address+'</div>'+
+						'</div></div><br>');
+
+					// debug_report(this);
 				});
 
-				$('#text_search_modal').foundation('reveal', 'open');
+				$('#search_modal').foundation('reveal', 'open');
 
 			}
 
 			// pagination.nextPage();
+
+		});
+
+	}
+
+	this.add_destination = function(destination, name) {
+		
+		google_api_obj.waypoints.push({
+          location: destination,
+          stopover: true
+		});
+
+		google_api_obj.destination = destination;
+
+		debug_report(unescape(name));
+
+		$('#search_modal').foundation('reveal', 'close');
+
+		google_api_obj.calculate_route();
+
+	}
+
+	this.calculate_route = function() {
+
+		var request = {
+			origin: google_api_obj.start_location,
+			destination: google_api_obj.destination,
+			provideRouteAlternatives: true,
+			travelMode: google.maps.TravelMode[google_api_obj.trip_mode]
+		};
+		
+		google_api_obj.directions_service.route(request, function(response, status) {
+			
+			debug_report(response);
+
+			if (status == google.maps.DirectionsStatus.OK) {
+				google_api_obj.directions_display.setDirections(response);
+			}
 
 		});
 

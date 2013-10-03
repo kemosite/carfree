@@ -4,6 +4,7 @@ var wait_for_location = new function() {
 	this.interval = setInterval( function() { wait_for_location.still_waiting() },3000);
 
 	this.still_waiting = function() {
+		
 		if (geocode_properties.locked == true) {
 			
 			this.stop_waiting(this.interval);
@@ -29,4 +30,13 @@ var wait_for_location = new function() {
 	this.stop_waiting = function() {
 		clearInterval(this.interval);
 	}
+
+	$(".search_click").click(function() {
+		$(".search.title").click();
+	});
+
+	$(".add.destination").click( function() {
+		
+	});
+
 }
