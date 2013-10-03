@@ -5,8 +5,8 @@ var google_api_obj = new function() {
 	this.geocoder = "";
 	this.trip_mode = "";
 	this.trip_mode_radius = {
-		"BICYCLING": 8000 / 4,
-		"TRANSIT": 25000 / 4
+		"BICYCLING": 15000 / 2,
+		"TRANSIT": 25000 / 2
 	};
 	this.directions_display = "";
 	this.directions_service = "";
@@ -91,6 +91,7 @@ var google_api_obj = new function() {
 			panControl: true,
 		    zoomControl: true,
 		    scaleControl: true,
+		    zoom: 13,
 			mapTypeControlOptions: {
 		      mapTypeIds: [google.maps.MapTypeId.ROADMAP, 'map_style']
 		    }
@@ -119,6 +120,11 @@ var google_api_obj = new function() {
 		google_api_obj.trip_mode = document.getElementById("trip_mode_select").value;
 
 		this.map_zoom_properties = {
+			strokeColor: '#004C00',
+			strokeOpacity: 0.25,
+			strokeWeight: 1,
+			fillColor: '#004C00',
+			fillOpacity: 0.125,
 			map: google_api_obj.map,
 			center: google_api_obj.map_default_options.center,
 			radius: google_api_obj.trip_mode_radius[google_api_obj.trip_mode]
@@ -126,8 +132,8 @@ var google_api_obj = new function() {
 
 		this.map_zoom_circle = new google.maps.Circle(this.map_zoom_properties);
 		this.map_bounds = new google.maps.LatLngBounds(this.map_zoom_circle.getBounds().getSouthWest(), this.map_zoom_circle.getBounds().getNorthEast()); 
-		google_api_obj.map.fitBounds(this.map_bounds);
-		this.map_zoom_circle.setMap(null);
+		// google_api_obj.map.fitBounds(this.map_bounds);
+		// this.map_zoom_circle.setMap(null);
 		google_api_obj.start_location = geocode_properties.city;
 		google_api_obj.categories_keyword = geocode_properties.city;
 
@@ -188,6 +194,11 @@ var google_api_obj = new function() {
 			});
 
 	      	this.map_zoom_properties = {
+	      		strokeColor: '#004C00',
+				strokeOpacity: 0.25,
+				strokeWeight: 1,
+				fillColor: '#004C00',
+				fillOpacity: 0.125,
 				map: google_api_obj.map,
 				center: results[0].geometry.location,
 				radius: google_api_obj.trip_mode_radius[google_api_obj.trip_mode]
@@ -198,7 +209,7 @@ var google_api_obj = new function() {
 			this.map_zoom_circle = new google.maps.Circle(this.map_zoom_properties);
 			this.map_bounds = new google.maps.LatLngBounds(this.map_zoom_circle.getBounds().getSouthWest(), this.map_zoom_circle.getBounds().getNorthEast());
 	        google_api_obj.map.fitBounds(this.map_bounds);
-	        this.map_zoom_circle.setMap(null);
+	        // this.map_zoom_circle.setMap(null);
 	        google_api_obj.places.broad_search();
 	        google_api_obj.calculate_route();
 
@@ -220,6 +231,11 @@ var google_api_obj = new function() {
 	      	google_api_obj.categories_keyword = address;
 
 	      	this.map_zoom_properties = {
+	      		strokeColor: '#004C00',
+				strokeOpacity: 0.25,
+				strokeWeight: 1,
+				fillColor: '#004C00',
+				fillOpacity: 0.125,
 				map: google_api_obj.map,
 				center: results[0].geometry.location,
 				radius: google_api_obj.trip_mode_radius[google_api_obj.trip_mode]
@@ -230,7 +246,7 @@ var google_api_obj = new function() {
 			this.map_zoom_circle = new google.maps.Circle(this.map_zoom_properties);
 			this.map_bounds = new google.maps.LatLngBounds(this.map_zoom_circle.getBounds().getSouthWest(), this.map_zoom_circle.getBounds().getNorthEast());
 	        google_api_obj.map.fitBounds(this.map_bounds);
-	        this.map_zoom_circle.setMap(null);
+	        // this.map_zoom_circle.setMap(null);
 	        google_api_obj.places.broad_search();
 	      }
 	    });
