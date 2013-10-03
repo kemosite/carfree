@@ -515,7 +515,7 @@ var google_api_obj = new function() {
 
 		google_api_obj.destination = destination;
 
-		debug_report(unescape(name));
+		// debug_report(unescape(name));
 
 		$('#search_modal').foundation('reveal', 'close');
 
@@ -525,10 +525,17 @@ var google_api_obj = new function() {
 
 	this.calculate_route = function() {
 
+		var waypoints = google_api_obj.waypoints;
+		if (google_api_obj.trip_mode == "TRANSIT") { waypoints = []; }
+
 		var request = {
 			origin: google_api_obj.start_location,
 			destination: google_api_obj.destination,
+			waypoints: waypoints,
 			provideRouteAlternatives: true,
+			optimizeWaypoints: true,
+			durationInTraffic: true,
+			avoidHighways: true,
 			travelMode: google.maps.TravelMode[google_api_obj.trip_mode]
 		};
 		
