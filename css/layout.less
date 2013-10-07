@@ -177,13 +177,16 @@ body {
 
 /* [Breakpoints] */
 @media screen and (min-width: 640px) {
+	.container {
+		margin: 1em auto;
+		max-width: @tablet-min;
+		min-height: 39em;
+		.round-corners();
+	}
 }
 @media screen and (min-width: 800px) { 
 	.container { 
-		margin: 1em auto;
 		max-width: 640px;
-		min-height: 39em;
-		.round-corners();
 	}
 }
 @media screen and (min-width: 1024px) { 

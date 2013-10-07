@@ -56,6 +56,9 @@ Author: Kevin Montgomery
 <!-- Glyphs: Modern Pictograms -->
 <link rel="stylesheet" href="fonts/modern-pictograms/stylesheet.css?ver=3.0" type="text/css" media="all">
 
+<!-- Sans Serif: Source Sans -->
+<link rel="stylesheet" href="fonts/source-sans/stylesheet.css?ver=3.0" type="text/css" media="all">
+
 <!--
 [ Master Stylesheet]
 Includes:
@@ -63,7 +66,7 @@ Includes:
 - Foundation CSS (Compressed) 3.1.1
 - Styles: LESS CSS 1.3.0
 -->
-<link rel="stylesheet/less" href="css/master.less?ver=1.3.0" type="text/css" media="all">
+<link rel="stylesheet/less" href="css/master.less?ver=1.4.1" type="text/css" media="all">
 
 <!-- [CSS PIE for IE < 10] -->
 <!--[if lt IE 10]><script type="text/javascript" src="js/vendor/PIE.js?ver=1.0.0"></script><![endif]-->
@@ -91,7 +94,7 @@ Includes:
   <div class="row">
     <div class="small-12 columns">
       <header>
-        <h1>Carless</h1>
+        <h2>Carless</h2>
       </header>
     </div>
   </div>
@@ -100,23 +103,16 @@ Includes:
 
     <form class="custom">
 
-    <div class="small-9 large-6 trip columns">
+    <div class="small-9 large-8 trip columns">
       <div class="row">
         
         <div class="small-12 columns">
-          <h6>Trip Details</h6>
+          <h5>Trip Details</h5>
 
-          <div class="section-container auto" data-section>
-            <section>
-              <div class="title" data-section-title><a href="#">Destinations</a></div>
+          <div class="section-container vertical-tabs" data-section="vertical-tabs">
+            <section class="active">
+              <div class="title" data-section-title><a href="#">Start</a></div>
               <div class="content trip_details" data-section-content>
-                <div>
-                  <label>Mode</label>
-                  <select id="trip_mode_select" class="medium" onchange="google_api_obj.update_radius();">
-                    <option value="BICYCLING">Cycling</option>
-                    <option value="TRANSIT">Transit</option>
-                  </select>
-                </div>
                 <div>
                   <label>Start Location</label>
                   <div class="row collapse">
@@ -126,34 +122,54 @@ Includes:
                     <div class="small-1 column">
                       <a href="#" class="button prefix glyph" onclick="google_api_obj.reset_start_address();" title="Reset to my location">,</a>
                     </div>
+                </div>                
+              </div>
+              <label>Search (Example: Pizza in <span class="search_city_ex">your city</span>; Store name; Address)</label>
+             <div class="row collapse">
+                <div class="small-11 columns">
+                  <input type="text" id="location_search" placeholder="Address, or name of place.">
                 </div>
-                <p>Click on &ldquo;<a href="#" class="search_click">Search</a>&rdquo; to locate or browse nearby destinations.</p>
-                <div class="trip_locations">
-                  <label>Destinations:</label>
-                  <div id="directions-panel"></div>
-                  <span></span>
+                <div class="small-1 columns">
+                  <a href="#" class="button prefix glyph" onclick="google_api_obj.places.text_search();">s</a>
+                </div>
+              </div>
+              <label style="margin-top: 1em;">Mode</label>
+              <div class="row collapse">
+                <div class="small-12 columns">
+                  <select id="trip_mode_select" class="medium" onchange="google_api_obj.update_radius();">
+                    <option value="BICYCLING">Cycling</option>
+                    <option value="TRANSIT">Transit</option>
+                  </select>
+                </div>
+              </div>
+              <div class="row">
+                <div class="small-8 large-6 small-centered columns">
+                  <p><a class="small secondary radius updated trip details expand button">See Updated Trip Details</a></p>
+                </div>
+              </div>
+              <div class="row">
+                <div class="small-12 columns nearby_destinations">
+                  <br>
+                  <label>Locate all places with these categories:</label>
+                  <ul class="destination_types small-block-grid-1 large-block-grid-2"></ul>
                 </div>
               </div>
             </section>
             <section>
-                <div class="search title" data-section-title><a href="#">Search</a></div>
+                <div class="trip title" data-section-title><a href="#">Trip Details</a></div>
                 <div class="content" data-section-content>
-                  <label>Search (Example: Pizza in <span class="search_city_ex">your city</span>; Store name; Address)</label>
-                   <div class="row collapse">
-                      <div class="small-11 columns">
-                        <input type="text" id="location_search" placeholder="Address, or name of place.">
-                      </div>
-                      <div class="small-1 columns">
-                        <a href="#" class="button prefix glyph" onclick="google_api_obj.places.text_search();">s</a>
-                      </div>
+                  <div class="row">
+                    <div class="small-8 large-6 small-centered columns">
+                      <p><a class="small radius add destinations expand button">Add/Change Destinations</a></p>
                     </div>
-                    <div class="row">
-                      <div class="small-12 columns nearby_destinations">
-                        <br>
-                        <label>Locate all places with these categories:</label>
-                        <ul class="destination_types small-block-grid-1 large-block-grid-2"></ul>
-                      </div>
+                  </div>
+                  <div class="row">
+                    <div class="small-12 columns trip_locations">
+                      <label>Destinations:</label>
+                      <div id="directions-panel"></div>
+                      <span></span>
                     </div>
+                  </div>
                 </div>
               </section>
           </div>
@@ -163,7 +179,7 @@ Includes:
       </div>
     </div>
 
-    <div class="small-3 large-6 map columns map_height">
+    <div class="small-3 large-4 map columns map_height">
        <section class="trip_map">
         <!-- Turn this into an iFrame -->
         <div id="map_canvas"></div>
@@ -187,10 +203,10 @@ Includes:
 
 <!-- [Initialize LESS CSS] -->
 <script>var less = { env: "development" }; // Comment out if used in production</script>
-<script type="text/javascript" src="js/vendor/less-1.3.3.min.js?ver=1.3.3"></script>
+<script type="text/javascript" src="js/vendor/less-1.4.1.min.js?ver=1.4.1"></script>
 
 <!-- [Initialize Foundation JS] -->
-<script src="js/vendor/foundation.min.js?ver=4.3.1"></script>
+<script src="js/vendor/foundation.min.js?ver=4.3.2"></script>
 
 <script>
 $(document).foundation(function (response) {

@@ -31,12 +31,15 @@ var wait_for_location = new function() {
 		clearInterval(this.interval);
 	}
 
-	$(".search_click").click(function() {
-		$(".search.title").click();
+	$(".updated.trip.details.button").click(function() {
+		$(".trip.title").click();
+	});
+	$(".trip.title").click( function() {
+		$(".updated.trip.details.button").removeClass("success").addClass("secondary");
 	});
 
 	$(".add.destination").click( function() {
-		
+
 	});
 
 }

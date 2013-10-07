@@ -5,7 +5,7 @@ var google_api_obj = new function() {
 	this.geocoder = "";
 	this.trip_mode = "";
 	this.trip_mode_radius = {
-		"BICYCLING": 15000 / 2,
+		"BICYCLING": 15000 / 4,
 		"TRANSIT": 25000 / 2
 	};
 	this.directions_display = "";
@@ -169,6 +169,8 @@ var google_api_obj = new function() {
 			
 			google_api_obj.layers.bike_layer = new google.maps.BicyclingLayer();
 			google_api_obj.layers.bike_layer.setMap(google_api_obj.map);
+
+			google_api_obj.map.setZoom(13);
 
 		}
 
@@ -537,6 +539,8 @@ var google_api_obj = new function() {
 
 		google_api_obj.calculate_route();
 
+		$(".trip.title").click();
+
 	}
 
 	this.calculate_route = function() {
@@ -564,6 +568,8 @@ var google_api_obj = new function() {
 			}
 
 		});
+
+		$(".updated.trip.details.button").removeClass("secondary").addClass("success");
 
 	}
 
