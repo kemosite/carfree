@@ -119,7 +119,11 @@ var google_api_obj = new function() {
 
 		google_api_obj.trip_mode = document.getElementById("trip_mode_select").value;
 
-		this.map_zoom_properties = {
+		/*
+		 * Separate the 'Zoom Circle' from the 'Bike Zone Circle'
+		 */
+
+		 this.map_zoom_properties = {
 			strokeColor: '#004C00',
 			strokeOpacity: 0.25,
 			strokeWeight: 1,
@@ -526,10 +530,12 @@ var google_api_obj = new function() {
 
 	this.add_destination = function(destination, name) {
 		
-		google_api_obj.waypoints.push({
-          location: destination,
-          stopover: true
-		});
+		if (google_api_obj.destination != "" && google_api_obj.destination != destination) {
+			google_api_obj.waypoints.push({
+	          location: google_api_obj.destination,
+	          stopover: true
+			});
+		}
 
 		google_api_obj.destination = destination;
 
