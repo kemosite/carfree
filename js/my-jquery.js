@@ -34,12 +34,13 @@ var wait_for_location = new function() {
 	$(".updated.trip.details.button").click(function() {
 		$(".trip.title").click();
 	});
+	$(".add.destinations.button").click(function() {
+		$(".start.title").click();
+	});
 	$(".trip.title").click( function() {
 		$(".updated.trip.details.button").removeClass("success").addClass("secondary");
 	});
 
-	$(".add.destination").click( function() {
-
-	});
+	debug_report(window.orientation);
 
 }

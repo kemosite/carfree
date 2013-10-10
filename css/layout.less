@@ -147,10 +147,10 @@ body {
 	.trip_map { 
 		height: 100%;
 		width: 100%;
-		display: none; 
+		// display: none; 
 
 		& > #map_canvas {
-			height: 32em;
+			height: 20em;
 			margin: 1em auto;
 		}
 	}
@@ -164,7 +164,7 @@ body {
 /* [Tablet Screen View] */
 @media only screen and (min-width: @tablet-min) {
 	.container {
-		.trip_map { display: block; }
+		// .trip_map { display: block; }
 		.destination_types li .icon { 
 			height: 1.5em;
 		}
@@ -172,36 +172,33 @@ body {
 }
 
 /* [Computer Screen View] */
-@media screen and (min-width: @screen-min) {
+@media screen and (min-width: @screen-min) { 
+	.container .trip_map > #map_canvas {
+		height: 37em;
+	}
 }
 
 /* [Breakpoints] */
-@media screen and (min-width: 640px) {
-	.container {
-		margin: 1em auto;
-		max-width: @tablet-min;
-		min-height: 39em;
-		.round-corners();
-	}
-}
-@media screen and (min-width: 800px) { 
-	.container { 
-		max-width: 640px;
-	}
-}
+@media screen and (min-width: 800px) { }
+
 @media screen and (min-width: 1024px) { 
 	.container { 
-		max-width: 800px; 
+		max-width: @screen-min;
+		margin: 1em auto;
+		min-height: 39em;
+		.round-corners();
 	}
 }
 @media screen and (min-width: 1152px) { 
 	.container { max-width: 1024px; }
 }
+/*
 @media screen and (max-width: 1280px) {
 	.container { 
 		.map.columns, .trip.columns { width: 100%; }
 	}
 }
+*/
 @media screen and (min-width: 1280px) { 
 	.container { max-width: 1152px; }
 }
