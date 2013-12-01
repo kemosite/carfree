@@ -26,7 +26,7 @@ function safe_exec(function_name) {
 $(document).ready(function(){
 	
 	/* [TypeSet Body Copy] */
-	$("body, p, label, input").typeset();
+	$("body, p").typeset();
 	
 	/* [Switch SVG for PNG Image, If Not Supported] */
 	if(!Modernizr.svg) {
@@ -67,4 +67,10 @@ $(document).ready(function(){
 			}
 		} 
 	});
+});
+
+/* [Fade The Page In] */
+$(window).load( function() {
+	$(".throbber").fadeOut().css("display: none");
+	$(".container").fadeIn().css("display: block");
 });

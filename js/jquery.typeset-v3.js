@@ -18,10 +18,10 @@
 
 (function( $ ){
 
-  $.fn.typeset = function() {
+	$.fn.typeset = function() {
   
 		// Capture screen resolution, use minimum for diameter //
-    var screen_width = screen.width;
+	    var screen_width = screen.width;
 		var screen_height = screen.height;
 		var screen_min = Math.min(screen_width, screen_height);
 
@@ -57,11 +57,11 @@
 		
 		return this.each(function(){
 
-      // Store the object
-      var $this = $(this);
-        
-      // Typesetter() typesets the item
-      var typesetter = function () {
+			// Store the object
+			var $this = $(this);
+
+			// Typesetter() typesets the item
+			var typesetter = function () {
 				
 				/*
 				for (var i = 0; i < $this.length; i++) {
@@ -93,12 +93,11 @@
 						'line-height':typeset_em_lineheight+'em'
 					});
 				}
-      };
+			};
 
-      // Call once to set.
-      typesetter();
+			// Call once to set.
+			typesetter();
       	
-    });
-				
-  };
+		});			
+	};
 })( jQuery );

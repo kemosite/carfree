@@ -1,8 +1,8 @@
 <!DOCTYPE HTML>
 
 <!--
-[Carless App]
-Description: A webapp to assist with a carless life.
+[Carfree App]
+Description: A webapp to assist with a carfree life.
 Version: 1.0
 Author: Kevin Montgomery
 -->
@@ -21,43 +21,28 @@ Author: Kevin Montgomery
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<meta name="SKYPE_TOOLBAR" content="SKYPE_TOOLBAR_PARSER_COMPATIBLE" />
-
 <!-- [Keywords and descriptions] -->
-<meta name="keywords" content="carless">
-<meta name="description" content="A webapp to assist with a carless life.">
+<meta name="keywords" content="carfree">
+<meta name="description" content="A webapp to assist with a carfree life.">
 
-<!-- [Open Graph] -->
-<meta property='og:locale' content='en_CA'/>
-<meta property='og:title' content='Carless 1.0'/>
-<meta property='og:description' content='A webapp to assist with a carless life.'/>
-<meta property='og:url' content=''/>
-<meta property='og:site_name' content='Carless 1.0'/>
-<meta property='og:type' content='article'/>
-
-<title>Carless 1.0</title>
+<title>Carfree 1.0</title>
 
 <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
-
 <link rel="profile" href="http://gmpg.org/xfn/11" />
-
-<meta name="robots" content="index,follow" />
+<meta name="robots" content="noindex,nofollow" />
 
 <style>
 /** 
   * [ Turn off the container until the page has loaded]
   * (Is activated via JavaScript)
   */
-.container { display: none; }
+.container, .throbber { display: none; }
 </style>
 
 <!-- [Load Fonts] -->
 
 <!-- Glyphs: Modern Pictograms -->
 <link rel="stylesheet" href="fonts/modern-pictograms/stylesheet.css?ver=3.0" type="text/css" media="all">
-
-<!-- Sans Serif: Source Sans -->
-<link rel="stylesheet" href="fonts/source-sans/stylesheet.css?ver=3.0" type="text/css" media="all">
 
 <!--
 [ Master Stylesheet]
@@ -86,109 +71,66 @@ Includes:
 
 <body>
 
-<div class="throbber"></div>
+<!-- [Throbber] -->
+<div class="throbber">
+  <div class="logo"><img src="images/carfree_logo.svg"></div>
+  <div><img src="assets/ajax-loader.gif"></div>
+  <br>
+  <div class="loading_message"></div>
+</div>
 
 <!-- [Container] -->
 <div class="container rounded">
-
-  <div class="row">
-    <div class="small-12 columns">
-      <header>
-        <h2>Carless</h2>
-      </header>
-    </div>
-  </div>
-
-  <div class="row map_height">
-
-    <form class="custom">
-
-    <div class="large-6 trip columns">
-      <div class="row">
-        
-        <div class="small-12 columns">
-          <h5>Trip Details</h5>
-
-          <div class="section-container tabs" data-section="tabs">
-            <section class="active">
-              <div class="start title" data-section-title><a href="#">Start</a></div>
-              <div class="content trip_details" data-section-content>
-                <div>
-                  <label>Start Location</label>
-                  <div class="row collapse">
-                    <div class="small-11 columns">
-                      <input type="text" id="start_location" placeholder="Where are you starting your trip from?" onchange="google_api_obj.geocode_start_address();">
-                    </div>
-                    <div class="small-1 column">
-                      <a href="#" class="button prefix glyph" onclick="google_api_obj.reset_start_address();" title="Reset to my location">,</a>
-                    </div>
-                </div>                
-              </div>
-              <label>Search (Example: Pizza in <span class="search_city_ex">your city</span>; Store name; Address)</label>
-             <div class="row collapse">
-                <div class="small-11 columns">
-                  <input type="text" id="location_search" placeholder="Address, or name of place.">
-                </div>
-                <div class="small-1 columns">
-                  <a href="#" class="button prefix glyph" onclick="google_api_obj.places.text_search();">s</a>
-                </div>
-              </div>
-              <label style="margin-top: 1em;">Mode</label>
-              <div class="row collapse">
-                <div class="small-12 columns">
-                  <select id="trip_mode_select" class="medium" onchange="google_api_obj.update_radius();">
-                    <option value="BICYCLING">Cycling</option>
-                    <option value="TRANSIT">Transit</option>
-                  </select>
-                </div>
-              </div>
-              <div class="row">
-                <div class="small-8 large-6 small-centered columns">
-                  <p><a class="small secondary radius updated trip details expand button">See Updated Trip Details</a></p>
-                </div>
-              </div>
-              <div class="row">
-                <div class="small-12 columns nearby_destinations">
-                  <br>
-                  <label>Locate all places with these categories:</label>
-                  <ul class="destination_types small-block-grid-1 large-block-grid-2"></ul>
-                </div>
-              </div>
-            </section>
-            <section>
-                <div class="trip title" data-section-title><a href="#">Trip Details</a></div>
-                <div class="content" data-section-content>
-                  <div class="row">
-                    <div class="small-8 large-6 small-centered columns">
-                      <p><a class="small radius add destinations expand button">Add/Change Destinations</a></p>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="small-12 columns trip_locations">
-                      <label>Destinations:</label>
-                      <div id="directions-panel"></div>
-                      <span></span>
-                    </div>
-                  </div>
-                </div>
-              </section>
-          </div>
-
-        </div>
-
+  
+  <header>
+    <div class="row">
+      <div class="small-6 columns">
+        <div class="logo"><img src="images/carfree_logo.svg"></div>
+      </div>
+      <div class="small-6 columns">
+        <a class="show-for-small menu radius button" data-dropdown="drop_menu">Menu</a>
+        <ul id="drop_menu" class="f-dropdown" data-dropdown-content>
+          <li><a href="#" class="trip" rel="menu">Plan a Trip</a></li>
+          <li><a href="#" class="nearby" rel="menu">What&rsquo;s Nearby?</a></li>
+          <li><a href="#" class="map" rel="menu">The Map</a></li>
+        </ul>
       </div>
     </div>
+  </header>
 
-    <div class="large-6 map columns map_height">
-       <section class="trip_map">
-        <!-- Turn this into an iFrame -->
-        <div id="map_canvas"></div>
-      </section>
+  <section class="menu window">
+    <div class="row">
+      <div class="small-12 columns">
+        <h5 class="greeting">What would you like to do?</h5>
+      </div>
     </div>
+    <div class="row">
+      <div class="small-12 columns"><a href="#" class="trip radius button expand" rel="menu">Plan a Trip</a></div>
+    </div>
+    <div class="row">
+      <div class="small-12 columns"><a href="#" class="nearby radius button expand" rel="menu">What&rsquo;s Nearby?</a></div>
+    </div>
+    <div class="row">
+      <div class="small-12 columns"><a href="#" class="map radius button expand" rel="menu">The Map</a></div>
+    </div>
+  </section>
 
-    </form>
-
-  </div>
+  <section class="trip window">
+    <div class="row">
+      <div class="small-12 columns">
+        <h5 class="greeting">Let&rsquo;s plan a trip!</h5>
+        <label>Start Location</label>
+        <div class="row collapse">
+          <div class="small-11 columns">
+            <input type="text" id="start_location" placeholder="Where are you starting your trip from?" onchange="google_api_obj.geocode_start_address();">
+          </div>
+          <div class="small-1 column">
+            <a href="#" class="button prefix glyph" onclick="google_api_obj.reset_start_address();" title="Reset to my location">,</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>  
 
   <div class="row">
     <div class="large-12 columns">
@@ -228,27 +170,22 @@ $(function() {
 <!-- [TypeSet 3.0] -->
 <script src="js/jquery.typeset-v3.js?ver=3"></script>
 
-<!-- [JQuery: Adaptive Scripts] -->
-<script src="js/adaptive-scripts.js?ver=1.0"></script>
-
 <!-- [JQuery: Standard Behaviours] -->
 <script src="js/standard-behaviours-jquery.js?ver=1.9.1"></script>
 
-<!-- [GeoLocate Class -->
-<script src="js/geolocate-class.js"></script>
+<!-- [JQuery: Adaptive Scripts] -->
+<script src="js/adaptive-scripts.js?ver=1.0"></script>
 
-<!-- [Google API Functions -->
-<script src="js/google-api-functions.js"></script>
+<!-- [Show Throbber] -->
+<noscript>
+  <style>
+    /* [ Turn on the container if JavaScript not loaded] */
+    .throbber { display: block; }
+  </style>
+</noscript>
 
 <!-- [Custom JQuery] -->
 <script src="js/my-jquery.js?ver=1.9.1"></script>
-
-<noscript>
-	<style>
-  	/* [ Turn on the container if JavaScript not loaded] */
-  	.container { display: block; }
-  </style>
-</noscript>
 
 <!-- [Initialize Google Analytics]
 <script>
@@ -261,10 +198,6 @@ s.parentNode.insertBefore(g,s)}(document,'script'));
 
 <!-- Modal Windows -->
 <div id="search_modal" class="reveal-modal small" style="display: none;">
-  <h4>Locations found for <span class="search_keyword">your search term</span>.</h4>
-  <h5>Please select locations to add to as destinations.</h5>
-  <div class="search_findings"></div>
-  <a class="close-reveal-modal">&#215;</a>
 </div>
 
 </body>

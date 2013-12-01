@@ -15,6 +15,23 @@ Version:    3
 html { height: 100%; } 
 
 body {
+   
+   // display: -webkit-box;   /* OLD: Safari,  iOS, Android browser, older WebKit browsers.  */
+   // display: -moz-box;      /* OLD: Firefox (buggy) */ 
+   // display: -ms-flexbox;   /* MID: IE 10 */
+   // display: -webkit-flex;  /* NEW, Chrome 21+ */
+   // display: flex;          /* NEW: Opera 12.1, Firefox 22+ */
+
+   // -webkit-box-align: center; -moz-box-align: center; /* OLD… */
+   // -ms-flex-align: center; /* You know the drill now… */
+   // -webkit-align-items: center;
+   // align-items: center;
+
+   // -webkit-box-pack: center; -moz-box-pack: center; 
+   // -ms-flex-pack: center; 
+   // -webkit-justify-content: center;
+   // justify-content: center;
+
    margin: 0;
    height: 100%;
    width: 100% /* needed for Firefox */
@@ -22,12 +39,20 @@ body {
 
 /* [Block-level Flex] */
 .flexbox() {
+	
+	/*
+	display: flex;
+	display: flexbox;
+	display: box;
+	*/
 
 	display: -webkit-box;   /* OLD: Safari,  iOS, Android browser, older WebKit browsers.  */
 	display: -moz-box;      /* OLD: Firefox (buggy) */ 
 	display: -ms-flexbox;   /* MID: IE 10 */
 	display: -webkit-flex;  /* NEW, Chrome 21+ */
 	display: flex;          /* NEW: Opera 12.1, Firefox 22+ */
+	// display: flexbox;
+	// display: box;
 
 	-webkit-box-align: center; -moz-box-align: center; /* OLD… */
 	-ms-flex-align: center; /* You know the drill now… */
@@ -57,15 +82,15 @@ body {
 
 /* [Throbber] */
 .throbber {
+	position: absolute;
+	background-color: white;
+	background-image: url(../assets/ajax-loader.gif);
+	background-repeat: no-repeat;
+	background-position: center center;
 	z-index: 9999;
 	height: 100%; width: 100%;
-	margin: 1em auto;
-	display: none;
-	text-align: center;
-
-	.logo { width: 100%; }
-	.loading_message { display: none; }
-
+	top: 0; left: 0;
+	display: block;
 }
 
 /* [Set up container] */
@@ -82,11 +107,7 @@ body {
 	}
 	
 	.row { max-width: 100%; }
-	.row .row { margin: 0; }
-
-	.window { display: none; }
-	.menu.window { display: block; }
-
+	.row .row { margin: 0; }	
 }
 
 /* [Variables should always come first, they're handy that way] */
@@ -98,29 +119,41 @@ body {
 /* [Mobile First View] */
 .container { 
 	
-	.f-dropdown > li {
-		height: 4em;
-		padding: 1em 0;
-	}
-
-	header,
-	header .row,
-	header .colomn,
-	header .columns {
-		height: 4em;
-		vertical-align: middle;
-	}
-
-	header .logo,
-	header .menu {
-		margin: .5em 0;
-	}
-
-	header .logo img { height: 3em; }
-
 	.button { margin: 0; }
 
 	min-height: 100%;
+
+	.map.columns { height: 100%; }
+
+	header {
+		border-bottom: 1px solid @cyan;
+	}
+
+	#location_search { margin-bottom: 0; }
+
+	.destination_types {
+
+		margin: 1em 0;
+
+		li {
+			
+			label { white-space:nowrap; }
+			img { height: 1em; }
+
+		}
+
+	}
+
+	.trip_map { 
+		height: 100%;
+		width: 100%;
+		// display: none; 
+
+		& > #map_canvas {
+			height: 20em;
+			margin: 1em auto;
+		}
+	}
 
 	footer {
 		> .maxmind_statement { display: none; }
@@ -131,14 +164,17 @@ body {
 /* [Tablet Screen View] */
 @media only screen and (min-width: @tablet-min) {
 	.container {
-		
+		// .trip_map { display: block; }
+		.destination_types li .icon { 
+			height: 1.5em;
+		}
 	}
 }
 
 /* [Computer Screen View] */
 @media screen and (min-width: @screen-min) { 
-	.container, .throbber {
-		max-width: @tablet-min;
+	.container .trip_map > #map_canvas {
+		height: 37em;
 	}
 }
 
@@ -146,20 +182,15 @@ body {
 @media screen and (min-width: 800px) { }
 
 @media screen and (min-width: 1024px) { 
-	
-	.throbber, .container { 
-		max-width: @screen-min;
-	}
-
 	.container { 
+		max-width: @screen-min;
 		margin: 1em auto;
 		min-height: 39em;
 		.round-corners();
 	}
-
 }
 @media screen and (min-width: 1152px) { 
-	.throbber, .container { max-width: 1024px; }
+	.container { max-width: 1024px; }
 }
 /*
 @media screen and (max-width: 1280px) {
@@ -169,22 +200,22 @@ body {
 }
 */
 @media screen and (min-width: 1280px) { 
-	.throbber, .container { max-width: 1152px; }
+	.container { max-width: 1152px; }
 }
 @media screen and (min-width: 1360px) { 
-	.throbber, .container { max-width: 1280px; }
+	.container { max-width: 1280px; }
 }
 @media screen and (min-width: 1366px) { 
-	.throbber, .container { max-width: 1360px; }
+	.container { max-width: 1360px; }
 }
 @media screen and (min-width: 1440px) { 
-	.throbber, .container { max-width: 1366px; }
+	.container { max-width: 1366px; }
 }
 @media screen and (min-width: 1600px) { 
-	.throbber, .container { max-width: 1440px; }
+	.container { max-width: 1440px; }
 }
 @media screen and (min-width: 1680px) { 
-	.throbber, .container { max-width: 1600px; }
+	.container { max-width: 1600px; }
 }
 
 /* [Print Style] */

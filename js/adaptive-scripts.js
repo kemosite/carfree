@@ -14,13 +14,6 @@ if (adaptive_scripts.resolution > adaptive_scripts.sorted_breakpoints()[0]) {
 	adaptive_scripts.attach_sourcesans.setAttribute("type", "text/css");
 	adaptive_scripts.attach_sourcesans.setAttribute("media", "all");
 	document.getElementsByTagName("head")[0].appendChild(adaptive_scripts.attach_sourcesans);
-	
-	/* [Attach MaxMind GeoIP] */
-	/*
-	var attach_geoip = document.createElement("script");
-	attach_geoip.setAttribute("src", "//j.maxmind.com/app/geoip.js");
-	document.getElementsByTagName("head")[0].appendChild(attach_geoip);
-	*/
 
 	/* 
 	Usage:
@@ -44,6 +37,6 @@ if (adaptive_scripts.resolution > adaptive_scripts.sorted_breakpoints()[0]) {
 	/* [Attach Scroll To 1.4.3.1] */
 	adaptive_scripts.attach_scrollto = document.createElement("script");
 	adaptive_scripts.attach_scrollto.setAttribute("src", "js/vendor/jquery.scrollTo-1.4.3.1-min.js?ver=1.4.3.1");
-	document.getElementsByTagName("body")[0].appendChild(adaptive_scripts.attach_scrollto);
+	// document.getElementsByTagName("body")[0].appendChild(adaptive_scripts.attach_scrollto);
 	
 }

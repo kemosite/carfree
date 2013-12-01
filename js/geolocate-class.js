@@ -15,9 +15,20 @@ if (navigator.geolocation) {
 
 	var geolocate_obj = new function() {
 
+		 $(".loading_message").queue(function() {
+			$(this).text("Determining your location").dequeue();
+	    });
+		$(".loading_message").fadeIn("fast").css("display: block");
+
 		this.error = {}
 
 		this.success = function(position) {
+
+			$(".loading_message").fadeOut("fast").css("display: none");
+		    $(".loading_message").queue(function() {
+				$(this).text("Location determined. Please wait").dequeue();
+		    });
+		    $(".loading_message").fadeIn("fast").css("display: block");
 			
 			geocode_properties.accuracy = position.coords.accuracy;
 			geocode_properties.altitude = position.coords.altitude;
@@ -44,6 +55,9 @@ if (navigator.geolocation) {
 
 			geocode_properties.locked = true;
 
+			$(".throbber").fadeOut("fast").css("display: none");
+		    $(".container").delay("1000").fadeIn("fast").css("display: block");
+
 		};
 
 		this.failure = function (error) {
@@ -52,15 +66,9 @@ if (navigator.geolocation) {
 
 		this.options = {
 			enableHighAccuracy: true
-			// timeout: "2000", //in milliseconds
-			// maximumAge: "2000"
 		}
 
-		this.location_id = navigator.geolocation.watchPosition(this.success, this.failure, this.options);
-		
-		this.clear_location = function() {
-			navigator.geolocation.clearWatch(geolocate_obj.location_id);
-		}
+		this.location_id = navigator.geolocation.getCurrentPosition(this.success, this.failure, this.options);
 
 	}
 

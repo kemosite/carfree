@@ -6,7 +6,7 @@ Author: Kevin Montgomery
 
 /* [Useful Mixins] */
 .button-bg-gradient(@button-colour-start, @button-colour-end) {
-	background: @button-colour-start; /* Old browsers */
+	background: @button-colour-start url(/img/header-titlebar-back.jpg) repeat-x; /* Old browsers */
 	background: -moz-linear-gradient(top,  @button-colour-start 0%, @button-colour-end 100%); /* FF3.6+ */
 	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,@button-colour-start), color-stop(100%,@button-colour-end)); /* Chrome,Safari4+ */
 	background: -webkit-linear-gradient(top,  @button-colour-start 0%,@button-colour-end 100%); /* Chrome10+,Safari5.1+ */
@@ -68,11 +68,8 @@ Author: Kevin Montgomery
 @black: @black-70;
 @inherit: @black;
 
-/*====================
-[ Apply Defaults ]
-======================*/
-
 body {
+	background-color: lighten(@cyan, 50%);
 	* {
 		color: @black;
 	}
@@ -82,18 +79,18 @@ h1,h2,h3,h4,h5,h6 { color: @cyan; }
 
 .container {
 
-	.button { 
-		.bg-gradient(@cyan);
+	border: 1px solid @cyan;
+	background-color: white;
+
+	.button-group a { 
 		color: white;
-
-		&:hover { color: white; }
-	}
-	.button:active { .bg-gradient(darken(@cyan, 10%)); }
-
-	header {
-		background-color: #BFE8FF;
+		&:hover {
+			color: white;
+		}
 	}
 
-	.menu .row { margin: 1em 0; }
+	a.button, a:link.button, a:hover.button, a:visited.button {
+		color: white;
+	}
 
 }
