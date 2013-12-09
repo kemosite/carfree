@@ -9,9 +9,7 @@ Author: Kevin Montgomery
 ===============================================*/
 
 body,
-p,
-button,
-.button { 
+p { 
 	font-family: SourceSansProRegular, "Helvetica Neue", Helvetica, Arial, sans-serif; 
 }
 
@@ -19,7 +17,7 @@ em {
 	font-family: SourceSansProItalic, "Helvetica Neue", Helvetica, Arial, sans-serif;
 	font-style: normal;
 }
-h1,h2,h3,h4,h5,h6,strong {
+h1,h2,h3,h4,h5,h6,strong, button, .button {
 	font-family: SourceSansProSemibold, "Arial Black", "Helvetica Neue", Helvetica, Arial, sans-serif;
 	font-weight: normal;
 }
@@ -38,12 +36,12 @@ h6 em
 .glyph { font-family: ModernPictogramsNormal; }
 	
 /* [Header Sizes] */
-h1 { font-size: 3em; line-height: .333em; margin: 0.666em 0 0.333em 0; }
-h2 { font-size: 2.6em; line-height: 0.384em; margin: 0.769em 0 0.384em 0}
-h3 { font-size: 2.2em; line-height: 0.454em; margin: 0.909em 0 0.454em 0; }
-h4 { font-size: 1.8em; line-height: 0.555em; margin: 1.111em 0 0.555em 0; }
-h5 { font-size: 1.4em; line-height: 0.714em; margin: 1.428em 0 0.714em 0; }
-h6 { font-size: 1em; line-height: 1em; margin: 2em 0 1em 0; }
+h1 { font-size: 3em; font-size: 3rem; line-height: .333em; margin: 0.666em 0 0.333em 0; }
+h2 { font-size: 2.6em; font-size: 2.6rem; line-height: 0.384em; margin: 0.769em 0 0.384em 0}
+h3 { font-size: 2.2em; font-size: 2.2rem; line-height: 0.454em; margin: 0.909em 0 0.454em 0; }
+h4 { font-size: 1.8em; font-size: 1.8rem; line-height: 0.555em; margin: 1.111em 0 0.555em 0; }
+h5 { font-size: 1.4em; font-size: 1.4rem; line-height: 0.714em; margin: 1.428em 0 0.714em 0; }
+h6 { font-size: 1em; font-size: 1rem; line-height: 1em; margin: 2em 0 1em 0; }
 
 /* [Default Link Formatting] */
 a, a:link, a:visited {
@@ -109,7 +107,7 @@ blockquote {
 blockquote:before {
 		 color:#ccc;
 		 content:open-quote;
-		 font-size:4em;
+		 font-size:4em; font-size:4rem;
 		 line-height:.1em;
 		 margin-right:.25em;
 		 vertical-align:-.4em;
@@ -122,10 +120,11 @@ blockquote p {
 [ End Default Formats]
 ===============================================*/
 
+.button { font-size: 1.25em !important; font-size: 1.25rem !important; }
+
 header .button {
-	text-align: left;
-	font-size: 1em !important;
-	margin: .5em;
+	text-align: left;	
+	margin: .35em;
 }
 
 .throbber {
@@ -141,6 +140,6 @@ header .button {
 
 .f-dropdown > li {
 	> a, a:link, a:visited {
-		font-size: 1.25em;
+		font-size: 1.25em; font-size: 1.25rem;
 	}
 }
