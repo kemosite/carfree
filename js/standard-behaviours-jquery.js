@@ -57,7 +57,7 @@ $(document).ready(function(){
 		if (url && !rel) {
 			
 			// If link is local, smooth-scroll to it
-			if (url.substr(0,1) == "#") {
+			if (url.substr(0,1) == "#" && adaptive_scripts.attach_scrollto) {
 				$.scrollTo($(url), 1000);
 			
 			// Otherwise, fade the page out, then go to the link

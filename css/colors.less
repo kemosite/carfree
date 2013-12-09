@@ -83,12 +83,16 @@ h1,h2,h3,h4,h5,h6 { color: @cyan; }
 .container {
 
 	.button { 
-		.bg-gradient(@cyan);
+		// .bg-gradient(@cyan);
+		background-color: @cyan;
 		color: white;
 
 		&:hover { color: white; }
 	}
-	.button:active { .bg-gradient(darken(@cyan, 10%)); }
+	.button:active { 
+		// .bg-gradient(darken(@cyan, 10%));
+		background-color: darken(@cyan, 10%);
+	}
 
 	header {
 		background-color: #BFE8FF;

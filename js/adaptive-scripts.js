@@ -37,6 +37,6 @@ if (adaptive_scripts.resolution > adaptive_scripts.sorted_breakpoints()[0]) {
 	/* [Attach Scroll To 1.4.3.1] */
 	adaptive_scripts.attach_scrollto = document.createElement("script");
 	adaptive_scripts.attach_scrollto.setAttribute("src", "js/vendor/jquery.scrollTo-1.4.3.1-min.js?ver=1.4.3.1");
-	// document.getElementsByTagName("body")[0].appendChild(adaptive_scripts.attach_scrollto);
+	document.getElementsByTagName("body")[0].appendChild(adaptive_scripts.attach_scrollto);
 	
 }

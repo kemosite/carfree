@@ -1,27 +1,60 @@
 /* [Fade The Page In] */
+
+$( document ).ready(function() {
+
+
+	
+});
+
 $(window).load( function() {
 	
 	$(".throbber").fadeIn("fast").css("display: block");
 
 	/* [GeoLocate Class] */
-	adaptive_scripts.attach_scrollto = document.createElement("script");
-	adaptive_scripts.attach_scrollto.setAttribute("src", "js/geolocate-class.js");
-	document.getElementsByTagName("body")[0].appendChild(adaptive_scripts.attach_scrollto);
+	var attach_geolocate = document.createElement("script");
+	attach_geolocate.setAttribute("src", "js/geolocate-class.js");
+	document.getElementsByTagName("body")[0].appendChild(attach_geolocate);
 
 	/* [Google API Functions] */
-	// adaptive_scripts.attach_scrollto = document.createElement("script");
-	// adaptive_scripts.attach_scrollto.setAttribute("src", "js/google-api-functions.js");
-	// document.getElementsByTagName("body")[0].appendChild(adaptive_scripts.attach_scrollto);
+	var attach_google_api = document.createElement("script");
+	attach_google_api.setAttribute("src", "js/google-api-functions.js");
+	document.getElementsByTagName("body")[0].appendChild(attach_google_api);
 
-});
+	/* [Check that we have a position lock before initiating further functions] */
+	var wait_for_location = new function() {
 
-$( document ).ready(function() {
+		this.interval = setInterval( function() { wait_for_location.still_waiting() },3000);
 
-	$("a.trip").click(function() {
+		this.still_waiting = function() {
+			
+			if (geocode_properties.locked == true) {
+				
+				this.stop_waiting(this.interval);
+				
+				/* [Pre-fill general starting address] */
+				$("#start_location").val(geocode_properties.city);
 
-		$(".window").fadeOut("fast").css("display: none");
-		$(".trip.window").delay("1000").fadeIn("fast").css("display: block");
+				/* [Use GeoIP2 if loaded and browser doesn't support navigator.geolocation] */
+				if (!geolocate_obj && geoip2) {
+					$(".maxmind_statement").show();
+				}
 
-	});
+				google_api_obj.load_map_canvas();
+				// google_api_obj.places.search_box();
+				// google_api_obj.places.broad_search();
+				// google_api_obj.places.type_search();
+				// google_api_obj.places.text_search();
+
+				$(".search_city_ex").text(geocode_properties.city);
+
+			}
+		}
+		this.stop_waiting = function() {
+			clearInterval(this.interval);
+		}
+
+		// debug_report(window.orientation);
+
+	}
 
 });

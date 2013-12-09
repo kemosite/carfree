@@ -84,19 +84,24 @@ Includes:
   
   <header>
     <div class="row">
-      <div class="small-6 columns">
+      <div class="small-7 columns">
         <div class="logo"><img src="images/carfree_logo.svg"></div>
       </div>
-      <div class="small-6 columns">
-        <a class="show-for-small menu radius button" data-dropdown="drop_menu">Menu</a>
+      <div class="small-5 columns">
+        <a class="show-for-small small menu radius button dropdown" data-dropdown="drop_menu">Menu</a>
         <ul id="drop_menu" class="f-dropdown" data-dropdown-content>
           <li><a href="#" class="trip" rel="menu">Plan a Trip</a></li>
           <li><a href="#" class="nearby" rel="menu">What&rsquo;s Nearby?</a></li>
-          <li><a href="#" class="map" rel="menu">The Map</a></li>
         </ul>
       </div>
     </div>
   </header>
+
+  <div class="row collapse">
+    <div class="small-12 columns">
+      <div id="map_canvas"></div>
+    </div>
+  </div>
 
   <section class="menu window">
     <div class="row">
@@ -105,20 +110,29 @@ Includes:
       </div>
     </div>
     <div class="row">
-      <div class="small-12 columns"><a href="#" class="trip radius button expand" rel="menu">Plan a Trip</a></div>
+      <div class="small-12 columns"><a href="#" class="trip radius button expand" data-reveal-id="trip_modal">Plan a Trip</a></div>
     </div>
     <div class="row">
       <div class="small-12 columns"><a href="#" class="nearby radius button expand" rel="menu">What&rsquo;s Nearby?</a></div>
     </div>
-    <div class="row">
-      <div class="small-12 columns"><a href="#" class="map radius button expand" rel="menu">The Map</a></div>
-    </div>
   </section>
+
+  <!--
+  <form class="custom">
 
   <section class="trip window">
     <div class="row">
       <div class="small-12 columns">
         <h5 class="greeting">Let&rsquo;s plan a trip!</h5>
+        <label>Travel Mode</label>
+        <div class="row collapse">
+          <div class="small-12 columns">
+            <select id="trip_mode_select" class="medium" onchange="google_api_obj.update_radius();">
+              <option value="BICYCLING">Cycling</option>
+              <option value="TRANSIT">Transit</option>
+            </select>
+          </div>
+        </div>
         <label>Start Location</label>
         <div class="row collapse">
           <div class="small-11 columns">
@@ -130,7 +144,10 @@ Includes:
         </div>
       </div>
     </div>
-  </section>  
+  </section>
+
+  </form>
+  -->
 
   <div class="row">
     <div class="large-12 columns">
@@ -143,16 +160,23 @@ Includes:
 </div>
 <!-- [End Container] -->
 
+<!-- Modal Windows -->
+<div id="trip_modal" class="reveal-modal small" data-reveal style="display: none;">
+  <p>Trip!</p>
+  <a class="close-reveal-modal">&#215;</a>
+</div>
+
 <!-- [Initialize LESS CSS] -->
 <script>var less = { env: "development" }; // Comment out if used in production</script>
 <script type="text/javascript" src="js/vendor/less-1.4.1.min.js?ver=1.4.1"></script>
 
-<!-- [Initialize Foundation JS] -->
-<script src="js/vendor/foundation.min.js?ver=4.3.2"></script>
+<!-- [Initialize Foundation JS 5.0.2] -->
+<script src="js/vendor/foundation.min.js?ver=5.0.2"></script>
+<script src="js/vendor/foundation/foundation.reveal.js?ver=5.0.2"></script>
 
 <script>
 $(document).foundation(function (response) {
-  // if (response.errors && console) { console.log(response.errors); }
+  if (response.errors && console) { console.log(response.errors); }
 });
 </script>
 
@@ -170,11 +194,11 @@ $(function() {
 <!-- [TypeSet 3.0] -->
 <script src="js/jquery.typeset-v3.js?ver=3"></script>
 
-<!-- [JQuery: Standard Behaviours] -->
-<script src="js/standard-behaviours-jquery.js?ver=1.9.1"></script>
-
 <!-- [JQuery: Adaptive Scripts] -->
 <script src="js/adaptive-scripts.js?ver=1.0"></script>
+
+<!-- [JQuery: Standard Behaviours] -->
+<script src="js/standard-behaviours-jquery.js?ver=1.9.1"></script>
 
 <!-- [Show Throbber] -->
 <noscript>
@@ -195,10 +219,6 @@ g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js
 s.parentNode.insertBefore(g,s)}(document,'script'));
 </script>
 -->
-
-<!-- Modal Windows -->
-<div id="search_modal" class="reveal-modal small" style="display: none;">
-</div>
 
 </body>
 </html>
