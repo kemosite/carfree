@@ -80,12 +80,28 @@ body {
 
 h1,h2,h3,h4,h5,h6 { color: @cyan; }
 
-.container {
+a, a:link, a:visited {
+	color: @blue;
+	
+	&:hover {
+		color: @cyan;
+		border-bottom-color: @cyan;
+	}
+	
+}
+a[href^="http://"],
+a[href^="https://"],
+a[href^="mailto:"] {
+	border-bottom: 1px solid @blue;
+}
+
+.container, .reveal-modal {
 
 	.button { 
 		// .bg-gradient(@cyan);
 		background-color: @cyan;
 		color: white;
+		border-right: 1px solid white;
 
 		&:hover { color: white; }
 	}

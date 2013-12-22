@@ -20,7 +20,11 @@ if (navigator.geolocation) {
 	    });
 		$(".loading_message").fadeIn("fast").css("display: block");
 
-		this.error = {}
+		this.error = function() {
+			$(".loading_message").queue(function() {
+				$(this).text("Error getting location. Please refresh your browser.").dequeue();
+			});
+		}
 
 		this.success = function(position) {
 

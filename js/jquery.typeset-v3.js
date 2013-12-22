@@ -80,17 +80,28 @@
 				}
 				*/
 				
-				if ($this[0].nodeName.toLowerCase() != "body") {
+				if (
+					$this[0].nodeName.toLowerCase() != "body" && 
+					$this[0].nodeName.toLowerCase() != "input" &&
+					$this[0].nodeName.toLowerCase() != "label" &&
+					$this[0].nodeName.toLowerCase() != "select"
+				) {
 					$this.css({
 						'font-size':typeset_em_fontheight+'em', 
+						'font-size':typeset_em_fontheight+'rem', 
 						'line-height':typeset_em_lineheight+'em', 
+						'line-height':typeset_em_lineheight+'rem', 
 						'max-width':typeset_em_maxlength+'em',
-						'margin':typeset_em_itemspace+'em 0'
+						'max-width':typeset_em_maxlength+'rem',
+						'margin':typeset_em_itemspace+'em 0',
+						'margin':typeset_em_itemspace+'rem 0'
 					});
 				} else {
 					$this.css({
 						'font-size':typeset_em_fontheight+'em', 
-						'line-height':typeset_em_lineheight+'em'
+						'font-size':typeset_em_fontheight+'rem', 
+						'line-height':typeset_em_lineheight+'em',
+						'line-height':typeset_em_lineheight+'rem'
 					});
 				}
 			};

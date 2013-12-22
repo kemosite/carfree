@@ -38,6 +38,7 @@ var google_api_obj = new function() {
 	},
 	this.bike_zone_circle = "";
 
+	/* [Load the map] */
 	this.load_map_canvas = function() {
 
 		// Enable the visual refresh
@@ -115,8 +116,9 @@ var google_api_obj = new function() {
 		google_api_obj.layers.bike_layer = new google.maps.BicyclingLayer();
 		google_api_obj.layers.bike_layer.setMap(google_api_obj.map);
 		
-		google_api_obj.layers.weather_layer = new google.maps.weather.WeatherLayer({ temperatureUnits: google.maps.weather.TemperatureUnit.CELSIUS });
-		google_api_obj.layers.weather_layer.setMap(google_api_obj.map);
+		/* [This layer is causing issues with map rendering. Wrapped in "safe_exec" to allow fail] */
+		safe_exec(google_api_obj.layers.weather_layer = new google.maps.weather.WeatherLayer({ temperatureUnits: google.maps.weather.TemperatureUnit.CELSIUS }));
+		safe_exec(google_api_obj.layers.weather_layer.setMap(google_api_obj.map));
 
 		google_api_obj.directions_service = new google.maps.DirectionsService();
 
@@ -125,7 +127,7 @@ var google_api_obj = new function() {
 		};
 		google_api_obj.directions_display = new google.maps.DirectionsRenderer(google_api_obj.directions_display_options);
 		google_api_obj.directions_display.setMap(google_api_obj.map);
-		google_api_obj.directions_display.setPanel(document.getElementById("directions_panel"));
+		google_api_obj.directions_display.setPanel(document.getElementById("directions-panel"));
 
 		google_api_obj.trip_mode = "BICYCLING";
 
@@ -176,8 +178,6 @@ var google_api_obj = new function() {
 		this.map_zoom_circle.setMap(null);
 
 		if (google_api_obj.trip_mode == "TRANSIT") {
-			
-			debug_report(google_api_obj.layers);
 
 			google_api_obj.map.setOptions({styles: null});
 			google_api_obj.layers.bike_layer.setMap(null);
@@ -209,46 +209,47 @@ var google_api_obj = new function() {
 		google_api_obj.geocoder = new google.maps.Geocoder();
 	    google_api_obj.geocoder.geocode({ 'address': address}, function(results, status) {
 	      
-	      if (status == google.maps.GeocoderStatus.OK) {
+			if (status == google.maps.GeocoderStatus.OK) {
 
-	      	google_api_obj.start_location = address;
+				google_api_obj.start_location = address;
 
-	      	$(results[0].address_components).each(function() {
-				if (this.types[0] == "locality") {
-					google_api_obj.categories_keyword = this.long_name;
-				}	
-			});
+				$(results[0].address_components).each(function() {
+					if (this.types[0] == "locality") {
+						google_api_obj.categories_keyword = this.long_name;
+					}	
+				});
 
-			this.map_zoom_properties = {
-				map: google_api_obj.map,
-				center: google_api_obj.map_default_options.center,
-				radius: google_api_obj.trip_mode_radius[google_api_obj.trip_mode]
-			};
+				this.map_zoom_properties = {
+					map: google_api_obj.map,
+					center: google_api_obj.map_default_options.center,
+					radius: google_api_obj.trip_mode_radius[google_api_obj.trip_mode]
+				};
 
-			this.bike_zone_properties = {
-				strokeColor: '#0040ff',
-				strokeOpacity: 0.5,
-				strokeWeight: 1,
-				fillColor: '#a6bcff',
-				fillOpacity: 0.125,
-				center: google_api_obj.map_default_options.center,
-				map: google_api_obj.map,
-				radius: google_api_obj.trip_mode_radius["BICYCLING"]
-			};
+				this.bike_zone_properties = {
+					strokeColor: '#0040ff',
+					strokeOpacity: 0.5,
+					strokeWeight: 1,
+					fillColor: '#a6bcff',
+					fillOpacity: 0.125,
+					center: google_api_obj.map_default_options.center,
+					map: google_api_obj.map,
+					radius: google_api_obj.trip_mode_radius["BICYCLING"]
+				};
 
-			google_api_obj.bike_zone_circle.setMap(null);
-			google_api_obj.bike_zone_circle = new google.maps.Circle(this.bike_zone_properties);
+				google_api_obj.bike_zone_circle.setMap(null);
+				google_api_obj.bike_zone_circle = new google.maps.Circle(this.bike_zone_properties);
 
-			google_api_obj.map_default_options = this.map_zoom_properties;
+				google_api_obj.map_default_options = this.map_zoom_properties;
 
-			// this.map_zoom_circle = new google.maps.Circle(this.map_zoom_properties);
-			// this.map_bounds = new google.maps.LatLngBounds(this.map_zoom_circle.getBounds().getSouthWest(), this.map_zoom_circle.getBounds().getNorthEast());
-	        // google_api_obj.map.fitBounds(this.map_bounds);
-	        // this.map_zoom_circle.setMap(null);
-	        google_api_obj.places.broad_search();
-	        google_api_obj.calculate_route();
+				// this.map_zoom_circle = new google.maps.Circle(this.map_zoom_properties);
+				// this.map_bounds = new google.maps.LatLngBounds(this.map_zoom_circle.getBounds().getSouthWest(), this.map_zoom_circle.getBounds().getNorthEast());
+				// google_api_obj.map.fitBounds(this.map_bounds);
+				// this.map_zoom_circle.setMap(null);
+				// google_api_obj.places.broad_search();
+				google_api_obj.calculate_route();
 
-	      }
+			}
+
 	    });
 	}
 
@@ -282,7 +283,7 @@ var google_api_obj = new function() {
 			this.map_bounds = new google.maps.LatLngBounds(this.map_zoom_circle.getBounds().getSouthWest(), this.map_zoom_circle.getBounds().getNorthEast());
 	        google_api_obj.map.fitBounds(this.map_bounds);
 	        // this.map_zoom_circle.setMap(null);
-	        google_api_obj.places.broad_search();
+	        // google_api_obj.places.broad_search();
 	      }
 	    });
 	}
@@ -428,7 +429,7 @@ var google_api_obj = new function() {
 			rankBy: google.maps.places.RankBy.DISTANCE
 		};
 
-		var destination_types = $(".nearby_destinations .destination_types");
+		var destination_types = $("#nearby_modal .destination_types");
 		destination_types.empty();
 		google_api_obj.places.categories.types = [];
 
@@ -438,7 +439,7 @@ var google_api_obj = new function() {
 			$.each(destinations, function(index, destination) {
 				if (google_api_obj.places.categories.types.indexOf(destination.types[0]) == -1) {
 					google_api_obj.places.categories.types.push(destination.types[0]);
-					destination_types.append('<li><a class="destination small button radius expand" onclick="google_api_obj.places.type_search(\''+destination.types[0]+'\');">'+google_api_obj.places.types[destination.types[0]]+'&ensp;<img src="'+destination.icon+'" class="icon"></a></li>');
+					destination_types.append('<li><a class="destination button radius expand" onclick="google_api_obj.places.type_search(\''+destination.types[0]+'\');">'+google_api_obj.places.types[destination.types[0]]+'&ensp;<img src="'+destination.icon+'" class="icon"></a></li>');
 					i++;'+google_api_obj.places.types[destination.types[0]]+'
 				}
 			});
@@ -470,8 +471,8 @@ var google_api_obj = new function() {
 
 					$(".search_findings").append(
 						'<div class="row">'+
-						'<div class="small-2 columns"><a class="tiny button radius glyph" onclick="google_api_obj.add_destination(\''+this.vicinity+'\', \''+escape(this.name)+'\')">%</a></div>'+
-						'<div class="small-10 columns">'+
+						'<div class="small-2 columns"><a class="tiny button radius glyph expand" onclick="google_api_obj.add_destination(\''+this.vicinity+'\', \''+escape(this.name)+'\')">%</a></div>'+
+						'<div class="small-offset-1 small-9 columns">'+
 						'<div><strong>'+this.name+'</strong></div>'+
 						'<div>'+this.vicinity+'</div>'+
 						'</div></div><br>');
@@ -493,6 +494,7 @@ var google_api_obj = new function() {
 
 	}
 
+	/* [Establish bounds in which to favour search results from] */
 	this.places.search_box = function() {
 
 		this.text_search_input = document.getElementById('location_search');
@@ -522,7 +524,6 @@ var google_api_obj = new function() {
 
 		google_api_obj.places.service.textSearch(this.text_search_properties, function(locations, status, pagination) {
 
-			// debug_report(locations[0]);
 			// debug_report(status);
 
 			if (status == "OK") {
@@ -537,21 +538,22 @@ var google_api_obj = new function() {
 
 					$(".search_findings").append(
 						'<div class="row">'+
-						'<div class="small-2 columns"><a class="tiny button radius glyph" onclick="google_api_obj.add_destination(\''+this.formatted_address+'\', \''+escape(this.name)+'\')">%</a></div>'+
-						'<div class="small-10 columns">'+
+						'<div class="small-2 columns"><a class="tiny button radius glyph expand" title="Add '+this.name+' to destinations" onclick="google_api_obj.add_destination(\''+this.formatted_address+'\', \''+escape(this.name)+'\')">+</a></div>'+
+						'<div class="small-offset-1 small-9 columns">'+
 						'<div><strong>'+this.name+'</strong></div>'+
 						'<div><em>'+google_api_obj.places.types[this.types[0]]+'</em> <img src="'+this.icon+'" style="height: 1em;"></div>'+
 						'<div>'+this.formatted_address+'</div>'+
 						'</div></div><br>');
 
 					// debug_report(this);
+
 				});
 
-				$('#search_modal').foundation('reveal', 'open');
+				$('#search_modal').foundation('reveal', 'open');				
 
 			}
 
-			// pagination.nextPage();
+			pagination.nextPage();
 
 		});
 
@@ -596,7 +598,7 @@ var google_api_obj = new function() {
 		
 		google_api_obj.directions_service.route(request, function(response, status) {
 			
-			debug_report(response);
+			// debug_report(response);
 
 			if (status == google.maps.DirectionsStatus.OK) {
 				google_api_obj.directions_display.setDirections(response);

@@ -55,16 +55,23 @@ body {
 	box-pack: start;
 }
 
+.reveal-modal { 
+	top: 2em;
+	top: 2rem;
+
+	li .button { margin: 0; }
+}
+
 /* [Throbber] */
 .throbber {
 	z-index: 9999;
 	height: 100%; width: 100%;
-	margin: 1em auto;
+	margin: 0 auto;
 	display: none;
 	text-align: center;
 
 	.logo { width: 100%; }
-	.loading_message { display: none; }
+	.loading_message, .refresh_warning { display: none; }
 
 }
 
@@ -88,15 +95,26 @@ body {
 
 }
 
+.destination_types {
+	li {
+		img { 
+			height: 1.25em; 
+			height: 1.25rem;
+		}
+	}
+}
+
 /* [Variables should always come first, they're handy that way] */
-@tablet-min: 39em;
-@screen-min: 59em;
+@tablet-min: 39rem;
+@screen-min: 59rem;
 
 /* [Foundation CSS Overrides] */
 
 /* [Mobile First View] */
 .container { 
 	
+	position: fixed;
+
 	.f-dropdown > li {
 		height: 4em;
 		padding: 1em 0;
@@ -119,7 +137,8 @@ body {
 	min-height: 100%;
 
 	#map_canvas {
-		height: 19em;
+		height: 17em;
+		height: 17rem;
 	}
 
 	footer {
@@ -130,18 +149,52 @@ body {
 
 /* [Tablet Screen View] */
 @media only screen and (min-width: @tablet-min) {
+	
 	.container {
-		#map_canvas {
-			height: 39em;
+
+		header,
+		header .row,
+		header .colomn,
+		header .columns {
+			height: 3em;
+			vertical-align: middle;
 		}
+
+		header .logo {
+			margin: .5em 0;
+		}
+
+		header .logo img { height: 2em; }
+		
+		#map_canvas {
+			height: 22em;
+			height: 22rem;
+		}
+
 	}
+
 }
+
+@media only screen and (min-width: @tablet-min) and (min-height: @tablet-min) {
+
+	.container {
+
+		#map_canvas {
+			height: 36em;
+			height: 36rem;
+		}
+
+	}
+}	
 
 /* [Computer Screen View] */
 @media screen and (min-width: @screen-min) { 
+	
 	.container, .throbber {
 		max-width: @tablet-min;
+		position: inherit;
 	}
+
 }
 
 /* [Breakpoints] */

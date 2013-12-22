@@ -6,27 +6,41 @@ Author: Kevin Montgomery
 
 /* [Debug Tool] */
 function debug_report(item) {
-	 if(this.console){ console.log(item); }
+	if(this.console) {
+	 	console.log("Item is type: "+typeof item);
+	 	console.log(item);
+	}
 }
 
 /* [Safe Execute] */
-function safe_exec(function_name) {
-	try {
-		function_name();
-	} catch (e) {
-		debug_report(e); // statements to handle any unspecified exceptions
-	}
-	finally {
-		window.onerror = function(message, url, linenumber) {
-			debug_report("Error: " + message + " on line " + linenumber + " for " + url);
+function safe_exec(input) {
+	
+	if (typeof input === "function") {
+
+		try {
+			input();
 		}
+
+		catch (error) {
+			debug_report(error); // statements to handle any unspecified exceptions
+		}
+		
+		finally {
+			window.onerror = function(message, url, linenumber) {
+				debug_report("Error: " + message + " on line " + linenumber + " for " + url);
+			}
+		}
+
+	} else {
+		debug_report("What is this "+ typeof input + " thing?");
+		debug_report(input); // what is this thing?
 	}
 }
 
 $(document).ready(function(){
 	
 	/* [TypeSet Body Copy] */
-	$("body, p, label, input").typeset();
+	$("body, p, label, input, select").typeset();
 	
 	/* [Switch SVG for PNG Image, If Not Supported] */
 	if(!Modernizr.svg) {
@@ -48,14 +62,14 @@ $(document).ready(function(){
 	/* [Default Link Behaviour] */
 		
 	$("a").click(function(event) {
-		
+
 		// Override default behaviour
 		event.preventDefault();
 		var url = $(this).attr("href");
 		var rel = $(this).attr("rel");
 		
-		if (url && !rel) {
-			
+		if (url && url !== "#" && !rel) {
+
 			// If link is local, smooth-scroll to it
 			if (url.substr(0,1) == "#" && adaptive_scripts.attach_scrollto) {
 				$.scrollTo($(url), 1000);

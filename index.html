@@ -77,6 +77,7 @@ Includes:
   <div><img src="assets/ajax-loader.gif"></div>
   <br>
   <div class="loading_message"></div>
+  <div class="refresh_warning">(Sorry this is taking a while. You might want to refresh.)</div>
 </div>
 
 <!-- [Container] -->
@@ -90,32 +91,33 @@ Includes:
       <div class="small-5 columns">
         <a class="show-for-small small menu radius button dropdown" data-dropdown="drop_menu">Menu</a>
         <ul id="drop_menu" class="f-dropdown" data-dropdown-content>
-          <li><a href="#" class="trip" rel="menu">Plan a Trip</a></li>
-          <li><a href="#" class="nearby" rel="menu">What&rsquo;s Nearby?</a></li>
+          <li><a href="#" class="trip" rel="menu" data-reveal-id="trip_modal">Plan a Trip</a></li>
+          <li><a href="#" class="nearby" rel="menu" data-reveal-id="nearby_modal">What&rsquo;s Nearby?</a></li>
+          <li><a href="#" class="route" rel="menu" data-reveal-id="route_modal">Route Details</a></li>
         </ul>
       </div>
     </div>
   </header>
 
   <div class="row collapse">
-    <div class="small-12 columns">
+    <div class="small-12 medium-6 columns">
       <div id="map_canvas"></div>
     </div>
-  </div>
-
-  <section class="menu window">
-    <div class="row">
-      <div class="small-12 columns">
-        <h5 class="greeting">What would you like to do?</h5>
+    <div class="small-12 medium-6 columns">
+      <section class="menu window">
+      <h5 class="greeting">What would you like to do?</h5>
+      <div class="row">
+        <div class="small-offset-1 small-10 columns"><a href="#" class="trip radius button expand" data-reveal-id="trip_modal">Plan a Trip</a></div>
       </div>
+      <div class="row">
+        <div class="small-offset-1 small-10 columns"><a href="#" class="nearby radius button expand" data-reveal-id="nearby_modal">See What&rsquo;s Nearby</a></div>
+      </div>
+       <div class="row">
+        <div class="small-offset-1 small-10 columns"><a href="#" class="route radius button expand" data-reveal-id="route_modal">Show Route Details</a></div>
+      </div>
+      </section>
     </div>
-    <div class="row">
-      <div class="small-offset-1 small-10 columns"><a href="#" class="trip radius button expand" data-reveal-id="trip_modal">Plan a Trip</a></div>
-    </div>
-    <div class="row">
-      <div class="small-offset-1 small-10 columns"><a href="#" class="nearby radius button expand" rel="menu">What&rsquo;s Nearby?</a></div>
-    </div>
-  </section>
+  </div>
 
   <!--
   <form class="custom">
@@ -161,8 +163,70 @@ Includes:
 <!-- [End Container] -->
 
 <!-- Modal Windows -->
-<div id="trip_modal" class="reveal-modal small" data-reveal style="display: none;">
-  <p>Trip!</p>
+<div id="trip_modal" class="reveal-modal medium" data-reveal style="display: none;">
+  <form class="custom">
+  <h5 class="greeting">Let&rsquo;s plan a trip!</h5>
+  <label>Travel Mode</label>
+  <div class="row collapse">
+    <div class="small-12 columns">
+      <select id="trip_mode_select" class="medium" onchange="google_api_obj.update_radius();">
+        <option value="BICYCLING">Cycling</option>
+        <option value="TRANSIT">Transit</option>
+      </select>
+    </div>
+  </div>
+  <label>Start Location</label>
+  <div class="row">
+    <div class="small-10 columns">
+      <input type="text" id="start_location" placeholder="Where are you starting your trip from?" onchange="google_api_obj.geocode_start_address();">
+    </div>
+    <div class="small-1 column">
+      <a href="#" class="button prefix glyph" onclick="google_api_obj.reset_start_address();" title="Reset to last known location">,</a>
+    </div>
+    <div class="small-1 column">
+      <a href="#" class="button prefix glyph" onclick="google_api_obj.reset_start_address();" title="Re-determine my location">R</a>
+    </div>
+    <!--
+    <div class="small-1 column">
+      <a href="#" class="button prefix glyph">%</a>
+    </div>
+    -->
+  </div>
+  <label>Search For A Destination<br>
+    <em>Example: Pizza in <span class="search_city_example">your city</span>; Store name; Address)</em></label>
+  <div class="row collapse">
+    <div class="small-11 columns">
+      <input type="text" id="location_search" placeholder="Address, or name of place.">
+    </div>
+    <div class="small-1 columns">
+      <a href="#" class="button prefix glyph" onclick="google_api_obj.places.text_search();" title="Search for locations">s</a>
+    </div>
+  </div>
+  <div class="row">
+    <div class="small-12 columns">
+      <a href="#" class="set trip radius button expand">Update Map, Close Window</a>
+    </div>
+  </div>
+  <a class="close-reveal-modal">&#215;</a>
+  </form>
+</div>
+
+<div id="search_modal" class="reveal-modal medium" data-reveal style="display: none;">
+  <h5>Locations found for <span class="search_keyword">your search term</span>.</h5>
+  <h6>Please select locations to add to as destinations.</h6>
+  <div class="search_findings"></div>
+  <a class="close-reveal-modal">&#215;</a>
+</div>
+
+<div id="nearby_modal" class="reveal-modal medium" data-reveal style="display: none;">
+  <h5 class="greeting">Look for things nearby</h5>
+  <ul class="destination_types small-block-grid-1 large-block-grid-2"></ul>
+  <a class="close-reveal-modal">&#215;</a>
+</div>
+
+<div id="route_modal" class="reveal-modal medium" data-reveal style="display: none;">
+  <h5 class="greeting">Your Route</h5>
+  <div id="directions-panel"></div>
   <a class="close-reveal-modal">&#215;</a>
 </div>
 

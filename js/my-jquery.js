@@ -2,7 +2,23 @@
 
 $( document ).ready(function() {
 
+	$('.set.trip.button').click(function() {
+		$('#trip_modal').foundation('reveal', 'close');
+	});
 
+	$('.nearby.button').click(function() {
+		if (typeof google_api_obj.start_location === "undefined") { google_api_obj.geocode_start_address(); }
+		google_api_obj.places.broad_search();
+	});
+
+	$('#drop_menu .nearby').click(function() {
+		if (typeof google_api_obj.start_location === "undefined") { google_api_obj.geocode_start_address(); }
+		google_api_obj.places.broad_search();
+	});
+
+	$('.route.button').click(function() {
+		$('#route_modal').foundation('reveal', 'close');
+	});
 	
 });
 
@@ -24,6 +40,7 @@ $(window).load( function() {
 	var wait_for_location = new function() {
 
 		this.interval = setInterval( function() { wait_for_location.still_waiting() },3000);
+		this.wait_count = 0;
 
 		this.still_waiting = function() {
 			
@@ -39,14 +56,29 @@ $(window).load( function() {
 					$(".maxmind_statement").show();
 				}
 
+				/* [Load the map] */
 				google_api_obj.load_map_canvas();
-				// google_api_obj.places.search_box();
+				
+				/* [Establish bounds in which to favour search results from] */
+				google_api_obj.places.search_box();
+
 				// google_api_obj.places.broad_search();
 				// google_api_obj.places.type_search();
 				// google_api_obj.places.text_search();
 
-				$(".search_city_ex").text(geocode_properties.city);
+				$(".search_city_example").text(geocode_properties.city);
 
+			} else {
+				$(".loading_message").queue(function() {
+					$(this).text("Still determining your location. Please wait.").dequeue();
+			    });
+			    wait_for_location.wait_count++;
+			}
+
+			if (wait_for_location.wait_count > 2) {
+				$(".refresh_warning").queue(function() {
+					$(this).show().dequeue();
+			    });
 			}
 		}
 		this.stop_waiting = function() {
