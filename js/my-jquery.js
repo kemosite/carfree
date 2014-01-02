@@ -47,9 +47,6 @@ $(window).load( function() {
 			if (geocode_properties.locked == true) {
 				
 				this.stop_waiting(this.interval);
-				
-				/* [Pre-fill general starting address] */
-				$("#start_location").val(geocode_properties.city);
 
 				/* [Use GeoIP2 if loaded and browser doesn't support navigator.geolocation] */
 				if (!geolocate_obj && geoip2) {
@@ -58,6 +55,9 @@ $(window).load( function() {
 
 				/* [Load the map] */
 				google_api_obj.load_map_canvas();
+
+				/* [Pre-fill general starting address] */
+				$("#start_location").val(google_api_obj.start_location);
 				
 				/* [Establish bounds in which to favour search results from] */
 				google_api_obj.places.search_box();
@@ -66,7 +66,7 @@ $(window).load( function() {
 				// google_api_obj.places.type_search();
 				// google_api_obj.places.text_search();
 
-				$(".search_city_example").text(geocode_properties.city);
+				// $(".search_city_example").text(geocode_properties.city);
 
 			} else {
 				$(".loading_message").queue(function() {

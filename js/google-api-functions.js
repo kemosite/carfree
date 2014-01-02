@@ -116,9 +116,17 @@ var google_api_obj = new function() {
 		google_api_obj.layers.bike_layer = new google.maps.BicyclingLayer();
 		google_api_obj.layers.bike_layer.setMap(google_api_obj.map);
 		
-		/* [This layer is causing issues with map rendering. Wrapped in "safe_exec" to allow fail] */
-		safe_exec(google_api_obj.layers.weather_layer = new google.maps.weather.WeatherLayer({ temperatureUnits: google.maps.weather.TemperatureUnit.CELSIUS }));
-		safe_exec(google_api_obj.layers.weather_layer.setMap(google_api_obj.map));
+		try {
+			google_api_obj.layers.weather_layer = new google.maps.weather.WeatherLayer({ temperatureUnits: google.maps.weather.TemperatureUnit.CELSIUS });
+			google_api_obj.layers.weather_layer.setMap(google_api_obj.map);
+		} catch (error) {
+			debug_report("Error caught:");
+			debug_report(error); // statements to handle any unspecified exceptions
+		} finally {
+			window.onerror = function(message, url, linenumber) {
+				debug_report("Error: " + message + " on line " + linenumber + " for " + url);
+			}
+		}
 
 		google_api_obj.directions_service = new google.maps.DirectionsService();
 
@@ -158,7 +166,13 @@ var google_api_obj = new function() {
 		this.map_bounds = new google.maps.LatLngBounds(this.map_zoom_circle.getBounds().getSouthWest(), this.map_zoom_circle.getBounds().getNorthEast()); 
 		// google_api_obj.map.fitBounds(this.map_bounds);
 		this.map_zoom_circle.setMap(null);
-		google_api_obj.start_location = geocode_properties.city;
+		
+		if (geocode_properties.street) {
+			google_api_obj.start_location = geocode_properties.street;
+		} else {
+			google_api_obj.start_location = geocode_properties.city;
+		}
+		
 		google_api_obj.categories_keyword = geocode_properties.city;
 
 	}
@@ -208,7 +222,7 @@ var google_api_obj = new function() {
 
 		google_api_obj.geocoder = new google.maps.Geocoder();
 	    google_api_obj.geocoder.geocode({ 'address': address}, function(results, status) {
-	      
+
 			if (status == google.maps.GeocoderStatus.OK) {
 
 				google_api_obj.start_location = address;
@@ -241,10 +255,10 @@ var google_api_obj = new function() {
 
 				google_api_obj.map_default_options = this.map_zoom_properties;
 
-				// this.map_zoom_circle = new google.maps.Circle(this.map_zoom_properties);
-				// this.map_bounds = new google.maps.LatLngBounds(this.map_zoom_circle.getBounds().getSouthWest(), this.map_zoom_circle.getBounds().getNorthEast());
-				// google_api_obj.map.fitBounds(this.map_bounds);
-				// this.map_zoom_circle.setMap(null);
+				this.map_zoom_circle = new google.maps.Circle(this.map_zoom_properties);
+				this.map_bounds = new google.maps.LatLngBounds(this.map_zoom_circle.getBounds().getSouthWest(), this.map_zoom_circle.getBounds().getNorthEast());
+				google_api_obj.map.fitBounds(this.map_bounds);
+				this.map_zoom_circle.setMap(null);
 				// google_api_obj.places.broad_search();
 				google_api_obj.calculate_route();
 
@@ -255,7 +269,7 @@ var google_api_obj = new function() {
 
 	this.reset_start_address = function() {
 
-	    $("#start_location").val(geocode_properties.city);
+	    $("#start_location").val(google_api_obj.start_location);
 	    var address = document.getElementById("start_location").value;
 
 		google_api_obj.geocoder = new google.maps.Geocoder();
@@ -282,9 +296,15 @@ var google_api_obj = new function() {
 			this.map_zoom_circle = new google.maps.Circle(this.map_zoom_properties);
 			this.map_bounds = new google.maps.LatLngBounds(this.map_zoom_circle.getBounds().getSouthWest(), this.map_zoom_circle.getBounds().getNorthEast());
 	        google_api_obj.map.fitBounds(this.map_bounds);
-	        // this.map_zoom_circle.setMap(null);
+	        this.map_zoom_circle.setMap(null);
 	        // google_api_obj.places.broad_search();
+
+	        if (google_api_obj.trip_mode == "BICYCLING") { google_api_obj.map.setZoom(13); }
+
+			google_api_obj.calculate_route();
+
 	      }
+	      
 	    });
 	}
 
@@ -444,7 +464,7 @@ var google_api_obj = new function() {
 				}
 			});
 
-			pagination.nextPage();
+			// pagination.nextPage();
 
 		});
 
@@ -516,6 +536,9 @@ var google_api_obj = new function() {
 
 		this.text_search_input = document.getElementById('location_search').value;
 
+		$(".search_findings").empty();
+		$(".search_keyword").text("'"+google_api_obj.places.text_search_input+"'");
+
 		this.text_search_properties = {
 			query: this.text_search_input,
 			location: google_api_obj.map_default_options.center,
@@ -524,17 +547,11 @@ var google_api_obj = new function() {
 
 		google_api_obj.places.service.textSearch(this.text_search_properties, function(locations, status, pagination) {
 
-			// debug_report(status);
-
 			if (status == "OK") {
-
-				$(".search_findings").empty();
-
-				$(".search_keyword").text("'"+google_api_obj.places.text_search_input+"'");
 
 				$(locations).each(function() {
 
-					debug_report(this);
+					// debug_report(this);
 
 					$(".search_findings").append(
 						'<div class="row">'+
@@ -545,15 +562,15 @@ var google_api_obj = new function() {
 						'<div>'+this.formatted_address+'</div>'+
 						'</div></div><br>');
 
-					// debug_report(this);
-
 				});
+
+				// pagination.nextPage();
+
+				// debug_report(locations);
 
 				$('#search_modal').foundation('reveal', 'open');				
 
 			}
-
-			pagination.nextPage();
 
 		});
 

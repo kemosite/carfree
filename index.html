@@ -89,7 +89,7 @@ Includes:
         <div class="logo"><img src="images/carfree_logo.svg"></div>
       </div>
       <div class="small-5 columns">
-        <a class="show-for-small small menu radius button dropdown" data-dropdown="drop_menu">Menu</a>
+        <a class="show-for-small tiny menu radius button dropdown" data-dropdown="drop_menu">Menu</a>
         <ul id="drop_menu" class="f-dropdown" data-dropdown-content>
           <li><a href="#" class="trip" rel="menu" data-reveal-id="trip_modal">Plan a Trip</a></li>
           <li><a href="#" class="nearby" rel="menu" data-reveal-id="nearby_modal">What&rsquo;s Nearby?</a></li>
@@ -100,10 +100,10 @@ Includes:
   </header>
 
   <div class="row collapse">
-    <div class="small-12 medium-6 columns">
+    <div class="small-12 medium-6 large-8 columns">
       <div id="map_canvas"></div>
     </div>
-    <div class="small-12 medium-6 columns">
+    <div class="hide-for-small small-12 medium-6 large-4 columns">
       <section class="menu window">
       <h5 class="greeting">What would you like to do?</h5>
       <div class="row">
@@ -177,14 +177,11 @@ Includes:
   </div>
   <label>Start Location</label>
   <div class="row">
-    <div class="small-10 columns">
+    <div class="small-11 columns">
       <input type="text" id="start_location" placeholder="Where are you starting your trip from?" onchange="google_api_obj.geocode_start_address();">
     </div>
     <div class="small-1 column">
       <a href="#" class="button prefix glyph" onclick="google_api_obj.reset_start_address();" title="Reset to last known location">,</a>
-    </div>
-    <div class="small-1 column">
-      <a href="#" class="button prefix glyph" onclick="google_api_obj.reset_start_address();" title="Re-determine my location">R</a>
     </div>
     <!--
     <div class="small-1 column">
@@ -192,11 +189,10 @@ Includes:
     </div>
     -->
   </div>
-  <label>Search For A Destination<br>
-    <em>Example: Pizza in <span class="search_city_example">your city</span>; Store name; Address)</em></label>
+  <label>Search For A Destination</label>
   <div class="row collapse">
     <div class="small-11 columns">
-      <input type="text" id="location_search" placeholder="Address, or name of place.">
+      <input type="text" id="location_search" placeholder="Name of place; or address.">
     </div>
     <div class="small-1 columns">
       <a href="#" class="button prefix glyph" onclick="google_api_obj.places.text_search();" title="Search for locations">s</a>

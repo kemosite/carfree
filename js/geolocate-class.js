@@ -1,6 +1,7 @@
 var geocode_properties = {
 	latitude: "",
 	longitude: "",
+	street: "",
 	city: "",
 	province: "",
 	accuracy: 40000,
@@ -48,6 +49,9 @@ if (navigator.geolocation) {
 			this.geocoder = new google.maps.Geocoder();
 			this.geocoder.geocode({'latLng': this.geocode_options.center}, function(geocoded, status) {
 				$(geocoded).each(function() {
+					if (this.types[0] == "street_address") {
+						geocode_properties.street = this.formatted_address;
+					}
 					if (this.types[0] == "locality") {
 						geocode_properties.city = this.formatted_address;
 					}

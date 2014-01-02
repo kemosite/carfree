@@ -6,34 +6,65 @@ Author: Kevin Montgomery
 
 /* [Debug Tool] */
 function debug_report(item) {
-	if(this.console) {
-	 	console.log("Item is type: "+typeof item);
-	 	console.log(item);
+	
+	try {
+
+		if (console && 
+			(
+				typeof item === "function" ||
+				typeof item === "object"
+			)
+		) {
+		 	console.log("Analyzing "+typeof item+" item.");
+		 	console.log(item);
+		} 
+
+		else if (console && typeof item === "string") {
+			console.log(item);
+		}
+
+		else { throw "Console not supported. Item is not an object, function, or string."}
+
 	}
+
+	catch (error) {
+		if(console) {
+		 	console.log("Error caught: "+error);
+		 }
+	}
+	
+	finally {
+		window.onerror = function(message, url, linenumber) {
+			if(console) {
+			 	console.log("Error: " + message + " on line " + linenumber + " for " + url);
+			 }
+		}
+	}
+
+	
 }
 
 /* [Safe Execute] */
 function safe_exec(input) {
+
+	debug_report("Safely executing item");
+
+	try {
+		if (typeof input === "function") { input(); }
+		else if (typeof input === "object") { debug_report(input); }
+		else { throw "Not a function or an object." }
+	}
+
+	catch (error) {
+		debug_report("Error caught:");
+		debug_report(error); // statements to handle any unspecified exceptions
+		debug_report(input);
+	}
 	
-	if (typeof input === "function") {
-
-		try {
-			input();
+	finally {
+		window.onerror = function(message, url, linenumber) {
+			debug_report("Error: " + message + " on line " + linenumber + " for " + url);
 		}
-
-		catch (error) {
-			debug_report(error); // statements to handle any unspecified exceptions
-		}
-		
-		finally {
-			window.onerror = function(message, url, linenumber) {
-				debug_report("Error: " + message + " on line " + linenumber + " for " + url);
-			}
-		}
-
-	} else {
-		debug_report("What is this "+ typeof input + " thing?");
-		debug_report(input); // what is this thing?
 	}
 }
 

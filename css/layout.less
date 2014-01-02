@@ -17,7 +17,7 @@ html { height: 100%; }
 body {
    margin: 0;
    height: 100%;
-   width: 100% /* needed for Firefox */
+   width: 100%; /* needed for Firefox */
 }
 
 /* [Block-level Flex] */
@@ -118,6 +118,11 @@ body {
 	.f-dropdown > li {
 		height: 4em;
 		padding: 1em 0;
+		border-bottom: 1px dotted @black;
+
+		&:last-child {
+			border-bottom: 0;
+		}
 	}
 
 	header,
@@ -134,11 +139,11 @@ body {
 
 	header .logo img { height: 3em; }
 
-	min-height: 100%;
+	// min-height: 100%;
 
 	#map_canvas {
-		height: 17em;
-		height: 17rem;
+		height: 25em;
+		height: 25rem;
 	}
 
 	footer {
@@ -175,7 +180,7 @@ body {
 
 }
 
-@media only screen and (min-width: @tablet-min) and (min-height: @tablet-min) {
+@media only screen and (min-height: @tablet-min) {
 
 	.container {
 
@@ -191,8 +196,21 @@ body {
 @media screen and (min-width: @screen-min) { 
 	
 	.container, .throbber {
-		max-width: @tablet-min;
+		// max-width: @tablet-min;
 		position: inherit;
+	}
+
+}
+
+@media screen and (min-height: @screen-min) { 
+	
+	.container {
+
+		#map_canvas {
+			height: 40em;
+			height: 40rem;
+		}
+
 	}
 
 }
@@ -208,7 +226,7 @@ body {
 
 	.container { 
 		margin: 1em auto;
-		min-height: 39em;
+		// min-height: 39em;
 		.round-corners();
 	}
 
