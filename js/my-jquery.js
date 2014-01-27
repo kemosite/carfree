@@ -2,6 +2,10 @@
 
 $( document ).ready(function() {
 
+	$('.reload').click(function() {
+		location.reload();
+	});
+
 	$('.set.trip.button').click(function() {
 		$('#trip_modal').foundation('reveal', 'close');
 	});
@@ -49,7 +53,7 @@ $(window).load( function() {
 				this.stop_waiting(this.interval);
 
 				/* [Use GeoIP2 if loaded and browser doesn't support navigator.geolocation] */
-				if (!geolocate_obj && geoip2) {
+				if (geoip2_obj) {
 					$(".maxmind_statement").show();
 				}
 

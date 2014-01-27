@@ -16,7 +16,7 @@ html { height: 100%; }
 
 body {
    margin: 0;
-   height: 100%;
+   // height: 100%;
    width: 100%; /* needed for Firefox */
 }
 
@@ -111,9 +111,8 @@ body {
 /* [Foundation CSS Overrides] */
 
 /* [Mobile First View] */
-.container { 
-	
-	position: fixed;
+.container { position: fixed; }
+.container, .reveal-modal { 
 
 	.f-dropdown > li {
 		height: 4em;
@@ -148,6 +147,13 @@ body {
 
 	footer {
 		> .maxmind_statement { display: none; }
+	}
+
+	/* [Help Colour Swatches] */
+	.colour.square {
+		width: 100%;
+		height: 2em;
+		margin: 1em 0;
 	}
 
 }
@@ -197,7 +203,7 @@ body {
 	
 	.container, .throbber {
 		// max-width: @tablet-min;
-		position: inherit;
+		position: static;
 	}
 
 }
@@ -227,7 +233,6 @@ body {
 	.container { 
 		margin: 1em auto;
 		// min-height: 39em;
-		.round-corners();
 	}
 
 }

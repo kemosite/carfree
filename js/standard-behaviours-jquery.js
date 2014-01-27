@@ -91,25 +91,28 @@ $(document).ready(function(){
 	*/
 	
 	/* [Default Link Behaviour] */
-		
-	$("a").click(function(event) {
+	if (adaptive_scripts.attach_scrollto) {
+		$("a").click(function(event) {
 
-		// Override default behaviour
-		event.preventDefault();
-		var url = $(this).attr("href");
-		var rel = $(this).attr("rel");
-		
-		if (url && url !== "#" && !rel) {
-
-			// If link is local, smooth-scroll to it
-			if (url.substr(0,1) == "#" && adaptive_scripts.attach_scrollto) {
-				$.scrollTo($(url), 1000);
+			// Override default behaviour
+			event.preventDefault();
+			var url = $(this).attr("href");
+			var rel = $(this).attr("rel");
 			
-			// Otherwise, fade the page out, then go to the link
-			} else {
-				$(".container").fadeOut("fast").css("display: none");
-				document.location.href=url;
-			}
-		} 
-	});
+			if (url && url !== "#" && !rel) {
+
+				// If link is local, smooth-scroll to it
+				if (url.substr(0,1) == "#" && adaptive_scripts.attach_scrollto) {
+					$.scrollTo($(url), 1000);
+				
+				// Otherwise, fade the page out, then go to the link
+				} else {
+					$(".container").fadeOut("fast").css("display: none");
+					document.location.href=url;
+				}
+			} 
+		});
+
+	}
+	
 });

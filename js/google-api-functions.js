@@ -136,7 +136,6 @@ var google_api_obj = new function() {
 		google_api_obj.directions_display = new google.maps.DirectionsRenderer(google_api_obj.directions_display_options);
 		google_api_obj.directions_display.setMap(google_api_obj.map);
 		google_api_obj.directions_display.setPanel(document.getElementById("directions-panel"));
-
 		google_api_obj.trip_mode = "BICYCLING";
 
 		/*
@@ -622,7 +621,8 @@ var google_api_obj = new function() {
 			}
 
 		});
-
+		
+		$(".no.destination.selected").hide();
 		$(".updated.trip.details.button").removeClass("secondary").addClass("success");
 		$('#map_modal').foundation('reveal', 'open');
 

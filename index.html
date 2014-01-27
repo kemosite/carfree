@@ -94,6 +94,7 @@ Includes:
           <li><a href="#" class="trip" rel="menu" data-reveal-id="trip_modal">Plan a Trip</a></li>
           <li><a href="#" class="nearby" rel="menu" data-reveal-id="nearby_modal">What&rsquo;s Nearby?</a></li>
           <li><a href="#" class="route" rel="menu" data-reveal-id="route_modal">Route Details</a></li>
+          <li><a href="#" class="howto" rel="menu" data-reveal-id="howto_modal">How To Use...</a></li>
         </ul>
       </div>
     </div>
@@ -114,6 +115,9 @@ Includes:
       </div>
        <div class="row">
         <div class="small-offset-1 small-10 columns"><a href="#" class="route radius button expand" data-reveal-id="route_modal">Show Route Details</a></div>
+      </div>
+      <div class="row">
+        <div class="small-offset-1 small-10 columns"><a href="#" class="howto radius button expand" data-reveal-id="howto_modal">How To Use Carfree</a></div>
       </div>
       </section>
     </div>
@@ -222,7 +226,64 @@ Includes:
 
 <div id="route_modal" class="reveal-modal medium" data-reveal style="display: none;">
   <h5 class="greeting">Your Route</h5>
+  <div class="no destination selected">You haven't chosen any destinations.</div>
   <div id="directions-panel"></div>
+  <a class="close-reveal-modal">&#215;</a>
+</div>
+
+<div id="howto_modal" class="reveal-modal small" data-reveal style="display: none;">
+  <h5 class="greeting">How To Use Carfree</h5>
+  <h6>Colour Schema</h6>
+  
+  <div class="row">
+    <div class="small-2 large-1 columns">
+      <div class="radius colour square"></div>
+    </div>
+    <div class="small-offset-1 small-9 large-10 columns">
+      <p>A light blue circle indicates a radius around your starting location that is bikeable (less than 7km, 30 minutes).</p>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="small-2 large-1 columns">
+      <div class="bikeroute colour square"></div>
+    </div>
+    <div class="small-offset-1 small-9 large-10 columns">
+      <p>Green markings are roads and paths separated from motor vehicles.</p>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="small-2 large-1 columns">
+      <div class="arterial colour square"></div>
+    </div>
+    <div class="small-offset-1 small-9 large-10 columns">
+      <p>Roads that are outlined in yellow are arterial roads that require more caution, and might want to be avoided if you expect vehicles to travel at high speeds.</p>
+    </div>
+  </div>
+
+   <div class="row">
+    <div class="small-2 large-1 columns">
+      <div class="highway colour square"></div>
+    </div>
+    <div class="small-offset-1 small-9 large-10 columns">
+      <p>Roads that are outlined in red are designated highways. Unless you know they are ridable, they should be avoided.</p>
+    </div>
+  </div>
+
+  <p>Whichever route you take, always ride with due care. And have fun!</p>
+  
+  <h6>Resetting The App</h6>
+  <p>To reset the app at any time, <a href="" class="reload">refresh your browser</a>.</p>
+  <h6>Plan A Trip</h6>
+  <p><a href="#" class="trip" rel="menu" data-reveal-id="trip_modal">Plan A Trip</a> sets up your travel mode (Cycling or Transit), determines your starting position, and lets you add a destination to your trip.</p>
+  <p>Search for destinations on addresses, names, or categories of places. Carless will prioritize results according to relevance and proximity to your starting position.</p>
+  <p>If travelling on a bike, you can add more than one destination. An ideal route will be calculated. Travelling by Transit allows for one destination only.</p>
+  <h6>See What's Nearby</h6>
+  <p><a href="#" class="nearby" rel="menu" data-reveal-id="nearby_modal">See What's Nearby</a> to see the kinds places near your starting location, organized into categories. These places are within 7km, or approximately a 30 minute bicycle trip, from your starting location. This is useful for finding types of places, without knowing an exact name or address.</p>
+  <h6>Show Route Details</h6>
+  <p>When a destination has been selected, <a href="#" class="route" rel="menu" data-reveal-id="route_modal">Show Route Details</a> will show you directions to get there.</p>
+  
   <a class="close-reveal-modal">&#215;</a>
 </div>
 

@@ -84,15 +84,34 @@ if (navigator.geolocation) {
 
 	var geoip2_obj = new function() {
 
-		this.error = {}
+		$(".loading_message").queue(function() {
+			$(this).text("Determining your location").dequeue();
+	    });
+		$(".loading_message").fadeIn("fast").css("display: block");
+
+		this.error = function() {
+			$(".loading_message").queue(function() {
+				$(this).text("Error getting location. Please refresh your browser.").dequeue();
+			});
+		}
 
 		this.success = function(position) {
+
+			$(".loading_message").fadeOut("fast").css("display: none");
+		    $(".loading_message").queue(function() {
+				$(this).text("Location determined. Please wait").dequeue();
+		    });
+		    $(".loading_message").fadeIn("fast").css("display: block");
+
 			geocode_properties.latitude = position.location.latitude;
 			geocode_properties.longitude = position.location.longitude;
 			geocode_properties.city = position.city.names.en;
 			geocode_properties.province = position.subdivisions[0].iso_code;
 
 			geocode_properties.locked = true;
+
+			$(".throbber").fadeOut("fast").css("display: none");
+		    $(".container").delay("1000").fadeIn("fast").css("display: block");
 
 		}
 
