@@ -21,10 +21,11 @@ if (navigator.geolocation) {
 	    });
 		$(".loading_message").fadeIn("fast").css("display: block");
 
-		this.error = function() {
+		this.error = function(error) {
 			$(".loading_message").queue(function() {
 				$(this).text("Error getting location. Please refresh your browser.").dequeue();
 			});
+			debug_report(error);
 		}
 
 		this.success = function(position) {
@@ -70,10 +71,12 @@ if (navigator.geolocation) {
 
 		this.failure = function (error) {
 			geolocate_obj.error = error;
+			debug_report(error);
 		};
 
 		this.options = {
-			enableHighAccuracy: true
+			enableHighAccuracy: true,
+			timeout: 9000
 		}
 
 		this.location_id = navigator.geolocation.getCurrentPosition(this.success, this.failure, this.options);

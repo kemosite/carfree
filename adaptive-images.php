@@ -19,7 +19,7 @@ ini_set         ('display_errors', 1);
 error_reporting (E_ALL | E_STRICT);
 ini_set					('error_reporting', E_ALL);
 
-$resolutions   = array(1680, 1600, 1440, 1366, 1360, 1280, 1152, 1024, 800, 640); // the resolution break-points to use (screen widths, in pixels)
+$resolutions   = array(1680, 1600, 1440, 1366, 1360, 1280, 1152, 1024, 800, 640, 480); // the resolution break-points to use (screen widths, in pixels)
 $cache_path    = "ai-cache"; // where to store the generated re-sized images. Specify from your document root!
 $jpg_quality   = 60; // the quality of any generated JPGs on a scale of 0 to 100
 $sharpen       = TRUE; // Shrinking images can blur details, perform a sharpen on re-scaled images?

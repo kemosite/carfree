@@ -68,6 +68,10 @@ Author: Kevin Montgomery
 @black: @black-70;
 @inherit: @black;
 
+/* [Logo Colours] */
+@logoblue: #00a0ff;
+@logogrey: #666666;
+
 /*====================
 [ Apply Defaults ]
 ======================*/
@@ -108,6 +112,13 @@ a[href^="mailto:"] {
 	.button:active { 
 		// .bg-gradient(darken(@cyan, 10%));
 		background-color: darken(@cyan, 10%);
+	}
+
+	.logotext {
+		color: @logogrey;
+		> span {
+			color: @logoblue;
+		}
 	}
 
 	header {

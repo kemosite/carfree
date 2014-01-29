@@ -18,7 +18,7 @@ em {
 	font-style: normal;
 }
 h1,h2,h3,h4,h5,h6,strong, button, .button {
-	font-family: SourceSansProSemibold, "Arial Black", "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-family: SourceSansProBold, "Arial Black", "Helvetica Neue", Helvetica, Arial, sans-serif;
 	font-weight: normal;
 }
 em strong, 
@@ -30,7 +30,7 @@ h4 em,
 h5 em, 
 h6 em 
 { 
-	font-family: SourceSansProSemiboldItalic, "Arial Black", "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-family: SourceSansProBoldItalic, "Arial Black", "Helvetica Neue", Helvetica, Arial, sans-serif;
 	font-weight: normal; font-style: normal;
 }
 .glyph { font-family: ModernPictogramsNormal; }
@@ -49,12 +49,10 @@ a, a:link, a:visited { text-decoration: none; }
 /* [External Link Format] */
 a[href^="http://"]:after,
 a[href^="https://"]:after {
-	content: "\o";
-	font: ModernPictogramsNormal;
-	/* outline: 1px solid inherit; */
+	content: "o";
+	font-family: ModernPictogramsNormal;
 	color: inherit;
-	padding:1px;
-	margin:0 5px 0 0;
+	margin-left: .25em;
 }
 	
 /* [Email Link Format] */
