@@ -1,7 +1,8 @@
 CARFREE RELEASE  1.0
 ====================
 
-<p>A web app to get people to where they want to go, without a car.</p>
+<p>A web app to get people to where they want to go, without a car.<br>
+http://carfree.kemosite.com/</p>
 
 <p>Please consider this product to be a beta: Expect bugs.</p>
 
