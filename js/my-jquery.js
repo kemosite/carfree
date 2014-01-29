@@ -7,7 +7,18 @@ $( document ).ready(function() {
 	});
 
 	$('.set.trip.button').click(function() {
-		$('#trip_modal').foundation('reveal', 'close');
+		debug_report(google_api_obj.waypoints);
+
+		if (google_api_obj.waypoints == "") {
+			var confirm_nowaypoints = confirm(
+				"You haven't added any destinations.\n" +
+				"Remember: The pop-up that appears while you type your search helps to shorten typing.\n" +
+				"You still have to complete a search and add a destination.\n\n"+
+				"Press 'OK' to continue closing this window, or 'Cancel' to complete a search and add a destination.");
+			if (confirm_nowaypoints == true) {
+ 				$('#trip_modal').foundation('reveal', 'close');
+ 			} 
+ 		}
 	});
 
 	$('.nearby.button').click(function() {
