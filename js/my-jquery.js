@@ -7,18 +7,20 @@ $( document ).ready(function() {
 	});
 
 	$('.set.trip.button').click(function() {
-		debug_report(google_api_obj.waypoints);
 
 		if (google_api_obj.waypoints == "") {
 			var confirm_nowaypoints = confirm(
-				"You haven't added any destinations.\n" +
-				"Remember: The pop-up that appears while you type your search helps to shorten typing.\n" +
-				"You still have to complete a search and add a destination.\n\n"+
+				"You haven't added any destinations.\n\n" +
+				"The pop-up that appears while you type your destination helps to shorten typing. You still have to complete a search, which lets you add a destination in a separate window.\n\n" +
 				"Press 'OK' to continue closing this window, or 'Cancel' to complete a search and add a destination.");
 			if (confirm_nowaypoints == true) {
  				$('#trip_modal').foundation('reveal', 'close');
- 			} 
+ 			}
+ 		} else {
+ 			$('#trip_modal').foundation('reveal', 'close');
  		}
+
+
 	});
 
 	$('.nearby.button').click(function() {
@@ -59,14 +61,9 @@ $(window).load( function() {
 
 		this.still_waiting = function() {
 			
-			if (geocode_properties.locked == true) {
+			if (geocode_properties.locked === true) {
 				
 				this.stop_waiting(this.interval);
-
-				/* [Use GeoIP2 if loaded and browser doesn't support navigator.geolocation] */
-				if (geoip2_obj) {
-					$(".maxmind_statement").show();
-				}
 
 				/* [Load the map] */
 				google_api_obj.load_map_canvas();
@@ -95,7 +92,8 @@ $(window).load( function() {
 					$(this).show().dequeue();
 			    });
 			}
-		}
+		};
+		
 		this.stop_waiting = function() {
 			clearInterval(this.interval);
 		}

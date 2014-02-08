@@ -15,24 +15,10 @@ if (adaptive_scripts.resolution > adaptive_scripts.sorted_breakpoints()[0]) {
 	adaptive_scripts.attach_sourcesans.setAttribute("media", "all");
 	document.getElementsByTagName("head")[0].appendChild(adaptive_scripts.attach_sourcesans);
 
-	/* 
-	Usage:
-	geoip_city()
-	geoip_region()
-	geoip_region_name()
-	geoip_postal_code()
-	geoip_country_code()
-	geoip_country_name()
-	geoip_latitude()
-	geoip_longitude()
-	*/
-
-	/* [Attach MaxMind GeoIP 2.0 if navigator.geolocation is not supported] */
-	if (!navigator.geolocation) {
-		adaptive_scripts.attach_geoip2 = document.createElement("script");
-		adaptive_scripts.attach_geoip2.setAttribute("src", "//j.maxmind.com/js/apis/geoip2/v2.0/geoip2.js");
-		document.getElementsByTagName("head")[0].appendChild(adaptive_scripts.attach_geoip2);
-	}
+	/* [Attach MaxMind GeoIP 2.0 as a precaution] */
+	adaptive_scripts.attach_geoip2 = document.createElement("script");
+	adaptive_scripts.attach_geoip2.setAttribute("src", "//j.maxmind.com/js/apis/geoip2/v2.0/geoip2.js");
+	document.getElementsByTagName("head")[0].appendChild(adaptive_scripts.attach_geoip2);
 		
 	/* [Attach Scroll To 1.4.3.1] */
 	adaptive_scripts.attach_scrollto = document.createElement("script");
