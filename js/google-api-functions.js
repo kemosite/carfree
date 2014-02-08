@@ -174,7 +174,7 @@ var google_api_obj = new function() {
 		
 		google_api_obj.categories_keyword = geocode_properties.city;
 
-	}
+	};
 
 	this.update_radius = function() {
 		google_api_obj.trip_mode = document.getElementById("trip_mode_select").value;
@@ -213,7 +213,7 @@ var google_api_obj = new function() {
 
 		google_api_obj.calculate_route();
 
-	}
+	};
 
 	this.geocode_start_address = function() {
 
@@ -264,7 +264,7 @@ var google_api_obj = new function() {
 			}
 
 	    });
-	}
+	};
 
 	this.reset_start_address = function() {
 
@@ -305,7 +305,7 @@ var google_api_obj = new function() {
 	      }
 	      
 	    });
-	}
+	};
 
 	this.places.types = {
 		accounting: "Accounting Firms",
@@ -434,7 +434,7 @@ var google_api_obj = new function() {
 		sublocality_level_1: "Sublocalities - Level 1",
 		subpremise: "Subpremises",
 		transit_station: "Transit Stations"
-	}
+	};
 
 	this.places.broad_search = function() {
 
@@ -467,7 +467,7 @@ var google_api_obj = new function() {
 
 		});
 
-	}
+	};
 
 	this.places.type_search = function(type) {
 
@@ -511,7 +511,7 @@ var google_api_obj = new function() {
 
 		});
 
-	}
+	};
 
 	/* [Establish bounds in which to favour search results from] */
 	this.places.search_box = function() {
@@ -529,7 +529,7 @@ var google_api_obj = new function() {
 
 		this.autocomplete.bindTo('bounds', google_api_obj.map);
 
-	}
+	};
 
 	this.places.text_search = function() {
 
@@ -573,7 +573,7 @@ var google_api_obj = new function() {
 
 		});
 
-	}
+	};
 
 	this.add_destination = function(destination, name) {
 		
@@ -594,7 +594,7 @@ var google_api_obj = new function() {
 
 		$(".trip.title").click();
 
-	}
+	};
 
 	this.calculate_route = function() {
 
@@ -626,6 +626,6 @@ var google_api_obj = new function() {
 		$(".updated.trip.details.button").removeClass("secondary").addClass("success");
 		$('#map_modal').foundation('reveal', 'open');
 
-	}
+	};
 
-}
+};

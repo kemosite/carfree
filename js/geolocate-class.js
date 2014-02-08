@@ -16,7 +16,7 @@ var geocode_properties = {
 	heading: "",
 	speed: "",
 	locked: false
-}
+};
 
 var geoip2_obj = new function() {
 
@@ -24,7 +24,7 @@ var geoip2_obj = new function() {
 		$(".loading_message").queue(function() {
 			$(this).text("Error getting location. Please refresh your browser.").dequeue();
 		});
-	}
+	};
 
 	this.success = function(position) {
 
@@ -46,17 +46,17 @@ var geoip2_obj = new function() {
 		$(".throbber").fadeOut("fast").css("display: none");
 	    $(".container").delay("1000").fadeIn("fast").css("display: block");
 
-	}
+	};
 
 	this.failure = function (error) {
 		$(".loading_message").queue(function() {
 			$(this).text("Error getting location. Please refresh your browser.").dequeue();
 		});
-	}
+	};
 
 	this.options = {
 		enableHighAccuracy: true
-	}
+	};
 
 	this.init = function() {
 		
@@ -74,9 +74,9 @@ var geoip2_obj = new function() {
 		geoip_longitude()
 		*/
 
-	}
+	};
 
-}
+};
 
 var geolocate_obj = new function() {
 
@@ -85,7 +85,7 @@ var geolocate_obj = new function() {
 			$(this).text("Error getting location. Just a moment.").dequeue();
 		});
 		geoip2_obj.init();
-	}
+	};
 
 	this.success = function(position) {
 
@@ -105,19 +105,19 @@ var geolocate_obj = new function() {
 
 		this.geocode_options = {
 			center: new google.maps.LatLng(position.coords.latitude, position.coords.longitude)
-		}
+		};
 		this.geocoder = new google.maps.Geocoder();
 		this.geocoder.geocode({'latLng': this.geocode_options.center}, function(geocoded, status) {
 			$(geocoded).each(function() {
 				if (this.types[0] == "street_address") {
 					geocode_properties.street = this.formatted_address;
-				}
+				};
 				if (this.types[0] == "locality") {
 					geocode_properties.city = this.formatted_address;
-				}
+				};
 				if (this.types[0] == "administrative_area_level_1") {
 					geocode_properties.province = this.formatted_address;
-				}
+				};
 			});
 		});
 
@@ -126,19 +126,19 @@ var geolocate_obj = new function() {
 		$(".throbber").fadeOut("fast").css("display: none");
 	    $(".container").delay("1000").fadeIn("fast").css("display: block");
 
-	}
+	};
 
 	this.failure = function (error) {
 		$(".loading_message").queue(function() {
 			$(this).text("Error getting location. Just a moment.").dequeue();
 		});
 		geoip2_obj.init();
-	}
+	};
 
 	this.options = {
 		enableHighAccuracy: true,
 		timeout: 3000
-	}
+	};
 
 	this.init = function() {
 
@@ -152,9 +152,9 @@ var geolocate_obj = new function() {
 		} else {
 			geoip2_obj.init();
 		}
-	}
+	};
 
-}
+};
 
 geolocate_obj.init();
 
@@ -162,7 +162,7 @@ var wait_for_geolocate = setInterval( function() {
 	
 	if (geocode_properties.locked !== true) { 
 		geoip2_obj.init(); 
-	}
+	};
 	clearInterval(wait_for_geolocate);
 
 }, 6000);
