@@ -43,6 +43,11 @@ $(window).load( function() {
 	
 	$(".throbber").fadeIn("fast").css("display: block");
 
+	/* [Attach MaxMind GeoIP 2.0 for a fallback] */
+	adaptive_scripts.attach_geoip2 = document.createElement("script");
+	adaptive_scripts.attach_geoip2.setAttribute("src", "//j.maxmind.com/js/apis/geoip2/v2.0/geoip2.js");
+	document.getElementsByTagName("head")[0].appendChild(adaptive_scripts.attach_geoip2);
+
 	/* [GeoLocate Class] */
 	var attach_geolocate = document.createElement("script");
 	attach_geolocate.setAttribute("src", "js/geolocate-class.min.js");
