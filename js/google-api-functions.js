@@ -6,7 +6,7 @@ var google_api_obj = new function() {
 	this.trip_mode = "";
 	this.trip_mode_radius = {
 		"BICYCLING": 15000 / 4,
-		"TRANSIT": 25000 / 2
+		"TRANSIT": 30000 / 4
 	};
 	this.directions_display = "";
 	this.directions_service = "";
@@ -32,9 +32,7 @@ var google_api_obj = new function() {
 	this.styles = "";
 	this.layers = {
 		bike_layer: "",
-		transit_layer: "",
-		weather_layer: "",
-		traffic_layer: ""
+		transit_layer: ""
 	},
 	this.bike_zone_circle = "";
 
@@ -115,18 +113,6 @@ var google_api_obj = new function() {
 
 		google_api_obj.layers.bike_layer = new google.maps.BicyclingLayer();
 		google_api_obj.layers.bike_layer.setMap(google_api_obj.map);
-		
-		try {
-			google_api_obj.layers.weather_layer = new google.maps.weather.WeatherLayer({ temperatureUnits: google.maps.weather.TemperatureUnit.CELSIUS });
-			google_api_obj.layers.weather_layer.setMap(google_api_obj.map);
-		} catch (error) {
-			debug_report("Error caught:");
-			debug_report(error); // statements to handle any unspecified exceptions
-		} finally {
-			window.onerror = function(message, url, linenumber) {
-				debug_report("Error: " + message + " on line " + linenumber + " for " + url);
-			}
-		}
 
 		google_api_obj.directions_service = new google.maps.DirectionsService();
 
@@ -195,13 +181,8 @@ var google_api_obj = new function() {
 			google_api_obj.map.setOptions({styles: null});
 			google_api_obj.layers.bike_layer.setMap(null);
 
-			google_api_obj.layers.traffic_layer = new google.maps.TrafficLayer();
-			google_api_obj.layers.traffic_layer.setMap(google_api_obj.map);
-
 		} else {
 						
-			google_api_obj.layers.traffic_layer.setMap(null);
-
 			google_api_obj.map.setOptions({styles: google_api_obj.styles});
 			
 			google_api_obj.layers.bike_layer = new google.maps.BicyclingLayer();
@@ -234,9 +215,13 @@ var google_api_obj = new function() {
 
 				this.map_zoom_properties = {
 					map: google_api_obj.map,
-					center: google_api_obj.map_default_options.center,
+					center: results[0].geometry.location,
 					radius: google_api_obj.trip_mode_radius[google_api_obj.trip_mode]
 				};
+
+				google_api_obj.map_default_options = this.map_zoom_properties;
+
+				google_api_obj.bike_zone_circle.setMap(null);
 
 				this.bike_zone_properties = {
 					strokeColor: '#0040ff',
@@ -249,16 +234,16 @@ var google_api_obj = new function() {
 					radius: google_api_obj.trip_mode_radius["BICYCLING"]
 				};
 
-				google_api_obj.bike_zone_circle.setMap(null);
 				google_api_obj.bike_zone_circle = new google.maps.Circle(this.bike_zone_properties);
-
-				google_api_obj.map_default_options = this.map_zoom_properties;
 
 				this.map_zoom_circle = new google.maps.Circle(this.map_zoom_properties);
 				this.map_bounds = new google.maps.LatLngBounds(this.map_zoom_circle.getBounds().getSouthWest(), this.map_zoom_circle.getBounds().getNorthEast());
 				google_api_obj.map.fitBounds(this.map_bounds);
 				this.map_zoom_circle.setMap(null);
 				// google_api_obj.places.broad_search();
+
+				if (google_api_obj.trip_mode == "BICYCLING") { google_api_obj.map.setZoom(13); }
+
 				google_api_obj.calculate_route();
 
 			}
@@ -267,6 +252,14 @@ var google_api_obj = new function() {
 	};
 
 	this.reset_start_address = function() {
+
+	    debug_report(geocode_properties);
+
+	    if (geocode_properties.street) {
+			google_api_obj.start_location = geocode_properties.street;
+		} else {
+			google_api_obj.start_location = geocode_properties.city;
+		}
 
 	    $("#start_location").val(google_api_obj.start_location);
 	    var address = document.getElementById("start_location").value;
@@ -280,17 +273,27 @@ var google_api_obj = new function() {
 	      	google_api_obj.categories_keyword = address;
 
 	      	this.map_zoom_properties = {
-	      		strokeColor: '#004C00',
-				strokeOpacity: 0.25,
-				strokeWeight: 1,
-				fillColor: '#004C00',
-				fillOpacity: 0.125,
 				map: google_api_obj.map,
 				center: results[0].geometry.location,
 				radius: google_api_obj.trip_mode_radius[google_api_obj.trip_mode]
 			};
 
 			google_api_obj.map_default_options = this.map_zoom_properties;
+
+			google_api_obj.bike_zone_circle.setMap(null);
+
+				this.bike_zone_properties = {
+					strokeColor: '#0040ff',
+					strokeOpacity: 0.5,
+					strokeWeight: 1,
+					fillColor: '#a6bcff',
+					fillOpacity: 0.125,
+					center: google_api_obj.map_default_options.center,
+					map: google_api_obj.map,
+					radius: google_api_obj.trip_mode_radius["BICYCLING"]
+				};
+
+				google_api_obj.bike_zone_circle = new google.maps.Circle(this.bike_zone_properties);
 
 			this.map_zoom_circle = new google.maps.Circle(this.map_zoom_properties);
 			this.map_bounds = new google.maps.LatLngBounds(this.map_zoom_circle.getBounds().getSouthWest(), this.map_zoom_circle.getBounds().getNorthEast());

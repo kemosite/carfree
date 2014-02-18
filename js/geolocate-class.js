@@ -50,7 +50,7 @@ var geoip2_obj = new function() {
 
 	this.failure = function (error) {
 		$(".loading_message").queue(function() {
-			$(this).text("Error getting location. Please refresh your browser.").dequeue();
+			$(this).text("Attempt to get location failed. Please refresh your browser.").dequeue();
 		});
 	};
 
@@ -123,14 +123,27 @@ var geolocate_obj = new function() {
 
 		geocode_properties.locked = true;
 
-		$(".throbber").fadeOut("fast").css("display: none");
-	    $(".container").delay("1000").fadeIn("fast").css("display: block");
+		// $(".throbber").fadeOut("fast").css("display: none");
+	    // $(".container").delay("1000").fadeIn("fast").css("display: block");
+
+	    $(".throbber").queue(function() {
+	    	$(this).fadeOut("fast");
+	    	$(this).css("display: none");
+	    	$(this).dequeue();
+		});
+
+		$(".container").queue(function() {
+	    	$(this).fadeIn("fast");
+	    	$(this).css("display: block");
+	    	$(this).dequeue();
+		});
+
 
 	};
 
 	this.failure = function (error) {
 		$(".loading_message").queue(function() {
-			$(this).text("Error getting location. Just a moment.").dequeue();
+			$(this).text("Attempt to get location failed. Just a moment.").dequeue();
 		});
 		geoip2_obj.init();
 	};
@@ -165,4 +178,4 @@ var wait_for_geolocate = setInterval( function() {
 	};
 	clearInterval(wait_for_geolocate);
 
-}, 6000);
+}, 4000);

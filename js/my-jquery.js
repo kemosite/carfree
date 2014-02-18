@@ -8,7 +8,7 @@ $( document ).ready(function() {
 
 	$('.set.trip.button').click(function() {
 
-		if (google_api_obj.waypoints == "") {
+		if (google_api_obj.waypoints === "" && document.getElementById("location_search").value !== "") {
 			var confirm_nowaypoints = confirm(
 				"You haven't added any destinations.\n\n" +
 				"The pop-up that appears while you type your destination helps to shorten typing. You still have to complete a search, which lets you add a destination in a separate window.\n\n" +
