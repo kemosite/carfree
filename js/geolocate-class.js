@@ -60,19 +60,8 @@ var geoip2_obj = new function() {
 
 	this.init = function() {
 		
-		geoip2.city(geoip2_obj.success, geoip2_obj.failure, geoip2_obj.options);
-
-		/* 
-		Usage:
-		geoip_city()
-		geoip_region()
-		geoip_region_name()
-		geoip_postal_code()
-		geoip_country_code()
-		geoip_country_name()
-		geoip_latitude()
-		geoip_longitude()
-		*/
+		debug_report(geoip2);
+		if (geoip2) { geoip2.city(geoip2_obj.success, geoip2_obj.failure, geoip2_obj.options); }
 
 	};
 
@@ -160,11 +149,11 @@ var geolocate_obj = new function() {
 	    });
 		$(".loading_message").fadeIn("fast").css("display: block");
 
-		if (navigator.geolocation) {
-			this.location_id = navigator.geolocation.getCurrentPosition(this.success, this.failure, this.options);
-		} else {
+		// if (navigator.geolocation) {
+			// this.location_id = navigator.geolocation.getCurrentPosition(this.success, this.failure, this.options);
+		// } else {
 			geoip2_obj.init();
-		}
+		// }
 	};
 
 };
