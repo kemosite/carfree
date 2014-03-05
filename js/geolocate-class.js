@@ -1,5 +1,5 @@
 /*
- * Thinking: Both Geolocate and GeoIP objects have their own APIs, that return their own properties.
+ * Thinking: Both Geolocate and geoip_json objects have their own APIs, that return their own properties.
  * Build each object. Try running the Geolocation first.
  * If we have reason to believe it failed, then run GeoIP.
  */
@@ -18,15 +18,17 @@ var geocode_properties = {
 	locked: false
 };
 
-var geoip2_obj = new function() {
+var geoip_obj = new function() {
 
 	this.error = function(error) {
 		$(".loading_message").queue(function() {
-			$(this).text("Error getting location. Please refresh your browser.").dequeue();
+			$(this).text("Error getting location. "+error+". Please refresh your browser.").dequeue();
 		});
 	};
 
 	this.success = function(position) {
+
+		debug_report(position);
 
 		$(".loading_message").fadeOut("fast").css("display: none");
 	    $(".loading_message").queue(function() {
@@ -34,12 +36,10 @@ var geoip2_obj = new function() {
 	    });
 	    $(".loading_message").fadeIn("fast").css("display: block");
 
-		$(".maxmind_statement").show();
-
-		geocode_properties.latitude = position.location.latitude;
-		geocode_properties.longitude = position.location.longitude;
-		geocode_properties.city = position.city.names.en;
-		geocode_properties.province = position.subdivisions[0].iso_code;
+		geocode_properties.latitude = position.lat;
+		geocode_properties.longitude = position.lon;
+		geocode_properties.city = position.city;
+		geocode_properties.province = position.region;
 
 		geocode_properties.locked = true;
 
@@ -54,17 +54,18 @@ var geoip2_obj = new function() {
 		});
 	};
 
-	this.options = {
-		enableHighAccuracy: true
-	};
-
 	this.init = function() {
-		
-		debug_report(geoip2);
-		if (geoip2) { geoip2.city(geoip2_obj.success, geoip2_obj.failure, geoip2_obj.options); }
-
+		$.getJSON("http://ip-api.com/json/", function(data) {
+			if (data.status === "success") {
+				geoip_obj.success(data);
+			} else if (data.status === "fail") {
+				geoip_obj.error(data.message);
+			}
+		})
+		.fail(function(error) {
+			geoip_obj.failure(error);
+		});
 	};
-
 };
 
 var geolocate_obj = new function() {
@@ -73,7 +74,7 @@ var geolocate_obj = new function() {
 		$(".loading_message").queue(function() {
 			$(this).text("Error getting location. Just a moment.").dequeue();
 		});
-		geoip2_obj.init();
+		geoip_obj.init();
 	};
 
 	this.success = function(position) {
@@ -134,7 +135,7 @@ var geolocate_obj = new function() {
 		$(".loading_message").queue(function() {
 			$(this).text("Attempt to get location failed. Just a moment.").dequeue();
 		});
-		geoip2_obj.init();
+		geoip_obj.init();
 	};
 
 	this.options = {
@@ -152,7 +153,7 @@ var geolocate_obj = new function() {
 		// if (navigator.geolocation) {
 			// this.location_id = navigator.geolocation.getCurrentPosition(this.success, this.failure, this.options);
 		// } else {
-			geoip2_obj.init();
+			geoip_obj.init();
 		// }
 	};
 
@@ -163,7 +164,7 @@ geolocate_obj.init();
 var wait_for_geolocate = setInterval( function() { 
 	
 	if (geocode_properties.locked !== true) { 
-		geoip2_obj.init(); 
+		geoip_obj.init(); 
 	};
 	clearInterval(wait_for_geolocate);
 
