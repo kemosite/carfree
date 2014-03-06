@@ -45,7 +45,7 @@ $(window).load( function() {
 
 	/* [GeoLocate Class] */
 	var attach_geolocate = document.createElement("script");
-	attach_geolocate.setAttribute("src", "js/geolocate-class.js");
+	attach_geolocate.setAttribute("src", "js/geolocate-class.min.js");
 	document.getElementsByTagName("body")[0].appendChild(attach_geolocate);
 
 	/* [Google API Functions] */

@@ -140,7 +140,7 @@ var geolocate_obj = new function() {
 
 	this.options = {
 		enableHighAccuracy: true,
-		timeout: 3000
+		timeout: 6000
 	};
 
 	this.init = function() {
@@ -150,16 +150,21 @@ var geolocate_obj = new function() {
 	    });
 		$(".loading_message").fadeIn("fast").css("display: block");
 
-		// if (navigator.geolocation) {
-			// this.location_id = navigator.geolocation.getCurrentPosition(this.success, this.failure, this.options);
-		// } else {
+		if (navigator.geolocation) {
+			this.location_id = navigator.geolocation.getCurrentPosition(this.success, this.failure, this.options);
+		} else {
 			geoip_obj.init();
-		// }
+		}
 	};
 
 };
 
 geolocate_obj.init();
+
+/* 
+FAILSAFE: Sometimes a browser has the geolocation function, but not permission.
+The app doesn't know if it has permission or not. It will fall back to geolocation via IP if browser geolocation times out.
+*/
 
 var wait_for_geolocate = setInterval( function() { 
 	
@@ -168,4 +173,4 @@ var wait_for_geolocate = setInterval( function() {
 	};
 	clearInterval(wait_for_geolocate);
 
-}, 4000);
+}, 7000);

@@ -99,7 +99,7 @@ var google_api_obj = new function() {
 			center: new google.maps.LatLng(geocode_properties.latitude, geocode_properties.longitude),
 			panControl: true,
 		    zoomControl: true,
-		    scaleControl: true,
+		    scaleControl: false,
 		    zoom: 13,
 			mapTypeControlOptions: {
 		      mapTypeIds: [google.maps.MapTypeId.ROADMAP, 'map_style']
@@ -107,6 +107,40 @@ var google_api_obj = new function() {
 		};
 
 		google_api_obj.map = new google.maps.Map(document.getElementById("map_canvas"), google_api_obj.map_default_options);
+
+		/* [Set up Adsense] */
+		var MapAdUnitDiv = document.createElement('div');
+
+		if (adaptive_scripts.resolution > adaptive_scripts.sorted_breakpoints()[0]) {			
+			var MapAdUnitOptions = {
+				format: google.maps.adsense.AdFormat.LARGE_HORIZONTAL_LINK_UNIT,
+				position: google.maps.ControlPosition.TOP_CENTER,
+				backgroundColor: '#c4d4f3',
+				borderColor: '#e5ecf9',
+				titleColor: '#0000cc',
+				textColor: '#000000',
+				urlColor: '#009900',
+				map: google_api_obj.map,
+				visible: true,
+				publisherId: 'pub-4910183591920801'
+			};
+		} else {
+			var MapAdUnitOptions = {
+				format: google.maps.adsense.AdFormat.SMALL_HORIZONTAL_LINK_UNIT,
+				position: google.maps.ControlPosition.TOP_CENTER,
+				backgroundColor: '#c4d4f3',
+				borderColor: '#e5ecf9',
+				titleColor: '#0000cc',
+				textColor: '#000000',
+				urlColor: '#009900',
+				map: google_api_obj.map,
+				visible: true,
+				publisherId: 'pub-4910183591920801'
+			};
+		}
+
+		MapAdUnit = new google.maps.adsense.AdUnit(MapAdUnitDiv, MapAdUnitOptions);
+		
 		google_api_obj.places.service = new google.maps.places.PlacesService(google_api_obj.map);
 
 		google_api_obj.map.setOptions({styles: google_api_obj.styles});
@@ -155,7 +189,7 @@ var google_api_obj = new function() {
 		if (geocode_properties.street) {
 			google_api_obj.start_location = geocode_properties.street;
 		} else {
-			google_api_obj.start_location = geocode_properties.city;
+			google_api_obj.start_location = geocode_properties.city + ", " + geocode_properties.province;
 		}
 		
 		google_api_obj.categories_keyword = geocode_properties.city;
@@ -258,7 +292,7 @@ var google_api_obj = new function() {
 	    if (geocode_properties.street) {
 			google_api_obj.start_location = geocode_properties.street;
 		} else {
-			google_api_obj.start_location = geocode_properties.city;
+			google_api_obj.start_location = geocode_properties.city + ", " + geocode_properties.province;
 		}
 
 	    $("#start_location").val(google_api_obj.start_location);

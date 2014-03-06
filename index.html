@@ -23,8 +23,8 @@ Author: Kevin Montgomery
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <!-- [Keywords and descriptions] -->
-<meta name="keywords" content="carfree">
-<meta name="description" content="A webapp to assist with a carfree life.">
+<meta name="keywords" content="car,free,light,lite,carfree,carlight,carlite,car light,car free,car lite">
+<meta name="description" content="An app to assist with a carfree life. Get where you want, without a car.">
 
 <title>Carfree</title>
 
@@ -60,8 +60,7 @@ Includes:
 <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.9.1.min.js?ver=1.9.1"><\/script>')</script>
 
 <!-- [Google Maps with Weather and Places Libraries] -->
-<script src="//maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyDI_5jh9WF2nJha5ST5w_Sq1uoNRPtBrdE&libraries=places&sensor=true"></script>
-<!-- <script src="//maps.googleapis.com/maps/api/js?v=3.exp&key=[GOOGLE_API_KEY]&libraries=places&sensor=false"></script> -->
+<script src="//maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyDI_5jh9WF2nJha5ST5w_Sq1uoNRPtBrdE&libraries=adsense,places&sensor=true"></script>
 
 </head>
 
@@ -70,7 +69,7 @@ Includes:
 <!-- [Throbber] -->
 <div class="throbber">
   <div class="logo"><img src="images/carfree_logo.svg"></div>
-  <div class="version">Version: 1.0</div>
+  <div class="version">Version: 1.1</div>
   <br>
   <div><img src="assets/ajax-loader.gif"></div>
   <br>
@@ -116,6 +115,19 @@ Includes:
       </div>
       <div class="row">
         <div class="small-offset-1 small-10 columns"><a href="#" class="howto radius button expand" data-reveal-id="howto_modal">How To Use Carfree</a></div>
+      </div>
+      <div class="row">
+        <div class="small-offset-1 small-10 columns">
+          <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+          <!-- Menu Ad -->
+          <ins class="adsbygoogle"
+               style="display:inline-block;width:300px;height:250px"
+               data-ad-client="ca-pub-4910183591920801"
+               data-ad-slot="8158022178"></ins>
+          <script>
+          (adsbygoogle = window.adsbygoogle || []).push({});
+          </script>
+        </div>
       </div>
       </section>
     </div>
@@ -186,6 +198,10 @@ Includes:
 
 <div id="howto_modal" class="reveal-modal small" data-reveal style="display: none;">
   <h5 class="greeting">How To Use Carfree</h5>
+  
+  <p><a href="https://github.com/kemosite/carfree" target="_blank">Carfree lives on GitHub</a></p>
+  <p>Send comments and questions to <a href="https://twitter.com/kemosite" target="_blank">@kemosite on Twitter</a></p>
+
   <h6>Colour Schema</h6>
   
   <div class="row">
@@ -275,16 +291,19 @@ $(document).foundation(function (response) {
 </noscript>
 
 <!-- [Custom JQuery] -->
-<script src="js/my-jquery.js?ver=1.9.1"></script>
+<script src="js/my-jquery.min.js?ver=1.9.1"></script>
 
-<!-- [Initialize Google Analytics]
+<!-- [Initialize Google Analytics] -->
 <script>
-var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];
-(function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
-g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
-s.parentNode.insertBefore(g,s)}(document,'script'));
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-48190003-1', 'kemosite.com');
+  ga('send', 'pageview');
+
 </script>
--->
 
 </body>
 </html>
