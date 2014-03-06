@@ -122,7 +122,7 @@ var google_api_obj = new function() {
 				urlColor: '#009900',
 				map: google_api_obj.map,
 				visible: true,
-				publisherId: 'pub-4910183591920801'
+				publisherId: 'pub-####'
 			};
 		} else {
 			var MapAdUnitOptions = {
@@ -135,7 +135,7 @@ var google_api_obj = new function() {
 				urlColor: '#009900',
 				map: google_api_obj.map,
 				visible: true,
-				publisherId: 'pub-4910183591920801'
+				publisherId: 'pub-####'
 			};
 		}
 
