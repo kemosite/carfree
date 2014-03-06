@@ -1,4 +1,4 @@
-CARFREE RELEASE  1.0
+CARFREE RELEASE  1.1
 ====================
 
 <p>A web app to get people to where they want to go, without a car.<br>
