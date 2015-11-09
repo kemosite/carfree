@@ -6,7 +6,8 @@ var google_api_obj = new function() {
 	this.trip_mode = "";
 	this.trip_mode_radius = {
 		"BICYCLING": 15000 / 4,
-		"TRANSIT": 30000 / 4
+		"TRANSIT": 30000 / 4,
+		"WALKING": 5000 / 4
 	};
 	this.directions_display = "";
 	this.directions_service = "";
@@ -139,7 +140,7 @@ var google_api_obj = new function() {
 			};
 		}
 
-		MapAdUnit = new google.maps.adsense.AdUnit(MapAdUnitDiv, MapAdUnitOptions);
+		// MapAdUnit = new google.maps.adsense.AdUnit(MapAdUnitDiv, MapAdUnitOptions);
 		
 		google_api_obj.places.service = new google.maps.places.PlacesService(google_api_obj.map);
 
@@ -179,6 +180,17 @@ var google_api_obj = new function() {
 			radius: google_api_obj.trip_mode_radius["BICYCLING"]
 		};
 
+		this.walk_zone_properties = {
+			strokeColor: '#0040ff',
+			strokeOpacity: 0.5,
+			strokeWeight: 1,
+			fillColor: '#a6bcff',
+			fillOpacity: 0.125,
+			center: google_api_obj.map_default_options.center,
+			map: google_api_obj.map,
+			radius: google_api_obj.trip_mode_radius["WALKING"]
+		};
+
 		google_api_obj.bike_zone_circle = new google.maps.Circle(this.bike_zone_properties);
 		
 		this.map_zoom_circle = new google.maps.Circle(this.map_zoom_properties);
@@ -215,7 +227,20 @@ var google_api_obj = new function() {
 			google_api_obj.map.setOptions({styles: null});
 			google_api_obj.layers.bike_layer.setMap(null);
 
+		} else if (google_api_obj.trip_mode == "WALKING") {
+
+			google_api_obj.bike_zone_circle.setMap(null);
+			google_api_obj.walk_zone_circle = new google.maps.Circle(this.walk_zone_properties);
+
+			google_api_obj.map.setOptions({styles: null});
+			google_api_obj.layers.bike_layer.setMap(null);
+
+			google_api_obj.map.setZoom(14);
+
 		} else {
+
+			google_api_obj.walk_zone_circle.setMap(null);
+			google_api_obj.bike_zone_circle = new google.maps.Circle(this.bike_zone_properties);
 						
 			google_api_obj.map.setOptions({styles: google_api_obj.styles});
 			
@@ -268,15 +293,34 @@ var google_api_obj = new function() {
 					radius: google_api_obj.trip_mode_radius["BICYCLING"]
 				};
 
-				google_api_obj.bike_zone_circle = new google.maps.Circle(this.bike_zone_properties);
+				this.walk_zone_properties = {
+					strokeColor: '#0040ff',
+					strokeOpacity: 0.5,
+					strokeWeight: 1,
+					fillColor: '#a6bcff',
+					fillOpacity: 0.125,
+					center: google_api_obj.map_default_options.center,
+					map: google_api_obj.map,
+					radius: google_api_obj.trip_mode_radius["WALKING"]
+				};
+
+				if (google_api_obj.trip_mode == "BICYCLING") { 
+					google_api_obj.walk_zone_circle.setMap(null);
+					google_api_obj.bike_zone_circle = new google.maps.Circle(this.bike_zone_properties);
+					google_api_obj.map.setZoom(13); 
+				}
+
+				else if (google_api_obj.trip_mode == "WALKING") { 
+					google_api_obj.bike_zone_circle.setMap(null);
+					google_api_obj.walk_zone_circle = new google.maps.Circle(this.walk_zone_properties);
+					google_api_obj.map.setZoom(14); 
+				}
 
 				this.map_zoom_circle = new google.maps.Circle(this.map_zoom_properties);
 				this.map_bounds = new google.maps.LatLngBounds(this.map_zoom_circle.getBounds().getSouthWest(), this.map_zoom_circle.getBounds().getNorthEast());
 				google_api_obj.map.fitBounds(this.map_bounds);
 				this.map_zoom_circle.setMap(null);
 				// google_api_obj.places.broad_search();
-
-				if (google_api_obj.trip_mode == "BICYCLING") { google_api_obj.map.setZoom(13); }
 
 				google_api_obj.calculate_route();
 

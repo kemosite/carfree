@@ -50,7 +50,7 @@ $(window).load( function() {
 
 	/* [Google API Functions] */
 	var attach_google_api = document.createElement("script");
-	attach_google_api.setAttribute("src", "js/google-api-functions.min.js");
+	attach_google_api.setAttribute("src", "js/google-api-functions.js");
 	document.getElementsByTagName("body")[0].appendChild(attach_google_api);
 
 	/* [Check that we have a position lock before initiating further functions] */

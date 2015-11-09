@@ -71,7 +71,7 @@ function safe_exec(input) {
 $(document).ready(function(){
 	
 	/* [TypeSet Body Copy] */
-	$("body, p, label, input, select").typeset();
+	/* $("body, p, label, input, select").typeset(); */
 	
 	/*
 	[If Retina Display, Load 2x Pixel Images]

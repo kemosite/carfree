@@ -3,13 +3,13 @@
 <!--
 [Carfree]
 Description: A webapp to assist with a carfree life.
-Version: 1.0
+Version: 2.0
 Author: Kevin Montgomery
 -->
 
 <!-- paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/ -->
-<!--[if lt IE 9]>		<html class="no-js lt-ie9" dir="ltr" lang="en-CA">								<![endif]-->
-<!--[if gt IE 8]>	<!--><html class="no-js" dir="ltr" lang="en-CA">							<!--<![endif]-->
+<!--[if lt IE 9]> <html class="no-js lt-ie9 typography lines orphans quotes" dir="ltr" lang="en-CA">  <![endif]-->
+<!--[if gt IE 8]> <!--><html class="no-js typography lines orphans quotes" dir="ltr" lang="en-CA"> <!--<![endif]-->
 
 <head>
 
@@ -25,6 +25,15 @@ Author: Kevin Montgomery
 <!-- [Keywords and descriptions] -->
 <meta name="keywords" content="car,free,light,lite,carfree,carlight,carlite,car light,car free,car lite">
 <meta name="description" content="An app to assist with a carfree life. Get where you want, without a car.">
+
+<!-- [Open Graph] -->
+<meta property='og:locale' content='en_CA'/>
+<meta property='og:title' content='Carfree'/>
+<meta property='og:description' content='An app to assist with a carfree life. Get where you want, without a car.'/>
+<meta property='og:url' content=''/>
+<meta property='og:site_name' content='Carfree'/>
+<meta property='og:type' content='article'/>
+
 
 <title>Carfree</title>
 
@@ -50,17 +59,15 @@ Author: Kevin Montgomery
 Includes:
 - Normalize CSS Reset 2.0.1
 - Foundation CSS (Compressed) 3.1.1
-- Styles: LESS CSS 1.3.0
 -->
-<!-- <link rel="stylesheet/less" href="css/master.less?ver=1.4.1" type="text/css" media="all"> -->
 <link rel="stylesheet" href="css/master.min.css?ver=1.4.1" type="text/css" media="all">
 
 <!-- [Initialize JQuery] -->
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js?ver=1.9.1"></script>
-<script>window.jQuery || document.write('<script src="js/vendor/jquery-1.9.1.min.js?ver=1.9.1"><\/script>')</script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src="js/vendor/jquery-2.1.4.min.js"><\/script>')</script>
 
 <!-- [Google Maps with Weather and Places Libraries] -->
-<script src="//maps.googleapis.com/maps/api/js?v=3.exp&key=[GOOGLE_MAPS_KEY]&libraries=adsense,places&sensor=true"></script>
+<script src="//maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyDI_5jh9WF2nJha5ST5w_Sq1uoNRPtBrdE&libraries=adsense,places"></script>
 
 </head>
 
@@ -69,7 +76,7 @@ Includes:
 <!-- [Throbber] -->
 <div class="throbber">
   <div class="logo"><img src="images/carfree_logo.svg"></div>
-  <div class="version">Version: 1.1</div>
+  <div class="version">Version: 2.0</div>
   <br>
   <div><img src="assets/ajax-loader.gif"></div>
   <br>
@@ -146,6 +153,7 @@ Includes:
       <select id="trip_mode_select" class="medium" onchange="google_api_obj.update_radius();">
         <option value="BICYCLING">Cycling</option>
         <option value="TRANSIT">Transit</option>
+        <option value="WALKING">Walking</option>
       </select>
     </div>
   </div>
@@ -257,30 +265,23 @@ Includes:
 </div>
 <!-- [End Modal Windows] -->
 
-<!-- [Initialize LESS CSS] -->
-<!--
-<script>var less = { env: "development" }; // Comment out if used in production</script>
-<script type="text/javascript" src="js/vendor/less-1.4.1.min.js?ver=1.4.1"></script>
--->
-
-<!-- [Initialize Foundation JS 5.0.2] -->
-<script src="js/vendor/foundation.min.js?ver=5.0.2"></script>
-<script src="js/vendor/foundation/foundation.reveal.js?ver=5.0.2"></script>
-
+<!-- [Initialize Foundation Essentials 5.2.3] -->
+<script src="js/vendor/foundation.min.js?ver=5.2.3"></script>
 <script>
-$(document).foundation(function (response) {
-  // if (response.errors && console) { console.log(response.errors); }
-});
+  $(document).foundation();
 </script>
 
-<!-- [TypeSet 3.0] -->
-<script src="js/jquery.typeset-v3.min.js?ver=3"></script>
+<!-- [Typography 4.1] -->
+<script src="js/typography-4.3.min.js?ver=4.3"></script>
+<script>
+  typography_obj.init();
+</script>
 
 <!-- [JQuery: Adaptive Scripts] -->
 <script src="js/adaptive-scripts.min.js?ver=1.0"></script>
 
 <!-- [JQuery: Standard Behaviours] -->
-<script src="js/standard-behaviours-jquery.min.js?ver=1.9.1"></script>
+<script src="js/standard-behaviours-jquery.js?ver=2.1.4"></script>
 
 <!-- [Show Throbber] -->
 <noscript>
@@ -291,19 +292,20 @@ $(document).foundation(function (response) {
 </noscript>
 
 <!-- [Custom JQuery] -->
-<script src="js/my-jquery.min.js?ver=1.9.1"></script>
+<script src="js/my-jquery.js?ver=2.1.4"></script>
 
 <!-- [Initialize Google Analytics] -->
+<!--
 <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
   m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
   })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-  ga('create', 'UA-#####', 'domain.com');
+  ga('create', 'UA-48190003-1', 'kemosite.com');
   ga('send', 'pageview');
 
 </script>
-
+-->
 </body>
 </html>
